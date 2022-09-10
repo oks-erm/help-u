@@ -1,0 +1,89 @@
+(function() {
+    "use strict";
+  
+    // select helper
+    const select = (el, all = false) => {
+      el = el.trim()
+      if (all) {
+        return [...document.querySelectorAll(el)]
+      } else {
+        return document.querySelector(el)
+      }
+    }
+  
+    // event listener setter
+    const on = (type, el, listener, all = false) => {
+      let selectElement = select(el, all)
+      if (selectElement) {
+        if (all) {
+          selectElement.forEach(e => e.addEventListener(type, listener))
+        } else {
+          selectElement.addEventListener(type, listener)
+        }
+      }
+    }
+  
+    // listener for scroll
+    const onscroll = (el, listener) => {
+      el.addEventListener('scroll', listener)
+    }
+  
+    // header onscroll animation
+    let selectHeader = select('#header')
+    if (selectHeader) {
+      const headerScrolled = () => {
+        if (window.scrollY > 100) {
+          selectHeader.classList.add('header-scrolled')
+        } else {
+          selectHeader.classList.remove('header-scrolled')
+        }
+      }
+      window.addEventListener('load', headerScrolled)
+      onscroll(document, headerScrolled)
+    }
+  
+    // logo onscroll animation
+    let selectLogo = select('#small-img-logo')
+    if (selectLogo) {
+        const logoScrolled = () => {
+        if (window.scrollY > 400) {
+            selectLogo.classList.add('small-logo-scrolled')
+        } else {
+            selectLogo.classList.remove('small-logo-scrolled')
+        }
+        }
+        window.addEventListener('load', logoScrolled)
+        onscroll(document, logoScrolled)
+    }
+
+    // shevron arrow onscroll animation
+    let selectArrow = select('.arrow')
+    if (selectArrow) {
+        const arrowScrolled = () => {
+        if (window.scrollY > 80) {
+            selectArrow.classList.add('arrow-scrolled')
+        } else {
+            selectArrow.classList.remove('arrow-scrolled')
+        }
+        }
+        window.addEventListener('load', arrowScrolled)
+        onscroll(document, arrowScrolled)
+    }
+
+    // mobile navbar
+    on('click', '.mobile-nav-toggle', function(e) {
+      select('#navbar').classList.toggle('navbar-mobile')
+      this.classList.toggle('bi-list')
+      this.classList.toggle('bi-x')
+    })
+  
+    // Animation on scroll   
+    window.addEventListener('load', () => {
+      AOS.init({
+        duration: 1000,
+        easing: 'ease-in-out',
+        once: true,
+        mirror: false
+      })
+    });
+  })()
