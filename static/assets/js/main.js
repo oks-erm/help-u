@@ -77,6 +77,14 @@
       this.classList.toggle('bi-x')
     })
   
+    // Preloader
+    let loader = select('#loader');
+    if (loader) {
+      window.addEventListener('load', () => {
+        loader.remove()
+      });
+    }
+  
     // Animation on scroll   
     window.addEventListener('load', () => {
       AOS.init({
