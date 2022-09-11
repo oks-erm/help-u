@@ -1,37 +1,84 @@
 {% extends "base.html" %}
 
 {% block content %}
- <!-- Hero -->
- <section id="hero" class="d-flex align-items-center">
-    <div class="container position-relative" data-aos="fade-up" data-aos-delay="100">
-      <div class="row justify-content-center">
-        <div class="col-xl-7 col-lg-9 text-center">
-          <img class="img-logo" src="./static/assets/img/logo.png" alt="logo - yellow and blue heart made of leaves">
-          <h1>People for people</h1>
-          <h2>We connect the ones who can help with the ones who need it</h2>
-        </div>
-      </div>
-      <div class="text-center">
-        <a href="#can" id="can_help" class="btn-hero scrollto">I can help</a>
-        <a href="#need" id="need_help" class="btn-hero scrollto">I need help</a>
+<!-- Hero -->
+<section id="hero" class="d-flex align-items-center">
+  <div class="container position-relative" data-aos="fade-up" data-aos-delay="100">
+    <div class="row justify-content-center">
+      <div class="col-xl-7 col-lg-9 text-center">
+        <img class="img-logo" src="./static/assets/img/logo.png" alt="logo - yellow and blue heart made of leaves">
+        <h1>People for people</h1>
+        <h2>We connect the ones who can help with the ones who need it</h2>
       </div>
     </div>
-  </section><!-- End Hero -->
-  <div class="container-fluid arrow fade-in-image"><i class="bi bi-chevron-double-down fade-in-down"></i></div>
-  
-  <main id="main">
+    <div class="text-center">
+      <a href="#can" id="can_help" class="btn-hero scrollto">I can help</a>
+      <a href="#need" id="need_help" class="btn-hero scrollto">I need help</a>
+    </div>
+  </div>
+</section><!-- End Hero -->
+<div class="container-fluid arrow fade-in-image"><i class="bi bi-chevron-double-down fade-in-down"></i></div>
 
-    <!-- About -->
-    <section id="about" class="about">
-      <div class="container" data-aos="fade-up">
+<main id="main">
 
-        <div class="section-title">
-          <h2>About</h2>
-          <p>At least 12 million people have fled their homes since Russia's invasion of Ukraine having to start their lives all over again. If you want to help, but don't know how, you can offer help here: house items, services, dinner, language practice, just yout time. Help locally. Help online. You can browse through requests for help, maybe there is something you could do, just is not aware it's needed. Many people are afraid of asking for help publicly on social media or intimidated with big charity centeres refrain from seeking support. Here is a safe space, where nobody is going to judge anybody.  </p>
-          <a href="#" class="btn-learn-more">Learn More</a>
-        </div>
+  <!-- About -->
+  <section id="about" class="about">
+    <div class="container" data-aos="fade-up">
+
+      <div class="section-title">
+        <h2>About</h2>
+        <p>At least 12 million people have fled their homes since Russia's invasion of Ukraine having to start their
+          lives all over again. If you want to help, but don't know how, you can offer help here: house items, services,
+          dinner, language practice, just yout time. Help locally. Help online. You can browse through requests for
+          help, maybe there is something you could do, just is not aware it's needed. Many people are afraid of asking
+          for help publicly on social media or intimidated with big charity centeres refrain from seeking support. Here
+          is a safe space, where nobody is going to judge anybody. </p>
+        <a href="#" class="btn-learn-more">Learn More</a>
       </div>
-    </section><!-- End About -->
+    </div>
+  </section><!-- End About -->
 
-  </main><!-- End main -->
+  <!-- Contact Form -->
+  <section id="contact" class="contact">
+    <div class="container" data-aos="fade-up">
+
+      <div class="section-title">
+        <h2>Contact Us</h2>
+        <p class="container-fluid col-lg-8 mt-5 mt-lg-0">If you have any questions, concerns or ideas, feel free to
+          contact us. We'll get back to you as soon as
+          possible. You might want ro read through Frequently Asked Questions section first, where your question might
+          have
+          already been covered.</p>
+      </div>
+      
+      <div class="container-fluid col-lg-8 mt-5 mt-lg-0">
+        <form method="post" role="form" class="contact-form">
+          {% csrf_token %}
+          <div class="row">
+            <div class="col-md-6 form-group mt-3 mt-md-3">
+              <input type="text" name="name" class="form-control" id="name" placeholder="Your Name" required>
+            </div>
+            <div class="col-md-6 form-group mt-3 mt-md-3">
+              <input type="email" class="form-control" name="email" id="email" placeholder="Your Email" required>
+            </div>
+          </div>
+          <div class="form-group mt-3">
+            <input type="text" class="form-control" name="subject" id="subject" placeholder="Subject" required>
+          </div>
+          <div class="form-group mt-3">
+            <textarea class="form-control" name="message" rows="5" placeholder="Message" required></textarea>
+          </div>
+          <div class="my-3">
+            <div class="loading">Loading</div>
+            <div class="error-message"></div>
+            <div class="sent-message alert-success">Your message has been sent. Thank you!</div>
+          </div>
+          <div class="text-center"><button type="submit">Send Message</button></div>
+        </form>
+      </div>
+    </div>
+
+  </div>
+</section><!-- End Contact Section -->
+
   {% endblock %}
