@@ -50,7 +50,7 @@
           have
           already been covered.</p>
       </div>
-      
+
       <div class="container-fluid col-lg-8 mt-5 mt-lg-0">
         <form method="post" role="form" class="contact-form">
           {% csrf_token %}
@@ -66,19 +66,48 @@
             <input type="text" class="form-control" name="subject" id="subject" placeholder="Subject" required>
           </div>
           <div class="form-group mt-3">
-            <textarea class="form-control" name="message" rows="5" placeholder="Message" required></textarea>
+            <textarea class="form-control" name="message" id="message" rows="5" placeholder="Message"
+              required></textarea>
           </div>
           <div class="my-3">
             <div class="loading">Loading</div>
-            <div class="error-message"></div>
-            <div class="sent-message alert-success">Your message has been sent. Thank you!</div>
+            <div class="error-message">Oooops! Your message hasn't been sent. Try again.</div>
+            <div class="sent-message">Your message has been sent. Thank you!</div>
           </div>
           <div class="text-center"><button type="submit">Send Message</button></div>
         </form>
       </div>
     </div>
 
-  </div>
-</section><!-- End Contact Section -->
+    </div>
+  </section><!-- End Contact Section -->
 
+  <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
+    crossorigin="anonymous"></script>
+  <script type="text/javascript">
+    $(document).on('submit', '.contact-form', (e) => {
+      e.preventDefault();
+      $.ajax({
+        type: 'POST',
+        url: '{% url "home" %}',
+        data: {
+          name: $("#name").val(),
+          email: $("#email").val(),
+          subject: $("#subject").val(),
+          message: $("#message").val(),
+          csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
+        },
+        success: () => {
+          $(".sent-message").css('display', 'block');
+          $('#name').val('')
+          $('#email').val('')
+          $('#subject').val('')
+          $('#message').val('')
+        },
+        error: () => {
+          $(".error-message").css('display', 'block');
+        }
+      })
+    });
+  </script>
   {% endblock %}
