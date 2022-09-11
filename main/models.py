@@ -1,6 +1,5 @@
 from django.db import models
 from django.utils import formats
-from datetime import datetime
 
 
 class ContactFormMessage(models.Model):
