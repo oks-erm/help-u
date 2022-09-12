@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<section id="search">
+    <div class="container position-relative" data-aos="fade-up" data-aos-delay="100">
+        <div class="row justify-content-center">
+            <div class="col-xl-7 col-lg-9 text-center">
+                <img class="search-logo my-4" src="{% static 'assets/img/logo.png' %}"
+                    alt="logo - yellow and blue heart made of leaves">
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Search">
+                    <button id="search-icon" class="btn btn-primary" type="button"><i class='bx bx-search'></i></button>
+                </div>
+            </div>
+        </div>
+</section>
+<section id="listings">
+</section>
+{% endblock %}

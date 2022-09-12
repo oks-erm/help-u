@@ -9,8 +9,7 @@ def home_page(request):
         email = request.POST.get('email')
         subject = request.POST.get('subject')
         msg = request.POST.get('message')
-        # date = datetime.now()
-        print(name)
+
         new = ContactFormMessage(
             name=name,
             email=email,
@@ -21,3 +20,7 @@ def home_page(request):
         new.save()
 
     return render(request, 'index.html')
+
+
+def listings(request):
+    return render(request, 'listings.html')

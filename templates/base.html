@@ -1,3 +1,5 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -18,7 +20,7 @@
   <link href='https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css' rel='stylesheet'>
 
   <!-- Main CSS -->
-  <link href="./static/assets/css/style.css" rel="stylesheet">
+  <link href="{% static 'assets/css/style.css' %}" rel="stylesheet">
 
   <title>Help U</title>
 </head>
@@ -30,12 +32,16 @@
     <div class="container d-flex align-items-center justify-content-between">
 
       <div class="logo-wrapper">
-        <h1 class="logo"><a href="#">Help U</a></h1><span id="small-img-logo" class="d-none d-md-block"></span>
+        <h1 class="logo"><a href="{% url 'home' %}">Help U</a></h1><span id="small-img-logo" class="d-none d-md-block"></span>
       </div>
       <!-- Navbar -->
       <nav id="navbar" class="navbar">
         <ul>
+          {% if url is 'home' %}
           <li><a class="nav-link scrollto active" href="#hero">Home</a></li>
+          {% else %}
+          <li><a class="nav-link scrollto active" href="{% url 'home' %}">Home</a></li>
+          {% endif %}
           <li><a class="nav-link scrollto" href="#about">About</a></li>
           <li><a class="nav-link scrollto" href="#faq">FAQ</a></li>
           <li><a class="nav-link scrollto" href="#contact">Contact</a></li>
@@ -119,8 +125,8 @@
   <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
 
   <!-- Main JavaScript -->
-  <script src="./static/assets/js/main.js"></script>
-
+  <script src="{% static 'assets/js/main.js' %}"></script>
+  
 </body>
 
 </html>

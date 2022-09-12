@@ -6,13 +6,13 @@
   <div class="container position-relative" data-aos="fade-up" data-aos-delay="100">
     <div class="row justify-content-center">
       <div class="col-xl-7 col-lg-9 text-center">
-        <img class="img-logo" src="./static/assets/img/logo.png" alt="logo - yellow and blue heart made of leaves">
+        <img class="img-logo" src="{% static 'assets/img/logo.png' %}" alt="logo - yellow and blue heart made of leaves">
         <h1>People for people</h1>
         <h2>We connect the ones who can help with the ones who need it</h2>
       </div>
     </div>
     <div class="text-center">
-      <a href="#can" id="can_help" class="btn-hero scrollto">I can help</a>
+      <a href="{% url 'listings' %}" id="can_help" class="btn-hero scrollto">I can help</a>
       <a href="#need" id="need_help" class="btn-hero scrollto">I need help</a>
     </div>
   </div>
@@ -30,7 +30,7 @@
         <p>At least 12 million people have fled their homes since Russia's invasion of Ukraine having to start their
           lives all over again. If you want to help, but don't know how, you can offer help here: house items, services,
           dinner, language practice, just yout time. Help locally. Help online. You can browse through requests for
-          help, maybe there is something you could do, just is not aware it's needed. Many people are afraid of asking
+          help, maybe there is something you could do, just you are not aware it's needed. Many people are afraid of asking
           for help publicly on social media or intimidated with big charity centeres refrain from seeking support. Here
           is a safe space, where nobody is going to judge anybody. </p>
         <a href="#" class="btn-learn-more">Learn More</a>
