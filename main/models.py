@@ -66,7 +66,10 @@ class ContactFormMessage(models.Model):
     subject = models.CharField(max_length=80)
     message = models.CharField(max_length=2000)
     date = models.DateTimeField(auto_now=True)
-    responded = models.BooleanField(choices = ((0, "No"), (1, "Yes")), default=0)
+    responded = models.BooleanField(choices=((0, "No"), (1, "Yes")), default=0)
+
+    class Meta:
+        ordering = ["-date"]
 
     def __str__(self):
         return (f"from {self.name} | subject: {self.subject}")

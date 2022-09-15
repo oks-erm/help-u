@@ -31,6 +31,11 @@ body {
     font-family: "Raleway", sans-serif;
   }
 
+  hr {
+    margin: 0.5rem 0;
+    opacity: .07;
+  }
+
   a {
     color: var(--blue);
     text-decoration: none;
@@ -566,8 +571,59 @@ body {
   }
 
   /*----------------------------------------------------Listings*/
-  #listings {
-    height: 50vh;
+
+  #listings{
+    display: flex;
+    justify-content: center;
+  }
+
+  .card-title {
+    font-size: 17px;
+    font-weight: bold;
+    color: var(--dark);
+    margin-bottom: auto;
+    margin-top: 3%;
+  }
+
+  #listings .card-img-top {
+    aspect-ratio: 4/3;
+  }
+
+  .subtitle {
+    font-size: 15px;
+    margin-bottom: auto;
+  }
+
+  #listings .author {
+    font-weight: 600;
+    color: var(--dark);
+  }
+
+  #listings .author i {
+    opacity: .7;
+    font-size: 15px;
+  }
+
+  #listings .card .card-body p.h6{
+    font-size: 14px;
+    margin-bottom: auto;
+  }
+
+  .fade-line {
+    position: relative;
+    height: 4.5em; 
+    overflow: hidden;
+  }
+  
+  .fade-line::after {
+    content: "";
+    text-align: right;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 80%;
+    height: 1.5em;
+    background: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1) 50%);
   }
 
   /*----------------------------------------------------Footer*/

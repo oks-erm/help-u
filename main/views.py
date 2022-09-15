@@ -1,5 +1,6 @@
 from django.shortcuts import render
-from .models import ContactFormMessage
+from django.views import generic
+from .models import ContactFormMessage, Post
 
 
 def home_page(request):
@@ -20,5 +21,16 @@ def home_page(request):
     return render(request, 'index.html')
 
 
-def posts_list(request):
-    return render(request, 'posts_list.html')
+class PostList(generic.ListView):
+    model = Post
+    queryset = Post.objects.filter(status=1).order_by("-created_on")
+    template_name = "posts_list.html"
+    paginate_by = 10
+
+
+# def posts_list(request):
+#     posts = Post.objects.all()
+#     context = {
+#         'posts': posts
+#     }
+#     return render(request, 'posts_list.html', context)
