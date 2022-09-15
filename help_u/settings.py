@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
+    'django.contrib.gis',
     'django.contrib.messages',
     'cloudinary_storage',
     'django.contrib.staticfiles',
@@ -113,7 +114,7 @@ WSGI_APPLICATION = 'help_u.wsgi.application'
 
 
 DATABASES = {
-    'default': dj_database_url.parse(os.environ.get('DATABASE_URL'))
+    'default': dj_database_url.parse(os.environ.get('DATABASE_URL')),
     }
 
 
@@ -167,3 +168,7 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+AUTH_USER_MODEL = 'main.CustomUser'
+

@@ -1,5 +1,4 @@
 from django.shortcuts import render
-from datetime import datetime
 from .models import ContactFormMessage
 
 
@@ -15,12 +14,11 @@ def home_page(request):
             email=email,
             subject=subject,
             message=msg,
-            # date=date,
             )
         new.save()
 
     return render(request, 'index.html')
 
 
-def listings(request):
-    return render(request, 'listings.html')
+def posts_list(request):
+    return render(request, 'posts_list.html')
