@@ -19,9 +19,40 @@ class CustomUserAdmin(admin.ModelAdmin):
         return f"{obj.id}"
 
 
+class UserProfileAdmin(admin.ModelAdmin):
+    fields = (('user', 'languages'),
+              ('country', 'city'),
+              'userpic',
+              'bio')
+    list_display = ('user', 'country', 'id')
+
+    def id(self, obj):
+        return f"{obj.user.id}"
+
+
+class PostAdmin(admin.ModelAdmin):
+    fields = ('author',
+              'title',
+              'slug',
+              'image',
+              'text',
+              ('country', 'city'),
+              ('status', 'relevance'),
+              ('type', 'category'))
+    list_display = ('title', 'author', 'created_on', 'status')
+
+
+class ContactFormAdmin(admin.ModelAdmin):
+    fields = (('name', 'email'),
+              'subject',
+              'message',
+              'date')
+    list_display = ('subject', 'name', 'email', 'date')
+
+
 # Register your models here.
 admin.site.register(CustomUser, CustomUserAdmin)
-admin.site.register(UserProfile)
-admin.site.register(Post)
-admin.site.register(ContactFormMessage)
+admin.site.register(UserProfile, UserProfileAdmin)
+admin.site.register(Post, PostAdmin)
+admin.site.register(ContactFormMessage, ContactFormAdmin)
 

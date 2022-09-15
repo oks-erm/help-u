@@ -1,5 +1,5 @@
 from django.db import models
-from django.utils import formats
+from django.utils import formats, timezone
 from django.contrib.auth.models import AbstractUser
 from .managers import CustomUserManager
 from cloudinary.models import CloudinaryField
@@ -28,7 +28,7 @@ class UserProfile(models.Model):
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
     userpic = CloudinaryField('image', default='placeholder')
     languages = models.CharField(max_length=200)
-    bio = models.TextField(default='')
+    bio = models.TextField(default='', null=True, blank=True)
     country = models.CharField(max_length=30, null=True)
     city = models.CharField(max_length=30, null=True)
 
@@ -44,7 +44,7 @@ class Post(models.Model):
     slug = models.SlugField(max_length=200, unique=True)
     image = CloudinaryField('image', default='placeholder')
     text = models.TextField()
-    country = models.CharField(max_length=30, null=True)
+    country = models.CharField(max_length=20, null=True)
     city = models.CharField(max_length=30, null=True)
     created_on = models.DateTimeField(auto_now_add=True)
     updated_on = models.DateTimeField(auto_now=True)
@@ -69,5 +69,4 @@ class ContactFormMessage(models.Model):
 
     def __str__(self):
         short_date = 'SHORT_DATETIME_FORMAT'
-        return (f"from {self.name} | subject: {self.subject} | "
-                f"created: {formats.date_format(self.date, short_date)}")
+        return (f"from {self.name} | subject: {self.subject}")

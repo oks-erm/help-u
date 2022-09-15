@@ -44,10 +44,11 @@ INSTALLED_APPS = [
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
-    'django.contrib.gis',
+    # 'django.contrib.gis',
     'django.contrib.messages',
     'cloudinary_storage',
     'django.contrib.staticfiles',
+    'django_countries',
     'cloudinary',
     'main',
 ]
