@@ -46,6 +46,7 @@ class PostAdmin(admin.ModelAdmin):
               'image',
               'text',
               ('country', 'city'),
+              'area',
               ('status', 'relevance'),
               ('type', 'category'))
     list_display = ('title', 'author', 'country', 'created_on', 'status')

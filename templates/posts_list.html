@@ -33,7 +33,16 @@
                         </div>
                             <h4 class="card-title mt-3">{{ post.title }}</h4>
                         </a>
-                        <p class="subtitle text-muted p"><i class='bx bx-map'></i> {{ post.country.name }}, {{ post.city}}</p>
+                        <p class="subtitle text-truncate p"><i class='bx bx-map'></i>
+                            <a href="https://www.google.com/maps/place/{{post.city}}+{{post.country.name}}" target="_blank" class="geo"> {{ post.city}}, {{ post.country.name }} 
+                                <iframe class="preview" loading="lazy" allowfullscreen
+                                referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps/embed/v1/place?key={{ key }}&q={{ post.city}}+{{ post.country.name }}&zoom=10">
+                            </iframe></a></p>
+                        {% if post.area != None %}
+                        <p class="subtitle text-muted p"><i class='bx bx-building-house'></i>{{ post.area }}</p>
+                        {% else %}
+                        <p class="subtitle text-muted p"><i class='bx bx-building-house'></i> ... </p>
+                        {% endif %}
                         <div class="author subtitle p"><i class='bx bxs-user-circle'></i><span> {{ post.author }} </span></div>
                         <hr>
                         <p class="card-text content fade-line">{{ post.text }}</p>

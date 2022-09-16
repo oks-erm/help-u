@@ -632,7 +632,7 @@ body {
       margin: 0;
       font-size: 32px;
       font-weight: 600;
-      line-height: 38px;
+      line-height: 44px;
       color: var(--dark);
       font-family: "Poppins", sans-serif;
     }
@@ -641,6 +641,17 @@ body {
       display: flex;
       flex-direction: column;
       justify-content: center;
+    }
+
+    #full-post img {
+      width: -webkit-fill-available;
+      overflow: hidden;
+    }
+
+    #full-post .created {
+      font-size: 13px;
+      margin-bottom: -6px;
+      padding-left: 2px;
     }
 
   /*----------------------------------------------------Footer*/
@@ -791,3 +802,18 @@ body {
     visibility: visible;
     opacity: 1;
   }
+
+  .geo {
+    color:#069; 
+    cursor:pointer;
+}
+
+.preview {
+    display:none;
+    position:absolute;
+    border:1px solid #000;
+    width:300px;
+    height:300px;
+    z-index: 999;
+    margin-left: -10px;
+}

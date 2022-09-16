@@ -46,6 +46,7 @@ class Post(models.Model):
     text = models.TextField(blank=True)
     country = CountryField(blank=True)
     city = models.CharField(max_length=30, null=True, blank=True)
+    area = models.CharField(max_length=30, null=True, blank=True)
     created_on = models.DateTimeField(auto_now_add=True)
     updated_on = models.DateTimeField(auto_now=True)
     status = models.IntegerField(choices=STATUS, default=0)
