@@ -1,6 +1,9 @@
-from django.shortcuts import render
-from django.views import generic
+from django.shortcuts import render, get_object_or_404
+from django.views import generic, View
 from .models import ContactFormMessage, Post
+import os
+if os.path.exists('env.py'):
+    import env
 
 
 def home_page(request):
@@ -28,9 +31,21 @@ class PostList(generic.ListView):
     paginate_by = 10
 
 
-# def posts_list(request):
-#     posts = Post.objects.all()
-#     context = {
-#         'posts': posts
-#     }
-#     return render(request, 'posts_list.html', context)
+class PostFull(View):
+
+    def get(self, request, slug, *args, **kwargs):
+        queryset = Post.objects.filter(status=1)
+        post = get_object_or_404(queryset, slug=slug)
+
+        API_KEY = os.environ.get('GOOGLE_MAPS_API_KEY')
+        maps = "https://www.google.com/maps/embed/v1/place?key="+API_KEY+"&q="+str(post.city)+","+str(post.country)
+
+        return render(
+            request,
+            "full.html",
+            {
+                "post": post,
+                "maps": maps,
+            },
+        )
+    

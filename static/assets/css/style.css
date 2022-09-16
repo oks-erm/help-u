@@ -592,6 +592,7 @@ body {
   .subtitle {
     font-size: 15px;
     margin-bottom: auto;
+    margin-top: -1px;
   }
 
   #listings .author {
@@ -614,7 +615,7 @@ body {
     height: 4.5em; 
     overflow: hidden;
   }
-  
+
   .fade-line::after {
     content: "";
     text-align: right;
@@ -625,6 +626,22 @@ body {
     height: 1.5em;
     background: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1) 50%);
   }
+
+  /*----------------------------------------------------Full Post Page*/
+    #full-post h2{
+      margin: 0;
+      font-size: 32px;
+      font-weight: 600;
+      line-height: 38px;
+      color: var(--dark);
+      font-family: "Poppins", sans-serif;
+    }
+
+    #full-post .container {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
 
   /*----------------------------------------------------Footer*/
   #footer {

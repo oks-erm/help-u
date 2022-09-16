@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<section id="full-post">
+    <div class="container mt-3">
+        <a href="{% url 'posts' %}" class="btn btn-outline-primary mb-3 mt-1"><<< Back to the list</a>
+                <div class="row">
+                    <div class="col-lg-6">
+                        <img src={{ post.image.url }} alt="">
+
+                    </div>
+                    <div class="col-lg-6">
+                        <h2>{{ post.title }}</h2>
+                        <hr>
+                        <iframe width="500" height="300" style="border:0" loading="lazy" allowfullscreen
+                            referrerpolicy="no-referrer-when-downgrade" src={{ maps }}>
+                        </iframe>
+                        <p class="subtitle text-muted p"><i class='bx bx-map'></i> {{ post.country.name }},
+                            {{ post.city}}</p>
+                        <div class="author subtitle p"><i class='bx bxs-user-circle'></i><span> {{ post.author }}
+                            </span></div>
+                        <hr>
+                        <p class="card-text text-muted h6">{{ post.created_on}}</p>
+                        <hr>
+                        <p>{{ post.text }}</p>
+                        <button type="button" class="btn btn-primary">Contact {{post.author}}</button>
+                        {% if post.type == True %}
+                        <button type="button" class="btn btn-success">Say Thank You</button>
+                        {% endif %}
+                        {% if post.type == False %}
+                        <button type="button" class="btn btn-success">Offer Help</button>
+                        {% endif %}
+                    </div>
+                </div>
+    </div>
+</section>
+
+{% endblock %}

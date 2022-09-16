@@ -22,18 +22,18 @@
             <div class="col-xxl-2 col-xl-3 col-lg-4 col-md-5">
                 <div class="card mb-3">
                     <div class="card-body">
+                        <a href="{% url 'full' post.slug  %}">
                         <div class="image-container">
                             {% if "placeholder" in post.image.url %}
-                            <img class="card-img-top"
-                                src="https://picsum.photos/200/150">
+                            <img class="card-img-top" style="opacity: 0.4; scale: 0.6;"
+                                src="{% static 'assets/img/logo_small.png' %}">
                             {% else %}
-                            <img class="card-img-top" src= {{ post.image.url }} alt="post image">
+                            <img class="card-img-top" src={{ post.image.url }} alt="post image">
                             {% endif %}
                         </div>
-                        <a href="#" class="post-link">
                             <h4 class="card-title mt-3">{{ post.title }}</h4>
                         </a>
-                        <p class="subtitle text-muted p">{{ post.country.name }}, {{ post.city}}</p>
+                        <p class="subtitle text-muted p"><i class='bx bx-map'></i> {{ post.country.name }}, {{ post.city}}</p>
                         <div class="author subtitle p"><i class='bx bxs-user-circle'></i><span> {{ post.author }} </span></div>
                         <hr>
                         <p class="card-text content fade-line">{{ post.text }}</p>
