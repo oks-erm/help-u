@@ -2,6 +2,7 @@
 {% load static %}
 
 {% block content %}
+
 <section id="search">
     <div class="container position-relative" data-aos="fade-up" data-aos-delay="100">
         <div class="row justify-content-center">
@@ -36,7 +37,7 @@
                         <p class="subtitle text-truncate p"><i class='bx bx-map'></i>
                             <a href="https://www.google.com/maps/place/{{post.city}}+{{post.country.name}}" target="_blank" class="geo"> {{ post.city}}, {{ post.country.name }} 
                                 <iframe class="preview" loading="lazy" allowfullscreen
-                                referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps/embed/v1/place?key={{ key }}&q={{ post.city}}+{{ post.country.name }}&zoom=10">
+                                referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps/embed/v1/place?key={{ key }}&q={{ post.city}}+{{ post.country.name }}&zoom=8">
                             </iframe></a></p>
                         {% if post.area != None %}
                         <p class="subtitle text-muted p"><i class='bx bx-building-house'></i>{{ post.area }}</p>

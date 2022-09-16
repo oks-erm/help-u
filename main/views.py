@@ -1,5 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 from django.views import generic, View
+from django.contrib.auth.decorators import login_required
 from .models import ContactFormMessage, Post
 import os
 if os.path.exists('env.py'):

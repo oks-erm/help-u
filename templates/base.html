@@ -32,8 +32,11 @@
     <div class="container d-flex align-items-center justify-content-between">
 
       <div class="logo-wrapper">
-        <h1 class="logo"><a href="{% url 'home' %}">Help U</a></h1><span id="small-img-logo" class="d-none d-md-block"></span>
+        <h1 class="logo"><a href="{% url 'home' %}">Help U</a></h1>
+        <span id="small-img-logo" class="d-none d-md-block"></span>
+        <span id="user-name" class="nav-link"><i class='bx bxs-user-circle'></i> {{ user.first_name }}</span>
       </div>
+
       <!-- Navbar -->
       <nav id="navbar" class="navbar">
         <ul>
@@ -45,6 +48,12 @@
           <li><a class="nav-link scrollto" href="#about">About</a></li>
           <li><a class="nav-link scrollto" href="#faq">FAQ</a></li>
           <li><a class="nav-link scrollto" href="#contact">Contact</a></li>
+          {% if user.is_authenticated %}
+          <li><a class="nav-link auth" href="{% url 'account_logout' %}">Logout</a></li>
+          {% else %}
+          <li><a class="nav-link auth" href="{% url 'account_signup' %}">Register</a></li>
+          <li><a class="nav-link auth" href="{% url 'account_login' %}">Login</a></li>
+          {% endif %}
         </ul>
         <i class="bi bi-list mobile-nav-toggle"></i>
       </nav>
