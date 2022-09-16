@@ -3,7 +3,7 @@ asgiref==3.5.2
 async-timeout==4.0.2
 autobahn==22.7.1
 Automat==20.2.0
-backports.zoneinfo==0.2.1
+backports.zoneinfo;python_version<"3.9"
 channels==1.0.2
 cloudinary==1.29.0
 constantly==15.1.0
