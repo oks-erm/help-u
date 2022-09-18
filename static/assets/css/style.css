@@ -144,6 +144,7 @@ body {
   #header #user-name {
     color:rgba(28, 89, 131, 0.8);
     font-size: 15px;
+    padding-right: 10px;
   }
   
   #small-img-logo {
@@ -246,10 +247,6 @@ body {
     .navbar ul {
       display: none;
     }
-
-    /* #header .container {
-      padding: 5px 20px;
-  } */
   }
   
   .navbar-mobile {
@@ -439,7 +436,7 @@ body {
     margin-bottom: 0;
   } */
   
-  .about .btn-learn-more {
+  .btn-learn-more {
     font-family: "Raleway", sans-serif;
     font-weight: 600;
     font-size: 14px;
@@ -450,6 +447,7 @@ body {
     transition: 0.3s;
     line-height: 1;
     color: #2487ce;
+    background: var(--white);
     -webkit-animation-delay: 0.8s;
     animation-delay: 0.8s;
     margin-top: 30px;
@@ -457,7 +455,7 @@ body {
     width: auto;
   }
   
-  .about .content .btn-learn-more:hover {
+ .btn-learn-more:hover {
     background: #2487ce;
     color: var(--white);
     text-decoration: none;
@@ -577,6 +575,7 @@ body {
 
   .search-logo {
     height: 150px;
+    width: fit-content;
   }
 
   .form-control:focus ~ #search-icon {
@@ -652,11 +651,11 @@ body {
       font-family: "Poppins", sans-serif;
     }
 
-    #full-post .container {
+    /* #full-post .container {
       display: flex;
       flex-direction: column;
       justify-content: center;
-    }
+    } */
 
     #full-post img {
       width: -webkit-fill-available;
@@ -668,6 +667,16 @@ body {
       margin-bottom: -6px;
       padding-left: 2px;
     }
+
+    .login-block {
+      margin-top: 8%;
+    }
+
+    .login-block input {
+      padding: 5px;
+      width: 230px;
+    }
+
 
   /*----------------------------------------------------Footer*/
   #footer {

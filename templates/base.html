@@ -34,11 +34,14 @@
       <div class="logo-wrapper">
         <h1 class="logo"><a href="{% url 'home' %}">Help U</a></h1>
         <span id="small-img-logo" class="d-none d-md-block"></span>
-        <span id="user-name" class="nav-link"><i class='bx bxs-user-circle'></i> {{ user.first_name }}</span>
+
       </div>
 
       <!-- Navbar -->
       <nav id="navbar" class="navbar">
+        {% if user.is_authenticated %}
+        <span id="user-name" class="nav-link"><i class='bx bxs-user-circle'></i> {{ user.first_name }}</span>
+        {% endif %}
         <ul>
           {% if url is 'home' %}
           <li><a class="nav-link scrollto active" href="#hero">Home</a></li>
