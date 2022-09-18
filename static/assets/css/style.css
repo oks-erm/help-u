@@ -20,6 +20,7 @@
 body {
     font-family: "Open Sans", sans-serif;
     color: #444444;
+
   }
   
   h1,
@@ -361,6 +362,7 @@ body {
     font-size: 25px;
     margin: -40px -6px 0;
     opacity: 1;
+    z-index: 100;
   }
   
   .arrow.arrow-scrolled {
@@ -394,9 +396,14 @@ body {
       font-size: 18px;
       line-height: 24px;
     }
+
   }
   
   /*----------------------------------------------------Sections Defaults*/
+  main {
+    z-index: 2;
+  }
+  
   section {
     padding: 80px 0;
     overflow: hidden;
@@ -668,6 +675,7 @@ body {
       padding-left: 2px;
     }
 
+  /*----------------------------------------------------Account*/
     .login-block {
       margin-top: 8%;
     }
@@ -676,7 +684,6 @@ body {
       padding: 5px;
       width: 230px;
     }
-
 
   /*----------------------------------------------------Footer*/
   #footer {
@@ -783,7 +790,7 @@ body {
   }
 
   .fade-in-image { 
-    animation: fadeIn 6s; 
+    animation: fadeIn 6s !important; 
   }
 
   @keyframes fadeIn {
