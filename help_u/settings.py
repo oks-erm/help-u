@@ -40,6 +40,7 @@ CSRF_TRUSTED_ORIGINS = ['https://*.8000-okserm-helpu-4vq7cec76g9.ws-eu64.gitpod.
 
 ACCOUNT_EMAIL_VERIFICATION = 'none'
 
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -57,6 +58,7 @@ INSTALLED_APPS = [
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
+    # 'allauth.socialaccount.providers.facebook',
     'main',
 ]
 
@@ -64,7 +66,7 @@ INSTALLED_APPS = [
 SITE_ID = 1
 
 LOGIN_REDIRECT_URL = '/'
-LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/'
 
 
 MESSAGE_TAGS = {
@@ -170,7 +172,21 @@ MEDIA_URL = '/media/'
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',
+)
+
+
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = os.environ.get('EMAIL_HOST')
+EMAIL_PORT = os.environ.get('EMAIL_PORT')
+EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
+EMAIL_USE_TLS = True
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
@@ -182,20 +198,24 @@ AUTH_USER_MODEL = 'main.CustomUser'
 
 
 ACCOUNT_FORMS = {
-'signup': 'main.forms.CustomSignUpForm',
+    'signup': 'main.forms.CustomSignUpForm',
 }
 ACCOUNT_USER_MODEL_USERNAME_FIELD = None
-ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_USERNAME_REQUIRED = False
 ACCOUNT_AUTHENTICATION_METHOD = 'email'
-ACCOUNT_EMAIL_CONFIRMATION_HMAC = True
-ACCOUNT_EMAIL_VERIFICATION = 'optional'
-ACCOUNT_EMAIL_SUBJECT_PREFIX = '[Site] bazinga!'
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
+ACCOUNT_LOGIN_ON_EMAIL_CONFIRMATION = True
+ACCOUNT_EMAIL_CONFIRMATION_ANONYMOUS_REDIRECT_URL = 'home'
+ACCOUNT_EMAIL_CONFIRMATION_AUTHENTICATED_REDIRECT_URL = 'posts'
+ACCOUNT_LOGIN_ON_PASSWORD_RESET = True
+ACCOUNT_LOGOUT_ON_PASSWORD_CHANGE = True
+ACCOUNT_SESSION_REMEMBER = True 
+
+
+# ACCOUNT_EMAIL_CONFIRMATION_HMAC = True
 ACCOUNT_EMAIL_CONFIRMATION_COOLDOWN = 180
 ACCOUNT_LOGIN_ATTEMPTS_LIMIT = 10
 ACCOUNT_LOGIN_ATTEMPTS_TIMEOUT = 3000
-ACCOUNT_LOGIN_ON_PASSWORD_RESET = False
-ACCOUNT_SESSION_REMEMBER = True
 ACCOUNT_SIGNUP_PASSWORD_ENTER_TWICE = True
 ACCOUNT_UNIQUE_EMAIL = True
-

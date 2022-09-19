@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% load static %}
+{% load i18n %}
+
+{% block head_title %}{% trans "Signup" %}{% endblock %}
+
+{% block content %}
+<div class="container login-block">
+  <div class="row">
+    <div class="col-md-12 d-flex justify-content-center mt-lg-3 mt-md-5 mt-5 mb-4">
+      <img class="search-logo" src="{% static 'assets/img/logo_small.png' %}">
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12 d-flex flex-column justify-content-center mt-lg-3 mt-md-5 mt-5 text-center">
+      <h3>{% trans "Sign Up" %}</h3>
+
+      <p>{% blocktrans %}Welcome to <strong>Help U</strong>! Do you already have an account? Then please <a class="link"
+          href="{{ login_url }}">sign in</a> instead.{% endblocktrans %}</p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12 d-flex justify-content-center mt-lg-3 mt-md-5 mt-5 mb-4">
+      <form class="signup d-flex flex-column justify-content-center text-end" id="signup_form" method="post" action="{% url 'account_signup' %}">
+        {% csrf_token %}
+        {{ form.as_p }}
+        {% if redirect_field_value %}
+        <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+        {% endif %}
+        <button class="btn-signup btn-learn-more mt-3 mb-5 me-5 ms-5" type="submit">{% trans "Sign Up" %} </button>
+      </form>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
