@@ -109,9 +109,15 @@
       onscroll(document, toggleBacktotop)
     }
 
+
     $(".geo").mouseover(function() {
-      $(this).children(".preview").show();
+      $(this).children(".preview").fadeIn('slow');
   }).mouseout(function() {
-      $(this).children(".preview").hide();
+      $(this).children(".preview").fadeOut('slow');
+  });
+
+
+    $(".alert").delay(3500).fadeOut('slow', function() {
+      $(this).hide().remove();
   });
   })()
