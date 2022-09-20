@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from .managers import CustomUserManager
+from django.urls import reverse
+from django.template.defaultfilters import slugify
 from cloudinary.models import CloudinaryField
 from django_countries.fields import CountryField
 
@@ -41,7 +43,7 @@ class Post(models.Model):
         CustomUser, on_delete=models.CASCADE, related_name="posts"
         )
     title = models.CharField(max_length=200, unique=True)
-    slug = models.SlugField(max_length=200, unique=True)
+    slug = models.SlugField(max_length=200, unique=True, null=False)
     image = CloudinaryField('image', default='placeholder')
     text = models.TextField(blank=True)
     country = CountryField(blank=True)
@@ -59,6 +61,14 @@ class Post(models.Model):
 
     def __str__(self):
         return f"{self.title}"
+
+    def get_absolute_url(self):
+        return reverse("full", kwargs={"slug": self.slug})
+
+    def save(self, *args, **kwargs): 
+        if not self.slug:
+            self.slug = slugify(self.title)
+        return super().save(*args, **kwargs)
 
 
 class ContactFormMessage(models.Model):

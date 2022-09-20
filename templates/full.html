@@ -4,7 +4,7 @@
 {% block content %}
 <section id="full-post">
     <div class="container d-flex flex-column justify-content-center mt-3">
-        <a href="{% url 'posts' %}" class="btn btn-outline-primary mb-3 mt-1"><<< Back to the list</a>
+        <a href="{{request.META.HTTP_REFERER}}" class="btn btn-outline-primary mb-3 mt-1"><<< Back to the list</a>
                 <div class="row">
                     <div class="col-lg-6">
                         {% if "placeholder" in post.image.url %}
