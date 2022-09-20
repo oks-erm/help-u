@@ -1,6 +1,6 @@
-(function() {
+(function () {
     "use strict";
-  
+
     // select helper
     const select = (el, all = false) => {
       el = el.trim()
@@ -10,7 +10,7 @@
         return document.querySelector(el)
       }
     }
-  
+
     // event listener setter
     const on = (type, el, listener, all = false) => {
       let selectElement = select(el, all)
@@ -22,12 +22,12 @@
         }
       }
     }
-  
+
     // listener for scroll
     const onscroll = (el, listener) => {
       el.addEventListener('scroll', listener)
     }
-  
+
     // header onscroll animation
     let selectHeader = select('#header')
     if (selectHeader) {
@@ -41,42 +41,42 @@
       window.addEventListener('load', headerScrolled)
       onscroll(document, headerScrolled)
     }
-  
+
     // logo onscroll animation
     let selectLogo = select('#small-img-logo')
     if (selectLogo) {
-        const logoScrolled = () => {
+      const logoScrolled = () => {
         if (window.scrollY > 400) {
-            selectLogo.classList.add('small-logo-scrolled')
+          selectLogo.classList.add('small-logo-scrolled')
         } else {
-            selectLogo.classList.remove('small-logo-scrolled')
+          selectLogo.classList.remove('small-logo-scrolled')
         }
-        }
-        window.addEventListener('load', logoScrolled)
-        onscroll(document, logoScrolled)
+      }
+      window.addEventListener('load', logoScrolled)
+      onscroll(document, logoScrolled)
     }
 
     // shevron arrow onscroll animation
     let selectArrow = select('.arrow')
     if (selectArrow) {
-        const arrowScrolled = () => {
+      const arrowScrolled = () => {
         if (window.scrollY > 80) {
-            selectArrow.classList.add('arrow-scrolled')
+          selectArrow.classList.add('arrow-scrolled')
         } else {
-            selectArrow.classList.remove('arrow-scrolled')
+          selectArrow.classList.remove('arrow-scrolled')
         }
-        }
-        window.addEventListener('load', arrowScrolled)
-        onscroll(document, arrowScrolled)
+      }
+      window.addEventListener('load', arrowScrolled)
+      onscroll(document, arrowScrolled)
     }
 
     // mobile navbar
-    on('click', '.mobile-nav-toggle', function(e) {
+    on('click', '.mobile-nav-toggle', function (e) {
       select('#navbar').classList.toggle('navbar-mobile')
       this.classList.toggle('bi-list')
       this.classList.toggle('bi-x')
     })
-  
+
     // Preloader
     let loader = select('#loader');
     if (loader) {
@@ -84,7 +84,7 @@
         loader.remove()
       });
     }
-  
+
     // Animation on scroll   
     window.addEventListener('load', () => {
       AOS.init({
@@ -111,13 +111,12 @@
 
 
     $(".geo").mouseover(function() {
-      $(this).children(".preview").fadeIn('slow');
-  }).mouseout(function() {
-      $(this).children(".preview").fadeOut('slow');
-  });
+      $(this).children(".preview").fadeIn(1000);
+    }).mouseout(function () {
+      $(this).children(".preview").fadeOut(1000);
+    });
 
 
-    $(".alert").delay(3500).fadeOut('slow', function() {
-      $(this).hide().remove();
-  });
-  })()
+    $(".alert").delay(3000).fadeOut(1000);
+
+    })()

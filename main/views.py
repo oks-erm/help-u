@@ -1,7 +1,9 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404,redirect
 from django.views import generic, View
 from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
 from .models import ContactFormMessage, Post
+from .forms import CreatePostForm
 import os
 if os.path.exists('env.py'):
     import env
@@ -28,20 +30,40 @@ def home_page(request):
     return render(request, 'index.html')
 
 
+def post_create(request):
+    form = CreatePostForm()
+    if request.method == "POST":
+        form = CreatePostForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect("/posts/1")
+
+    context = {
+        "form": form
+    }
+    return render(request, "new.html", context)
+
+
+@method_decorator(login_required, name='dispatch')
 class PostList(generic.ListView):
     model = Post
-    queryset = Post.objects.filter(status=1).order_by("-created_on")
+    # queryset = Post.objects.filter(status=1).order_by("-created_on")
     template_name = "posts_list.html"
-    paginate_by = 10
+    paginate_by = 12
+
+    def get_queryset(self):
+        qs = super(PostList, self).get_queryset()
+        if self.kwargs.get('type') is not None:
+            qs = qs.filter(type=self.kwargs['type'])
+        return qs
 
     def get_context_data(self, **kwargs):
-        # Call the base implementation first to get a context
         context = super().get_context_data(**kwargs)
-        # Add in a QuerySet of all the books
         context['key'] = API_KEY
         return context
 
 
+@method_decorator(login_required, name='dispatch')
 class PostFull(View):
 
     def get(self, request, slug, *args, **kwargs):

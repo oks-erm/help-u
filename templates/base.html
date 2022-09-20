@@ -60,7 +60,7 @@
         <i class="bi bi-list mobile-nav-toggle"></i>
       </nav>
     </div>
-    <div class="container-fluid gx-0">
+    <div class="container-fluid gx-0 msg-box" data-aos="fade" data-aos-easing="ease-in-back" data-aos-duration="800">
       <div class="row">
         <div class="col-md-6 offset-md-3 mt-2">
           {% for message in messages %}
@@ -155,11 +155,5 @@
   <script src="{% static 'assets/js/main.js' %}"></script>
 
 </body>
-<script>
-  setTimeout(function () {
-      let messages = document.getElementById('msg');
-      let alert = new bootstrap.Alert(messages);
-      alert.close();
-  }, 2500);
-</script>
+
 </html>

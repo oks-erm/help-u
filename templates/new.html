@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<section>
+    <div class="row">
+        <div class="container-fluid col-lg-8 mt-1">
+            <div class="d-flex align-items-center">
+                <h1 class="section-title text-start pb-0">Create a New Post</h1>
+                <img class="search-logo" style="scale: 0.5;" src="{% static 'assets/img/logo_small.png' %}">
+            </div>
+            <form role="form" method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" class="btn btn-primary mb-2 mt-2 px-5">Publish</button>
+            </form>
+        </div>
+    </div>
+</section>
+
+{% endblock content %}

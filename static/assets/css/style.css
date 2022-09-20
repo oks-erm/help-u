@@ -186,12 +186,12 @@ body {
   }
 
   .navbar ul li .auth {
-    color: rgb(73 9 138);
+    color: rgb(10 64 151);
     font-weight: 600;
   }
 
   .navbar ul li .auth:hover {
-    color: rgb(109 12 206);
+    color: rgb(10, 105, 207);
   }
   
   .navbar a,
@@ -299,12 +299,15 @@ body {
 
   /*----------------------------------------------------Hero Section*/
 
-#msg {
-  z-index: 999;
-  opacity: 0.65;
-  margin-bottom: -50px;
-}
+  #msg {
+    z-index: 999;
+    opacity: 0.65;
+    margin-bottom: -90px;
+  }
 
+  .msg-box {
+    height: 0px;
+  }
 
   #hero {
     width: 100%;
@@ -585,6 +588,16 @@ body {
   #search {
     background: url(../img/background.png);
     height: 45vh;
+  }
+
+  #search::before{
+    content: "";
+    background: rgba(255, 255, 255, 0.7);
+    position: absolute;
+    bottom: 0;
+    top: 0;
+    left: 0;
+    right: 0;
   }
 
   .search-logo {
