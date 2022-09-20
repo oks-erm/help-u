@@ -48,7 +48,6 @@ def post_create(request):
 @method_decorator(login_required, name='dispatch')
 class PostList(generic.ListView):
     model = Post
-    # queryset = Post.objects.filter(status=1).order_by("-created_on")
     template_name = "posts_list.html"
     paginate_by = 12
 

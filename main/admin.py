@@ -42,17 +42,15 @@ class UserProfileAdmin(admin.ModelAdmin):
 class PostAdmin(admin.ModelAdmin):
     fields = ('author',
               'title',
-              'slug',
               'image',
               'text',
               ('country', 'city'),
               'area',
               ('status', 'relevance'),
               ('type', 'category'))
-    list_display = ('title', 'author', 'country', 'created_on', 'status')
-    list_filter = ('status', 'created_on')
+    list_display = ('title', 'author', 'country', 'created_on', 'type', 'status')
+    list_filter = ('type', 'status', 'created_on')
     search_fields = ('name', 'email', 'author', 'title')
-    prepopulated_fields = {'slug': ('title',)}
  
     actions = ['approve_posts']
 
