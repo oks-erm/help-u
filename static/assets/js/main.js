@@ -111,9 +111,9 @@
 
 
     $(".geo").mouseover(function() {
-      $(this).children(".preview").fadeIn(1000);
+      $(this).children(".preview").show();
     }).mouseout(function () {
-      $(this).children(".preview").fadeOut(1000);
+      $(this).children(".preview").hide();
     });
 
 

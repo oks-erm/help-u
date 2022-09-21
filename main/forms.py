@@ -1,6 +1,7 @@
 from django.forms import ModelForm, CharField, TextInput, Textarea, FileInput, Select
 from allauth.account.forms import SignupForm
 from .models import CustomUser, Post
+from cloudinary.forms import CloudinaryFileField
 
 
 class CustomSignUpForm(SignupForm):
@@ -18,6 +19,7 @@ class CustomSignUpForm(SignupForm):
 
 
 class CreatePostForm(ModelForm):
+
     class Meta:
         model = Post
         fields = ['title', 'text', 'image', 'country', 'city',
@@ -29,21 +31,15 @@ class CreatePostForm(ModelForm):
                 }),
             'text': Textarea(attrs={
                 'class': 'form-control', 
-                'style': 'height: 250px;',
+                'style': 'height: 150px;',
                 }),
-            'image': FileInput(attrs={
-                'class': 'form-control',
-                'id': "formFileMultiple",
-
-            }),
             'country': Select(attrs={
                 'class': 'form-select',
-                'size': '6',
+                'size': '5',
                 'style': 'max-width: 400px;',
                 }),
             'city': TextInput(attrs={
                 'class': 'form-control',
-
                 'placeholder': 'City'
                 }),
             'area': TextInput(attrs={
@@ -59,3 +55,9 @@ class CreatePostForm(ModelForm):
                 'style': 'max-width: 200px;',
                 }),
         }
+    image = CloudinaryFileField(
+        options = { 
+            'tags': "directly_uploaded",
+            'crop': 'limit', 'width': 1000, 'height': 1000,
+            'eager': [{ 'crop': 'fill', 'width': 150, 'height': 100 }]
+        })

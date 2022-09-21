@@ -2,6 +2,7 @@ from django.shortcuts import render, get_object_or_404,redirect
 from django.views import generic, View
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
+from cloudinary.forms import cl_init_js_callbacks      
 from .models import ContactFormMessage, Post
 from .forms import CreatePostForm
 import os
@@ -31,17 +32,15 @@ def home_page(request):
 
 
 def post_create(request):
-    form = CreatePostForm()
+    context = dict(form=CreatePostForm())
     if request.method == "POST":
-        form = CreatePostForm(request.POST)
+        form = CreatePostForm(request.POST, request.FILES)
         form.instance.author = request.user
+        context['posted'] = form.instance
         if form.is_valid():
             form.save()
             return redirect("/posts/1")
 
-    context = {
-        "form": form
-    }
     return render(request, "new.html", context)
 
 
@@ -53,9 +52,9 @@ class PostList(generic.ListView):
 
     def get_queryset(self):
         qs = super(PostList, self).get_queryset()
-        if self.kwargs.get('type') is not None:
-            qs = qs.filter(type=self.kwargs['type'])
-        return qs
+        if self.kwargs.get('type') in ['0', '1']:
+            qs = qs.filter(type=self.kwargs['type'], status=1)
+        return qs.filter(status=1)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -80,3 +79,5 @@ class PostFull(View):
                 "maps": maps,
             },
         )
+
+

@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
+{% load cloudinary %}
 
 {% block content %}
 <section>
@@ -9,13 +10,14 @@
                 <h1 class="section-title text-start pb-0">Create a New Post</h1>
                 <img class="search-logo" style="scale: 0.5;" src="{% static 'assets/img/logo_small.png' %}">
             </div>
-            <form role="form" method="post">
+            <form action='{{ main.views.post_create }}' method="post"
+            enctype="multipart/form-data">
                 {% csrf_token %}
                 {{ form.as_p }}
-                <button type="submit" class="btn btn-primary mb-2 mt-2 px-5">Publish</button>
+                
+                <button type="submit" class="btn btn-primary mb-2 mt-2 px-5" value="Upload">Publish</button>
             </form>
         </div>
     </div>
 </section>
-
 {% endblock content %}

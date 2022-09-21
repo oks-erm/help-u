@@ -2,6 +2,8 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 from .managers import CustomUserManager
 from django.urls import reverse
+from sorl.thumbnail import get_thumbnail
+from django.utils.html import format_html
 from django.template.defaultfilters import slugify
 from cloudinary.models import CloudinaryField
 from django_countries.fields import CountryField
@@ -45,9 +47,10 @@ class Post(models.Model):
     title = models.CharField(max_length=200, unique=True)
     slug = models.SlugField(max_length=200, unique=True, null=False)
     image = CloudinaryField('image', default='placeholder')
+    # thumbnail = models.ImageField(upload_to='post/thumbnail/%Y/%m/%d/', null=True, blank=True)
     text = models.TextField(blank=True)
-    country = CountryField(blank=True)
-    city = models.CharField(max_length=30, null=True, blank=True)
+    country = CountryField(blank=False)
+    city = models.CharField(max_length=30, blank=False)
     area = models.CharField(max_length=30, null=True, blank=True)
     created_on = models.DateTimeField(auto_now_add=True)
     updated_on = models.DateTimeField(auto_now=True)
@@ -69,7 +72,7 @@ class Post(models.Model):
         if not self.slug:
             self.slug = slugify(self.title)
         return super().save(*args, **kwargs)
-
+    
 
 class ContactFormMessage(models.Model):
     name = models.CharField(max_length=50)
