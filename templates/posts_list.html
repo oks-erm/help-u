@@ -45,7 +45,7 @@
                                 <img class="card-img-top" style="opacity: 0.4; scale: 0.6;"
                                     src="{% static 'assets/img/logo_small.png' %}">
                                 {% else %}
-                                <img class="card-img-top" src={{ post.image.url }}>
+                                    {% cloudinary post.image height=350 width=350 crop="fill" class="card-img-top" %}
                                 {% endif %}
                             </div>
                             <h4 class="card-title mt-3 text-truncate" title="{{ post.title }}">{{ post.title }}</h4>
@@ -55,7 +55,7 @@
                                 target="_blank" class="geo" title="{{ post.city}}, {{ post.country.name }}"> {{ post.city}}, {{ post.country.name }}
                                 <iframe class="preview" loading="lazy" allowfullscreen
                                     referrerpolicy="no-referrer-when-downgrade"
-                                    src="https://www.google.com/maps/embed/v1/place?key={{ key }}&q={{ post.city}}+{{ post.country.name }}&zoom=8">
+                                    src="https://www.google.com/maps/embed/v1/place?key={{ key }}&q={{ post.city}}+{{ post.country.name }}&zoom=11">
                                 </iframe></a></p>
                         {% if post.area != None %}
                         <p class="subtitle text-muted p"><i class='bx bx-building-house'></i>{{ post.area }}</p>

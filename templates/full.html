@@ -6,10 +6,9 @@
     <div class="container d-flex flex-column justify-content-center mt-3">
         <a href="{{request.META.HTTP_REFERER}}" class="btn btn-outline-primary mb-3 mt-1"><<< Back to the list</a>
                 <div class="row">
-                    <div class="col-lg-6">
+                    <div class="col-lg-6 mt-2">
                         {% if "placeholder" in post.image.url %}
-                        <img class="card-img-top" style="opacity: 0.4; scale: 0.6;"
-                            src="{% static 'assets/img/logo.png' %}">
+                        <img style="opacity: 0.4; scale: 0.6;" src="{% static 'assets/img/logo.png' %}">
                         {% else %}
                         <img src={{ post.image.url }} alt="">
                         {% endif %}

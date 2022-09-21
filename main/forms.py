@@ -1,14 +1,18 @@
-from django.forms import ModelForm, CharField, TextInput, Textarea, FileInput, Select
+from django.forms import (ModelForm,
+                          CharField,
+                          TextInput,
+                          Textarea,
+                          Select)
 from allauth.account.forms import SignupForm
-from .models import CustomUser, Post
 from cloudinary.forms import CloudinaryFileField
+from .models import Post
 
 
 class CustomSignUpForm(SignupForm):
     first_name = CharField(max_length=30, label='First Name', required=True,
-                           widget=TextInput(attrs={'placeholder': 'First Name'}))
+                           widget=TextInput(attrs={'placeholder': 'First Name', 'class': 'form-control'}))
     last_name = CharField(max_length=30, label='Last Name', required=True,
-                          widget=TextInput(attrs={'placeholder': 'Last Name'}))
+                          widget=TextInput(attrs={'placeholder': 'Last Name', 'class': 'form-control'}))
 
     def save(self, request):
         user = super(CustomSignUpForm, self).save(request)
@@ -56,8 +60,8 @@ class CreatePostForm(ModelForm):
                 }),
         }
     image = CloudinaryFileField(
-        options = { 
+        options={ 
             'tags': "directly_uploaded",
-            'crop': 'limit', 'width': 1000, 'height': 1000,
-            'eager': [{ 'crop': 'fill', 'width': 150, 'height': 100 }]
+            'crop': 'limit', 'width': 800, 'height': 800,
+            'eager': [{'crop': 'fill', 'width': 150, 'height': 150}]
         })
