@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 from .managers import CustomUserManager
 from django.urls import reverse
-from sorl.thumbnail import get_thumbnail
+from django.utils.html import mark_safe
 from django.utils.html import format_html
 from django.template.defaultfilters import slugify
 from cloudinary.models import CloudinaryField
@@ -47,7 +47,6 @@ class Post(models.Model):
     title = models.CharField(max_length=200, unique=True)
     slug = models.SlugField(max_length=200, unique=True, null=False)
     image = CloudinaryField('image', default='placeholder')
-    # thumbnail = models.ImageField(upload_to='post/thumbnail/%Y/%m/%d/', null=True, blank=True)
     text = models.TextField(blank=True)
     country = CountryField(blank=False)
     city = models.CharField(max_length=30, blank=False)
@@ -73,6 +72,12 @@ class Post(models.Model):
             self.slug = slugify(self.title)
         return super().save(*args, **kwargs)
     
+    @property
+    def thumbnail_preview(self):
+        if self.image:
+            return mark_safe('<img src="{}" width="auto" height="400" />'.format(self.image.url))
+        return ""
+
 
 class ContactFormMessage(models.Model):
     name = models.CharField(max_length=50)

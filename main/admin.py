@@ -43,12 +43,14 @@ class PostAdmin(admin.ModelAdmin):
     fields = ('author',
               'title',
               'image',
+              'thumbnail_preview',
               'text',
               ('country', 'city'),
               'area',
               ('status', 'relevance'),
               ('type', 'category'))
     list_display = ('title', 'author', 'country', 'created_on', 'type', 'status')
+    readonly_fields = ('thumbnail_preview',)
     list_filter = ('type', 'status', 'created_on')
     search_fields = ('name', 'email', 'author', 'title')
  
@@ -56,6 +58,12 @@ class PostAdmin(admin.ModelAdmin):
 
     def approve_posts(self, request, queryset):
         queryset.update(status=True)
+
+    def thumbnail_preview(self, obj):
+        return obj.thumbnail_preview
+
+    thumbnail_preview.short_description = 'Thumbnail Preview'
+    thumbnail_preview.allow_tags = True
 
 
 @admin.register(ContactFormMessage)
