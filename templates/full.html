@@ -8,9 +8,9 @@
                 <div class="row">
                     <div class="col-lg-6 mt-2">
                         {% if "placeholder" in post.image.url %}
-                        <img style="opacity: 0.4; scale: 0.6;" src="{% static 'assets/img/logo.png' %}">
+                        <img style="opacity: 0.4; scale: 0.6;" src="{% static 'assets/img/grateful.png' %}">
                         {% else %}
-                        <img src={{ post.image.url }} alt="">
+                        <img src={{ post.image.url }} alt="{{ post.title }}">
                         {% endif %}
                     </div>
                     <div class="col-lg-6">
@@ -21,7 +21,13 @@
                             referrerpolicy="no-referrer-when-downgrade" src={{ maps }}>
                         </iframe>
                         <p class="subtitle text-muted p"><i class='bx bx-map'></i> {{ post.country.name }},
-                            {{ post.city}}, {{ post.area }}</p>
+                            {{ post.city}}, 
+                            {% if post.area != None %}
+                            {{ post.area }}
+                            {% else %}
+                            ... 
+                            {% endif %}
+                        </p>
                         <div class="author subtitle p"><i class='bx bxs-user-circle'></i><span> {{ post.author }}
                             </span></div>
 
