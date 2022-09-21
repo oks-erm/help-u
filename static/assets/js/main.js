@@ -108,14 +108,30 @@
       window.addEventListener('load', toggleBacktotop)
       onscroll(document, toggleBacktotop)
     }
-
+    
+    // navbar links active state on scroll
+    let navbarlinks = select('#navbar .scrollto', true)
+    const navbarlinksActive = () => {
+      let position = window.scrollY + 200
+      navbarlinks.forEach(navbarlink => {
+        if (!navbarlink.hash) return
+        let section = select(navbarlink.hash)
+        if (!section) return
+        if (position >= section.offsetTop && position <= (section.offsetTop + section.offsetHeight)) {
+          navbarlink.classList.add('active')
+        } else {
+          navbarlink.classList.remove('active')
+        }
+      })
+    }
+    window.addEventListener('load', navbarlinksActive)
+    onscroll(document, navbarlinksActive)
 
     $(".geo").mouseover(function() {
       $(this).children(".preview").show();
     }).mouseout(function () {
       $(this).children(".preview").hide();
     });
-
 
     $(".alert").delay(3000).fadeOut(1000);
 

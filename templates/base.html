@@ -46,10 +46,10 @@
         <span id="user-name" class="nav-link"><i class='bx bxs-user-circle'></i> {{ user.first_name }}</span>
         {% endif %}
         <ul>
-          {% if url is 'home' %}
+          {% if url == urls.home %}
           <li><a class="nav-link scrollto active" href="#hero">Home</a></li>
           {% else %}
-          <li><a class="nav-link scrollto active" href="{% url 'home' %}">Home</a></li>
+          <li><a class="nav-link" href="{% url 'home' %}">Home</a></li>
           {% endif %}
           <li><a class="nav-link scrollto" href="#about">About</a></li>
           <li><a class="nav-link scrollto" href="#faq">FAQ</a></li>
