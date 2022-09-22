@@ -52,7 +52,7 @@ def post_update(request, slug):
     post = get_object_or_404(queryset, slug=slug)
     form = CreatePostForm(instance=post)
     if request.method == "POST":
-        form = CreatePostForm(request.POST, instance=post)
+        form = CreatePostForm(request.POST, request.FILES, instance=post)
         if form.is_valid():
             form.save()
             return redirect(reverse('full', kwargs={'slug': slug}))
