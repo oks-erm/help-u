@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404,redirect
+from django.shortcuts import render, get_object_or_404,redirect, reverse
 from django.views import generic, View
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
@@ -32,16 +32,36 @@ def home_page(request):
 
 
 def post_create(request):
-    context = dict(form=CreatePostForm())
+    form = CreatePostForm()
     if request.method == "POST":
         form = CreatePostForm(request.POST, request.FILES)
-        form.instance.author = request.user
-        context['posted'] = form.instance
+
+        if form.is_valid():
+            form.instance.author = request.user
+            form.save()
+            return redirect('/posts/1')
+
+    context = {
+        "form": form
+    }
+    return render(request, "new.html", context)
+
+
+def post_update(request, slug):
+    queryset = Post.objects.filter(status=1)
+    post = get_object_or_404(queryset, slug=slug)
+    form = CreatePostForm(instance=post)
+    if request.method == "POST":
+        form = CreatePostForm(request.POST, instance=post)
         if form.is_valid():
             form.save()
-            return redirect("/posts/1")
+            return redirect(reverse('full', kwargs={'slug': slug}))
 
-    return render(request, "new.html", context)
+    context = {
+        "form": form,
+        "post": post
+    }
+    return render(request, "update.html", context)
 
 
 @method_decorator(login_required, name='dispatch')

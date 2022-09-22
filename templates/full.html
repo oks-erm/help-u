@@ -4,44 +4,49 @@
 {% block content %}
 <section id="full-post">
     <div class="container d-flex flex-column justify-content-center mt-3">
-        <a href="{{request.META.HTTP_REFERER}}" class="btn btn-outline-primary mb-3 mt-1"><<< Back to the list</a>
-                <div class="row">
-                    <div class="col-lg-6 mt-2">
-                        {% if "placeholder" in post.image.url %}
-                        <img style="opacity: 0.4; scale: 0.6;" src="{% static 'assets/img/grateful.png' %}">
-                        {% else %}
-                        <img src={{ post.image.url }} alt="{{ post.title }}">
-                        {% endif %}
-                    </div>
-                    <div class="col-lg-6">
-                        <h2>{{ post.title }}</h2>
-                        <p class="card-text created text-muted h6">{{ post.created_on}}</p>
-                        <hr>
-                        <iframe width="500" height="300" style="border:0" loading="lazy" allowfullscreen
-                            referrerpolicy="no-referrer-when-downgrade" src={{ maps }}>
-                        </iframe>
-                        <p class="subtitle text-muted p"><i class='bx bx-map'></i> {{ post.country.name }},
-                            {{ post.city}}, 
-                            {% if post.area != None %}
-                            {{ post.area }}
-                            {% else %}
-                            ... 
-                            {% endif %}
-                        </p>
-                        <div class="author subtitle p"><i class='bx bxs-user-circle'></i><span> {{ post.author }}
-                            </span></div>
-
-                        <hr>
-                        <p>{{ post.text }}</p>
-                        <button type="button" class="btn btn-primary">Contact {{post.author}}</button>
-                        {% if post.type == True %}
-                        <button type="button" class="btn btn-success">Say Thank You</button>
-                        {% endif %}
-                        {% if post.type == False %}
-                        <button type="button" class="btn btn-success">Offer Help</button>
-                        {% endif %}
-                    </div>
+        <a href="{% url 'posts' post.type %}" class="btn btn-outline-primary mb-3 mt-1"><<< Back to the list</a>
+        <div class="row">
+            <div class="col-lg-6 mt-2">
+                {% if "placeholder" in post.image.url %}
+                <img style="opacity: 0.4; scale: 0.6;" src="{% static 'assets/img/grateful.png' %}">
+                {% else %}
+                <img src={{ post.image.url }} alt="{{ post.title }}">
+                {% endif %}
+            </div>
+            <div class="col-lg-6">
+                <h2>{{ post.title }}</h2>
+                <p class="card-text created text-muted h6">{{ post.created_on}}</p>
+                <hr>
+                <iframe width="500" height="300" style="border:0" loading="lazy" allowfullscreen
+                    referrerpolicy="no-referrer-when-downgrade" src={{ maps }}>
+                </iframe>
+                <p class="subtitle text-muted p"><i class='bx bx-map'></i> {{ post.country.name }},
+                    {{ post.city}}, 
+                    {% if post.area != None %}
+                    {{ post.area }}
+                    {% else %}
+                    ... 
+                    {% endif %}
+                </p>
+                <div class="author subtitle p"><i class='bx bxs-user-circle'></i><span> {{ post.author }}
+                    </span>
                 </div>
+                <hr>
+                <p>{{ post.text }}</p>
+                {% if post.author == request.user %}
+                <a href="{% url 'update' post.slug %}" class="btn btn-primary px-4">Update</a>
+                <a href="{% url 'update' post.slug %}" class="btn btn-secondary px-4">Delete</a>  
+                {% else %}
+                <button type="button" class="btn btn-primary">Contact {{post.author}}</button>
+                {% if post.type == True %}
+                <button type="button" class="btn btn-success">Say Thank You</button>
+                {% endif %}
+                {% if post.type == False %}
+                <button type="button" class="btn btn-success">Offer Help</button>
+                {% endif %}
+                {% endif %}
+            </div>
+        </div>
     </div>
 </section>
 

@@ -742,6 +742,11 @@ body {
     height: 4.5em;
   }
 
+  .new-post {
+    margin-top: -80px !important;
+    position: relative;
+  }
+
   /*----------------------------------------------------Full Post Page*/
     #full-post h2{
       margin: 0;

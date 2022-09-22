@@ -46,14 +46,18 @@
         <span id="user-name" class="nav-link"><i class='bx bxs-user-circle'></i> {{ user.first_name }}</span>
         {% endif %}
         <ul>
-          {% if url == urls.home %}
+          {% if request.get_full_path == '/' %}
           <li><a class="nav-link scrollto active" href="#hero">Home</a></li>
-          {% else %}
-          <li><a class="nav-link" href="{% url 'home' %}">Home</a></li>
-          {% endif %}
           <li><a class="nav-link scrollto" href="#about">About</a></li>
           <li><a class="nav-link scrollto" href="#faq">FAQ</a></li>
           <li><a class="nav-link scrollto" href="#contact">Contact</a></li>
+          {% else %}
+          <li><a class="nav-link" href="{% url 'home' %}">Home</a></li>
+          <li><a class="nav-link" href="{% url 'home' %}#about">About</a></li>
+          <li><a class="nav-link" href="{% url 'home' %}#faq">FAQ</a></li>
+          <li><a class="nav-link" href="{% url 'home' %}#contact">Contact</a></li>
+          {% endif %}
+          
           {% if user.is_authenticated %}
           <li><a class="nav-link auth" href="{% url 'account_logout' %}">Logout</a></li>
           {% else %}

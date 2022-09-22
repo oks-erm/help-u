@@ -32,8 +32,10 @@
             </div>
         </div>
 </section>
+
 <section id="listings">
     <div class="col-10  left">
+        <a href="{% url 'new' %}" class="btn btn-success mt-1 new-post">New post</a>
         <div class="row gx-2">
             {% for post in post_list %}
             <div class="col-xxl-2 col-xl-3 col-lg-4 col-sm-6">

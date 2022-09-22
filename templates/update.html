@@ -3,20 +3,23 @@
 {% load cloudinary %}
 {% load crispy_forms_tags %}
 
+
 {% block content %}
+
 <section>
     <div class="row">
         <div class="container-fluid col-lg-8 mt-1">
             <div class="d-flex align-items-center">
-                <h1 class="section-title text-start pb-0">Create a New Post</h1>
+                <h1 class="section-title text-start pb-0">Edit Post "{{post.title}}"</h1>
                 <img class="search-logo" style="scale: 0.5;" src="{% static 'assets/img/logo_small.png' %}">
             </div>
-            <form action='{{ main.views.post_create }}' method="post"
+            <form action='{{ main.views.post_update }}' method="post"
             enctype="multipart/form-data">
                 {% csrf_token %}
                 {% crispy form %}
+                <!-- <button type="submit" class="btn btn-primary mb-2 mt-2 px-5" value="Upload">Update</button> -->
             </form>
         </div>
     </div>
 </section>
-{% endblock content %}
+            {% endblock content %}
