@@ -18,7 +18,7 @@
           <li><a class="nav-link scrollto" href="#faq">FAQ</a></li>
           <li><a class="nav-link scrollto" href="#contact">Contact</a></li>
           {% else %}
-          <li><a class="nav-link" href="{% url 'home' %}">Home</a></li>
+          <li><a class="nav-link" href="{% url 'posts_list' 'all' %}">Posts</a></li>
           <li><a class="nav-link" href="{% url 'home' %}#about">About</a></li>
           <li><a class="nav-link" href="{% url 'home' %}#faq">FAQ</a></li>
           <li><a class="nav-link" href="{% url 'home' %}#contact">Contact</a></li>

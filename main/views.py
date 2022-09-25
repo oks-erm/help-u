@@ -41,7 +41,7 @@ def post_create(request):
         if form.is_valid():
             form.instance.author = request.user
             form.save()
-            return redirect('/posts/1')
+            return redirect('/posts_list/all')
 
     context = {
         "form": form
