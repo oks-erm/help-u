@@ -127,7 +127,7 @@
     window.addEventListener('load', navbarlinksActive)
     onscroll(document, navbarlinksActive)
 
-    $(".geo").mouseover(function() {
+    $(".geo").mouseover(function () {
       $(this).children(".preview").show();
     }).mouseout(function () {
       $(this).children(".preview").hide();
@@ -135,4 +135,6 @@
 
     $(".alert").delay(3000).fadeOut(1000);
 
-    })()
+    })();
+
+  

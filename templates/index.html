@@ -14,8 +14,8 @@
       </div>
     </div>
     <div class="text-center">
-      <a href="{% url 'posts' 1 %}" id="can_help" class="btn-hero scrollto">I can help</a>
-      <a href="{% url 'posts' 0 %}" id="need_help" class="btn-hero scrollto">I need help</a>
+      <a href="{% url 'posts_list' 'give' %}" id="can_help" class="btn-hero scrollto">I can help</a>
+      <a href="{% url 'posts_list' 'receive' %}" id="need_help" class="btn-hero scrollto">I need help</a>
     </div>
   </div>
 </section><!-- End Hero -->

@@ -3,7 +3,6 @@ from django.contrib.auth.models import AbstractUser
 from .managers import CustomUserManager
 from django.urls import reverse
 from django.utils.html import mark_safe
-from django.utils.html import format_html
 from django.template.defaultfilters import slugify
 from cloudinary.models import CloudinaryField
 from django_countries.fields import CountryField
@@ -11,8 +10,8 @@ from django_countries.fields import CountryField
 
 STATUS = ((0, "Pending"), (1, "Approved"))
 ACTIVE = ((0, "Closed"), (1, "Open"))
-TYPE = ((0, "Receive"), (1, "Give"))
-CATEGORIES = ((0, "Items"), (1, "Services"), (2, "Support"))
+TYPE = (("receive", "Receive"), ("give", "Give"))
+CATEGORIES = (("items", "Items"), ("services", "Services"), ("support", "Support"))
 
 
 class CustomUser(AbstractUser):
@@ -55,8 +54,8 @@ class Post(models.Model):
     updated_on = models.DateTimeField(auto_now=True)
     status = models.IntegerField(choices=STATUS, default=0)
     relevance = models.IntegerField(choices=ACTIVE, default=1)
-    type = models.IntegerField(choices=TYPE)
-    category = models.IntegerField(choices=CATEGORIES)
+    type = models.CharField(choices=TYPE, max_length=10, blank=False)
+    category = models.CharField(choices=CATEGORIES, max_length=10, blank=False)
 
     class Meta:
         ordering = ["-created_on"]
