@@ -776,13 +776,21 @@ body {
 
   /*----------------------------------------------------Account*/
     .login-block {
-      margin-top: 8%;
+      margin-top: 7%;
     }
 
-    .login-block input {
-      padding: 5px;
-      border: 1.5px solid #e6ecf1;
-      border-radius: 5px;
+    .login-block .card-body {
+      background-color: var(--bluesmoke);
+      padding: 1.3em;
+    }
+
+    .login-block .form-label {
+      margin-bottom: 5px;
+    }
+
+    .login-block .card-title {
+      margin-top: 0;
+      font-size: 19px;
     }
 
   /*----------------------------------------------------Footer*/

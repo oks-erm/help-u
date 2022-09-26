@@ -23,6 +23,11 @@ class CustomSignUpForm(SignupForm):
         user.save()
         return user
 
+    def __init__(self, *args, **kwargs):
+        super(CustomSignUpForm, self).__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.fields['password2'].label = ""
+
 
 class CreatePostForm(ModelForm):
 
