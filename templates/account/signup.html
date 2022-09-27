@@ -1,6 +1,8 @@
 {% extends "base.html" %}
 {% load static %}
 {% load i18n %}
+{% load account socialaccount %}
+{% load socialaccount %}
 {% load crispy_forms_tags %}
 
 {% block head_title %}{% trans "Signup" %}{% endblock %}
@@ -22,6 +24,9 @@
           <hr>
           <p class="card-text fw-light">{% blocktrans %}Welcome to <strong>Help U</strong>!<br> Do you already have an account? Then
             please <a class=" link" href="{{ login_url }}">sign in</a> instead.{% endblocktrans %}</p>
+            <div class="separator">OR</div>
+            <a href="{% provider_login_url 'facebook' %}" class="fs-4 px-1"><i class='bx bxl-facebook-square'></i></a>
+            <a href="{% provider_login_url 'google' %}" class="fs-4 text-danger px-1"><i class='bx bxl-google' ></i></a>
 
           <form class="signup d-flex flex-column justify-content-center text-start px-2" id="signup_form" method="post"
             action="{% url 'account_signup' %}">

@@ -3,14 +3,17 @@
 {% load i18n %}
 {% load account socialaccount %}
 {% load socialaccount %}
+{% providers_media_js %}
 {% load crispy_forms_tags %}
+
 
 {% block head_title %}{% trans "Sign In" %}{% endblock %}
 
 {% block content %}
-<div class="container login-block">
+<div class="container login-block mb-3">
+
   <div class="row">
-    <div class="col-md-12 d-flex justify-content-center mt-lg-0 mt-md-5 mt-5">
+    <div class="col-md-12 d-flex justify-content-center mt-xl-0 mt-lg-5 mt-md-5 mt-5">
       <img class="search-logo" src="{% static 'assets/img/logo.png' %}">
     </div>
   </div>
@@ -23,11 +26,14 @@
 
           <h3 class="card-title text-uppercase">{% trans "Sign In" %}</h3>
           <hr>
-          <p class="card-text fw-light px-2">{% blocktrans %}Welcome to Help U!<br>To see the website, please log in. If
+          <p class="card-text fw-light px-2 mb-2">{% blocktrans %}Welcome to Help U!<br>To see the website, please log in. If
             you don't have an account, <a class="link" href="{{ signup_url }}">sign up</a>
             first.{% endblocktrans %}</p>
+            <div class="separator">OR</div>
+            <a href="{% provider_login_url 'facebook' method='oauth2' %}" class="fs-4 px-1 fb-login-button"><i class='bx bxl-facebook-square'></i></a>
+            <a href="{% provider_login_url 'google' %}" class="fs-4 text-danger px-1"><i class='bx bxl-google' ></i></a>
 
-          <form class="login d-flex flex-column justify-content-center text-start px-2" method="POST"
+          <form class="login d-flex flex-column justify-content-center text-start mt-2 px-2" method="POST"
             action="{% url 'account_login' %}">
             {% csrf_token %}
             {{ form | crispy }}
@@ -36,6 +42,7 @@
             {% endif %}
             <div class="d-grid gap-2">
             <button class="btn-signup btn btn-primary mt-2 mb-2" type="submit">{% trans "Sign In" %}</button>
+    
             </div>
           </form>
         </div>
@@ -43,4 +50,5 @@
     </div>
   </div>
 </div>
+
 {% endblock %}

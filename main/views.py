@@ -126,8 +126,6 @@ class PostList(generic.ListView):
         context['key'] = API_KEY
         return context
 
-    
-
 
 @method_decorator(login_required, name='dispatch')
 class PostFull(View):

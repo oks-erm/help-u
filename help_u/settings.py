@@ -35,7 +35,7 @@ DEBUG = True
 ALLOWED_HOSTS = ['helpukr.herokuapp.com', 'localhost']
 
 
-CSRF_TRUSTED_ORIGINS = ['https://*.8000-okserm-helpu-4vq7cec76g9.ws-eu67.gitpod.io/']
+CSRF_TRUSTED_ORIGINS = ['https://*.8000-okserm-helpu-4vq7cec76g9.ws-eu67.gitpod.io/', 'https://facebook.com']
 
 
 ACCOUNT_EMAIL_VERIFICATION = 'none'
@@ -58,14 +58,16 @@ INSTALLED_APPS = [
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
-    # 'allauth.socialaccount.providers.facebook',
+    'allauth.socialaccount.providers.facebook',
+    'allauth.socialaccount.providers.google',
     "crispy_forms",
     "crispy_bootstrap5",
+    "sslserver",
     'main',
 ]
 
 
-SITE_ID = 1
+SITE_ID = 2
 
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
@@ -181,6 +183,9 @@ AUTHENTICATION_BACKENDS = (
 )
 
 
+ACCOUNT_DEFAULT_HTTP_PROTOCOL='https'
+
+
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 # EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = os.environ.get('EMAIL_HOST')
@@ -214,11 +219,35 @@ ACCOUNT_EMAIL_CONFIRMATION_AUTHENTICATED_REDIRECT_URL = 'posts'
 ACCOUNT_LOGIN_ON_PASSWORD_RESET = True
 ACCOUNT_LOGOUT_ON_PASSWORD_CHANGE = True
 ACCOUNT_SESSION_REMEMBER = True 
-
-
 # ACCOUNT_EMAIL_CONFIRMATION_HMAC = True
 ACCOUNT_EMAIL_CONFIRMATION_COOLDOWN = 180
 ACCOUNT_LOGIN_ATTEMPTS_LIMIT = 10
 ACCOUNT_LOGIN_ATTEMPTS_TIMEOUT = 3000
 ACCOUNT_SIGNUP_PASSWORD_ENTER_TWICE = True
 ACCOUNT_UNIQUE_EMAIL = True
+
+
+SOCIALACCOUNT_PROVIDERS = {
+    'facebook': {
+        'METHOD': 'oauth2',
+        'SDK_URL': '//connect.facebook.net/{locale}/sdk.js',
+        'SCOPE': ['email', 'public_profile'],
+        'AUTH_PARAMS': {'auth_type': 'rerequest'},
+        'INIT_PARAMS': {'cookie': True},
+        'FIELDS': [
+            'id',
+            'first_name',
+            'last_name',
+            'middle_name',
+            'name',
+            'name_format',
+            'picture',
+            'short_name'
+        ],
+        "callbackURL": "/accounts/facebook/login/callback/",
+        'EXCHANGE_TOKEN': True,
+        'LOCALE_FUNC': 'path.to.callable',
+        'VERIFIED_EMAIL': False,
+        'VERSION': 'v13.0',
+    }
+}
