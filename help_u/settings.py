@@ -35,7 +35,7 @@ DEBUG = True
 ALLOWED_HOSTS = ['helpukr.herokuapp.com', 'localhost']
 
 
-CSRF_TRUSTED_ORIGINS = ['https://*.8000-okserm-helpu-4vq7cec76g9.ws-eu67.gitpod.io/', 'https://facebook.com']
+CSRF_TRUSTED_ORIGINS = ['https://*.8000-okserm-helpu-4vq7cec76g9.ws-eu67.gitpod.io/', 'https://facebook.com', 'https://google.com']
 
 
 ACCOUNT_EMAIL_VERIFICATION = 'none'
@@ -249,5 +249,17 @@ SOCIALACCOUNT_PROVIDERS = {
         'LOCALE_FUNC': 'path.to.callable',
         'VERIFIED_EMAIL': False,
         'VERSION': 'v13.0',
+    }
+}
+
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        'SCOPE': [
+            'profile',
+            'email',
+        ],
+        'AUTH_PARAMS': {
+            'access_type': 'offline',
+        }
     }
 }
