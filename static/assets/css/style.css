@@ -301,7 +301,7 @@ body {
 
   #msg {
     z-index: 999;
-    opacity: 0.65;
+    opacity: 0.67;
     margin-bottom: -90px;
   }
 
@@ -314,7 +314,6 @@ body {
     height: 95vh;
     background: url(../img/background.png) top center;
     background-size: cover;
-    /* position: relative; */
     z-index: 1;
   }
   
