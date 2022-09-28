@@ -35,7 +35,7 @@ DEBUG = True
 ALLOWED_HOSTS = ['helpukr.herokuapp.com', 'localhost', '8000-okserm-helpu-4vq7cec76g9.ws-eu67.gitpod.io']
 
 
-CSRF_TRUSTED_ORIGINS = ['https://*.8000-okserm-helpu-4vq7cec76g9.ws-eu67.gitpod.io/', 'https://facebook.com', 'https://accounts.google.com']
+CSRF_TRUSTED_ORIGINS = ['https://*.8000-okserm-helpu-4vq7cec76g9.ws-eu67.gitpod.io/', 'https://*.helpukr.herokuapp.com' 'https://facebook.com', 'https://*.google.com']
 
 
 ACCOUNT_EMAIL_VERIFICATION = 'none'
