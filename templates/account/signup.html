@@ -22,23 +22,23 @@
 
           <h3 class="card-title text-uppercase">{% trans "Sign Up" %}</h3>
           <hr>
-          <p class="card-text fw-light">{% blocktrans %}Welcome to <strong>Help U</strong>!<br> Do you already have an account? Then
+          <p class="card-text fw-light">{% blocktrans %}Welcome to <strong>Help U</strong>!<br> Do you already have an
+            account? Then
             please <a class=" link" href="{{ login_url }}">sign in</a> instead.{% endblocktrans %}</p>
-            <div class="separator">OR</div>
-            <a href="{% provider_login_url 'facebook' %}" class="fs-4 px-1"><i class='bx bxl-facebook-square'></i></a>
-            <a href="{% provider_login_url 'google' %}" class="fs-4 text-danger px-1"><i class='bx bxl-google' ></i></a>
+          <div class="separator">OR</div>
+          <a href="{% provider_login_url 'facebook' %}" class="fs-4 px-1"><i class='bx bxl-facebook-square'></i></a>
+          <a href="{% provider_login_url 'google' %}" class="fs-4 text-danger px-1"><i class='bx bxl-google'></i></a>
 
           <form class="signup d-flex flex-column justify-content-center text-start px-2" id="signup_form" method="post"
             action="{% url 'account_signup' %}">
             {% csrf_token %}
-            {% crispy form %}
+            {{ form | crispy }}
             {% if redirect_field_value %}
             <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
             {% endif %}
             <div class="d-grid gap-2">
-            <button class="btn-signup btn btn-primary mt-2 mb-2" type="submit">{% trans "Sign Up" %}
-            </button>
-          </div>
+              <button class="btn-signup btn btn-primary mt-2 mb-2" type="submit">{% trans "Sign Up" %}</button>
+            </div>
           </form>
         </div>
       </div>
@@ -46,4 +46,4 @@
   </div>
 </div>
 
-  {% endblock %}
+{% endblock %}

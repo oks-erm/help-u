@@ -7,6 +7,7 @@
 
 
 {% block content %}
+<section>
 <div class="container login-block">
     <div class="row">
         <div class="col-md-12 d-flex justify-content-center mt-lg-3 mt-md-5 mt-5 mb-4">
@@ -31,16 +32,20 @@
             </form>
         </div>
     </div>
-    {% else %}
+</div>
+{% else %}
 
-    {% url 'account_email' as email_url %}
+{% url 'account_email' as email_url %}
+<div class="container login-block">
     <div class="row">
-        <div class="col-md-12 d-flex justify-content-center mt-lg-3 mt-md-5 mt-5 mb-4">
+        <div class="col-md-12 d-flex flex-column text-center justify-content-center mt-lg-3 mt-md-5 mt-5 mb-4">
             <p>{% blocktrans %}This e-mail confirmation link expired or is invalid. Please <a
-                    href="{{ email_url }}">issue a new
-                    e-mail confirmation request</a>.{% endblocktrans %}</p>
+                    href="{{ email_url }}">issue a new e-mail confirmation request</a>.{% endblocktrans %}</p>
         </div>
     </div>
-    {% endif %}
 </div>
+{% endif %}
+</section>
+
+
 {% endblock %}
