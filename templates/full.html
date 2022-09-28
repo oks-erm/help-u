@@ -35,7 +35,7 @@
                 <p>{{ post.text }}</p>
                 {% if post.author == request.user %}
                 <a href="{% url 'update' post.slug %}" class="btn btn-primary px-4">Update</a>
-                <a href="{% url 'update' post.slug %}" class="btn btn-secondary px-4">Delete</a>  
+                <a href="{% url 'delete' post.slug %}" class="btn btn-secondary px-4">Delete</a>  
                 {% else %}
                 <button type="button" class="btn btn-primary">Contact {{post.author}}</button>
                 {% if post.type == 'give' %}

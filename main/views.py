@@ -66,6 +66,12 @@ def post_update(request, slug):
     return render(request, "update.html", context)
 
 
+def post_delete(request, slug):
+    post = Post.objects.get(slug=slug)
+    post.delete()
+    return redirect(reverse('posts_list', kwargs={'type': post.type}))
+
+
 @method_decorator(login_required, name='dispatch')
 class PostList(generic.ListView):
     model = Post
