@@ -2,7 +2,7 @@ from django.shortcuts import render, get_object_or_404,redirect, reverse
 from django.views import generic, View
 from django.contrib.auth.decorators import login_required
 from django.template.loader import render_to_string
-from django.http import JsonResponse, Http404
+from django.http import JsonResponse, Http404, HttpResponse
 from django.core import serializers
 from django.utils.decorators import method_decorator 
 from .models import ContactFormMessage, Post
@@ -15,61 +15,23 @@ if os.path.exists('env.py'):
 API_KEY = os.environ.get('GOOGLE_MAPS_API_KEY')
 
 
-def home_page(request):
-    if request.method == 'POST':
-        name = request.POST.get('name')
-        email = request.POST.get('email')
-        subject = request.POST.get('subject')
-        msg = request.POST.get('message')
+class LandingView(generic.TemplateView):
+    template_name = "index.html"
 
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+            return redirect(reverse('posts_list', kwargs={'type': 'all'}))
+        return super().dispatch(request, *args, **kwargs)
+
+    def post(self, request):
         new = ContactFormMessage(
-            name=name,
-            email=email,
-            subject=subject,
-            message=msg,
+            name=request.POST.get('name'),
+            email=request.POST.get('email'),
+            subject=request.POST.get('subject'),
+            message=request.POST.get('message'),
             )
         new.save()
-
-    return render(request, 'index.html')
-
-
-def post_create(request):
-    form = CreatePostForm()
-    if request.method == "POST":
-        form = CreatePostForm(request.POST, request.FILES)
-
-        if form.is_valid():
-            form.instance.author = request.user
-            form.save()
-            return redirect('/posts_list/all')
-
-    context = {
-        "form": form
-    }
-    return render(request, "new.html", context)
-
-
-def post_update(request, slug):
-    queryset = Post.objects.filter(status=1)
-    post = get_object_or_404(queryset, slug=slug)
-    form = CreatePostForm(instance=post)
-    if request.method == "POST":
-        form = CreatePostForm(request.POST, request.FILES, instance=post)
-        if form.is_valid():
-            form.save()
-            return redirect(reverse('full', kwargs={'slug': slug}))
-
-    context = {
-        "form": form,
-        "post": post
-    }
-    return render(request, "update.html", context)
-
-
-def post_delete(request, slug):
-    post = Post.objects.get(slug=slug)
-    post.delete()
-    return redirect(reverse('posts_list', kwargs={'type': post.type}))
+        return HttpResponse("")
 
 
 @method_decorator(login_required, name='dispatch')
@@ -134,20 +96,52 @@ class PostList(generic.ListView):
 
 
 @method_decorator(login_required, name='dispatch')
-class PostFull(View):
+class PostFull(generic.DetailView):
+    template_name = "full.html"
+    context_object_name = "post"
 
-    def get(self, request, slug, *args, **kwargs):
+    def get_queryset(self):
         queryset = Post.objects.filter(status=1)
-        post = get_object_or_404(queryset, slug=slug)
+        return queryset
 
-        maps = "https://www.google.com/maps/embed/v1/place?key="+API_KEY+"&q="+str(post.area)+str(post.city)+","+str(post.country)+"&zoom=13"
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['key'] = API_KEY
+        return context
 
-        return render(
-            request,
-            "full.html",
-            {
-                "post": post,
-                "maps": maps,
-            },
-        )
+
+class PostCreateView(generic.CreateView):
+    template_name = "new.html"
+    form_class = CreatePostForm
+
+    def get_success_url(self):
+        return reverse('posts_list', kwargs={'type': self.object.type})
+
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        form.save()
+        return super(PostCreateView, self).form_valid(form)
+
+
+class PostUpdateView(generic.UpdateView):
+    template_name = "update.html"
+    form_class = CreatePostForm
+    queryset = Post.objects.filter(status=1)
+
+    def get_success_url(self):
+        return reverse('full', kwargs={'slug': self.object.slug})
+
+    def form_valid(self, form):
+        form.save()
+        return super(PostUpdateView, self).form_valid(form)
+
+
+class PostDeleteView(generic.DeleteView):
+    template_name = "delete.html"
+    queryset = Post.objects.filter(status=1)
+
+    def get_success_url(self):
+        return reverse('posts_list', kwargs={'type': self.object.type})
+
+
 

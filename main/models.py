@@ -1,3 +1,4 @@
+import random
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from .managers import CustomUserManager
@@ -68,7 +69,11 @@ class Post(models.Model):
 
     def save(self, *args, **kwargs): 
         if not self.slug:
-            self.slug = slugify(self.title)
+            draft_slug = str(self.title) + str(random.random())
+            if Post.objects.filter(slug=draft_slug).exists():
+                draft_slug = str(self.title) + str(random.random())[::-1]
+            self.slug = slugify(draft_slug)
+                
         return super().save(*args, **kwargs)
     
     @property

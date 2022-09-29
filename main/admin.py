@@ -74,6 +74,7 @@ class ContactFormAdmin(admin.ModelAdmin):
               'date',
               'responded')
     list_display = ('subject', 'name', 'email', 'date', 'responded')
+    readonly_fields = ('date',)
     list_filter = ('date', 'responded')
     search_fields = ('name', 'email', 'subject', 'message')
 

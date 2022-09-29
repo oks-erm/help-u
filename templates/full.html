@@ -18,7 +18,7 @@
                 <p class="card-text created text-muted h6">{{ post.created_on}}</p>
                 <hr>
                 <iframe width="500" height="300" style="border:0" loading="lazy" allowfullscreen
-                    referrerpolicy="no-referrer-when-downgrade" src={{ maps }}>
+                    referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps/embed/v1/place?key={{key}}&q={{post.area}}{{post.city}},{{post.country}}&zoom=13">
                 </iframe>
                 <p class="subtitle text-muted p"><i class='bx bx-map'></i> {{ post.country.name }},
                     {{ post.city}}, 
