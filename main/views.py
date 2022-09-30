@@ -3,9 +3,9 @@ from django.views import generic, View
 from django.contrib.auth.decorators import login_required
 from django.template.loader import render_to_string
 from django.http import JsonResponse, Http404, HttpResponse
-from django.core import serializers
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.utils.decorators import method_decorator 
-from .models import ContactFormMessage, Post
+from .models import ContactFormMessage, Post, UserProfile
 from .forms import CreatePostForm
 import os
 if os.path.exists('env.py'):
@@ -18,10 +18,10 @@ API_KEY = os.environ.get('GOOGLE_MAPS_API_KEY')
 class LandingView(generic.TemplateView):
     template_name = "index.html"
 
-    def dispatch(self, request, *args, **kwargs):
-        if request.user.is_authenticated:
-            return redirect(reverse('posts_list', kwargs={'type': 'all'}))
-        return super().dispatch(request, *args, **kwargs)
+    # def dispatch(self, request, *args, **kwargs):
+    #     if request.user.is_authenticated:
+    #         return redirect(reverse('posts_list', kwargs={'type': 'all'}))
+    #     return super().dispatch(request, *args, **kwargs)
 
     def post(self, request):
         new = ContactFormMessage(
@@ -34,8 +34,7 @@ class LandingView(generic.TemplateView):
         return HttpResponse("")
 
 
-@method_decorator(login_required, name='dispatch')
-class PostList(generic.ListView):
+class PostList(LoginRequiredMixin, generic.ListView):
     model = Post
     template_name = "posts_list.html"
     paginate_by = 12
@@ -65,8 +64,6 @@ class PostList(generic.ListView):
                     template_name="posts.html",
                     context={"post_list": posts}
                 )
-            print(html)
-
             return JsonResponse({"html_from_view": html}, safe=False)
         else:
             self.object_list = self.get_queryset()
@@ -95,8 +92,7 @@ class PostList(generic.ListView):
         return context
 
 
-@method_decorator(login_required, name='dispatch')
-class PostFull(generic.DetailView):
+class PostFull(LoginRequiredMixin, generic.DetailView):
     template_name = "full.html"
     context_object_name = "post"
 
@@ -110,12 +106,12 @@ class PostFull(generic.DetailView):
         return context
 
 
-class PostCreateView(generic.CreateView):
+class PostCreateView(LoginRequiredMixin, generic.CreateView):
     template_name = "new.html"
     form_class = CreatePostForm
 
     def get_success_url(self):
-        return reverse('posts_list', kwargs={'type': self.object.type})
+        return reverse('main:posts_list', kwargs={'type': self.object.type})
 
     def form_valid(self, form):
         form.instance.author = self.request.user
@@ -123,25 +119,25 @@ class PostCreateView(generic.CreateView):
         return super(PostCreateView, self).form_valid(form)
 
 
-class PostUpdateView(generic.UpdateView):
+class PostUpdateView(LoginRequiredMixin, generic.UpdateView):
     template_name = "update.html"
     form_class = CreatePostForm
     queryset = Post.objects.filter(status=1)
 
     def get_success_url(self):
-        return reverse('full', kwargs={'slug': self.object.slug})
+        return reverse('main:full', kwargs={'slug': self.object.slug})
 
     def form_valid(self, form):
         form.save()
         return super(PostUpdateView, self).form_valid(form)
 
 
-class PostDeleteView(generic.DeleteView):
+class PostDeleteView(LoginRequiredMixin, generic.DeleteView):
     template_name = "delete.html"
     queryset = Post.objects.filter(status=1)
 
     def get_success_url(self):
-        return reverse('posts_list', kwargs={'type': self.object.type})
+        return reverse('main:posts_list', kwargs={'type': self.object.type})
 
 
 

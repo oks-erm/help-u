@@ -1,5 +1,7 @@
 import random
 from django.db import models
+from django.shortcuts import redirect
+from django.db.models.signals import post_save
 from django.contrib.auth.models import AbstractUser
 from .managers import CustomUserManager
 from django.urls import reverse
@@ -42,7 +44,7 @@ class UserProfile(models.Model):
 
 class Post(models.Model):
     author = models.ForeignKey(
-        CustomUser, on_delete=models.CASCADE, related_name="posts"
+        UserProfile, on_delete=models.CASCADE, related_name="posts", default=22
         )
     title = models.CharField(max_length=200, unique=True)
     slug = models.SlugField(max_length=200, unique=True, null=False)
@@ -57,6 +59,7 @@ class Post(models.Model):
     relevance = models.IntegerField(choices=ACTIVE, default=1)
     type = models.CharField(choices=TYPE, max_length=10, blank=False)
     category = models.CharField(choices=CATEGORIES, max_length=10, blank=False)
+    favourite = models.ManyToManyField(UserProfile, related_name='fave', blank=True)
 
     class Meta:
         ordering = ["-created_on"]
@@ -83,6 +86,21 @@ class Post(models.Model):
         return ""
 
 
+class Comment(models.Model):
+    post = models.ForeignKey(Post, on_delete=models.CASCADE,
+                             related_name="comments")
+    user = models.ManyToManyField(UserProfile, blank=True)
+    body = models.TextField()
+    created_on = models.DateTimeField(auto_now_add=True)
+    approved = models.BooleanField(default=False)
+
+    class Meta:
+        ordering = ["created_on"]
+
+    def __str__(self):
+        return f"Comment {self.body} by {self.user}"
+
+
 class ContactFormMessage(models.Model):
     name = models.CharField(max_length=50)
     email = models.EmailField(max_length=50)
@@ -96,3 +114,12 @@ class ContactFormMessage(models.Model):
 
     def __str__(self):
         return (f"from {self.name} | subject: {self.subject}")
+
+
+def post_user_created_signal(sender, instance, created, **kwargs):
+    if created:
+        UserProfile.objects.create(user=instance)
+        return redirect('users:create-profile')
+
+
+post_save.connect(post_user_created_signal, sender=CustomUser)

@@ -3,14 +3,14 @@
 
 {% if 'post_list' %}
 <div class="col-10  left">
-    <a href="{% url 'new' %}" class="btn btn-success mt-1 new-post">New post</a>
+    <a href="{% url 'main:new' %}" class="btn btn-success mt-1 new-post">New post</a>
     <div class="row gx-2">
 
         {% for post in post_list %}
         <div class="col-xxl-2 col-xl-3 col-lg-4 col-sm-6">
             <div class="card mb-3">
                 <div class="card-body">
-                    <a href="{% url 'full' post.slug  %}">
+                    <a href="{% url 'main:full' post.slug  %}">
                         <div class="image-container">
                             {% if "placeholder" in post.image.url %}
                             <img class="card-img-top" style="opacity: 0.4; scale: 0.6;"
@@ -24,19 +24,19 @@
                     </a>
                     <p class="subtitle text-truncate p"><i class='bx bx-map'></i>
                         <a href="https://www.google.com/maps/place/{{post.city}}+{{post.country.name}}" target="_blank"
-                            class="geo" title="{{ post.city}}, {{ post.country.name }}">
+                            class="geo" title="{{ post.city }}, {{ post.country.name }}">
                             {{ post.city}}, {{ post.country.name }}
                             <iframe class="preview" loading="lazy" allowfullscreen
                                 referrerpolicy="no-referrer-when-downgrade"
-                                src="https://www.google.com/maps/embed/v1/place?key={{ key }}&q={{ post.city}}+{{ post.country.name }}&zoom=11">
+                                src="https://www.google.com/maps/embed/v1/place?key={{ key }}&q={{ post.city }}+{{ post.country.name }}&zoom=11">
                             </iframe></a></p>
                     {% if post.area != None %}
                     <p class="subtitle text-muted p"><i class='bx bx-building-house'></i>{{ post.area }}</p>
                     {% else %}
                     <p class="subtitle text-muted p"><i class='bx bx-building-house'></i> ... </p>
                     {% endif %}
-                    <div class="author subtitle p"><i class='bx bxs-user-circle'></i><span> {{ post.author }}
-                        </span></div>
+                    <div class="author subtitle p"><a href="{% url 'users:profile' post.author.id %}"><i class='bx bxs-user-circle'></i><span> {{ post.author }}
+                        </span></a></div>
                     <hr>
                     <p class="card-text content line-clamp">{{ post.text }}</p>
                     <p class="card-text text-muted h6 text-truncate">{{ post.created_on|date:"d M Y" }}</p>

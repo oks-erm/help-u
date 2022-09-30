@@ -41,7 +41,7 @@
         e.preventDefault();
         $.ajax({
             type: 'POST',
-            url: '{% url "home" %}',
+            url: '{% url "main:home" %}',
             data: {
                 name: $("#name").val(),
                 email: $("#email").val(),

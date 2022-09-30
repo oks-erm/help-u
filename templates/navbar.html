@@ -2,26 +2,28 @@
     <div class="container d-flex align-items-center justify-content-between">
 
       <div class="logo-wrapper">
-        <h1 class="logo"><a href="{% url 'home' %}">Help U</a></h1>
+        <h1 class="logo"><a href="{% url 'main:home' %}">Help U</a></h1>
         <span id="small-img-logo" class="d-none d-md-block"></span>
       </div>
 
       <!-- Navbar -->
       <nav id="navbar" class="navbar">
         {% if user.is_authenticated %}
-        <span id="user-name" class="nav-link"><i class='bx bxs-user-circle'></i> {{ user.first_name }}</span>
+        <span id="user-name" class="nav-link"><a href="{%  url 'users:profile' user.userprofile.id %}"><i class='bx bxs-user-circle'></i>&nbsp;{{ user.first_name }}</span></a>
         {% endif %}
         <ul>
+          
+
           {% if request.get_full_path == '/' %}
           <li><a class="nav-link scrollto active" href="#hero">Home</a></li>
           <li><a class="nav-link scrollto" href="#about">About</a></li>
           <li><a class="nav-link scrollto" href="#faq">FAQ</a></li>
           <li><a class="nav-link scrollto" href="#contact">Contact</a></li>
           {% else %}
-          <li><a class="nav-link" href="{% url 'posts_list' 'all' %}">Posts</a></li>
-          <li><a class="nav-link" href="{% url 'home' %}#about">About</a></li>
-          <li><a class="nav-link" href="{% url 'home' %}#faq">FAQ</a></li>
-          <li><a class="nav-link" href="{% url 'home' %}#contact">Contact</a></li>
+          <li><a class="nav-link" href="{% url 'main:posts_list' 'all' %}">Posts</a></li>
+          <li><a class="nav-link" href="{% url 'main:home' %}#about">About</a></li>
+          <li><a class="nav-link" href="{% url 'main:home' %}#faq">FAQ</a></li>
+          <li><a class="nav-link" href="{% url 'main:home' %}#contact">Contact</a></li>
           {% endif %}
           
           {% if user.is_authenticated %}

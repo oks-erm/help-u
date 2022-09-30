@@ -2,6 +2,9 @@ from . import views
 from django.urls import path
 
 
+app_name = "main"
+
+
 urlpatterns = [
     path('', views.LandingView.as_view(), name='home'),
     path('new/', views.PostCreateView.as_view(), name='new'),

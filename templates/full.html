@@ -4,7 +4,7 @@
 {% block content %}
 <section id="full-post">
     <div class="container d-flex flex-column justify-content-center mt-3">
-        <a href="{% url 'posts_list' post.type %}" class="btn btn-outline-primary mb-3 mt-1"><<< Back to the list</a>
+        <a href="{% url 'main:posts_list' post.type %}" class="btn btn-outline-primary mb-3 mt-1"><<< Back to the list</a>
         <div class="row">
             <div class="col-lg-6 mt-2">
                 {% if "placeholder" in post.image.url %}
@@ -34,8 +34,8 @@
                 <hr>
                 <p>{{ post.text }}</p>
                 {% if post.author == request.user %}
-                <a href="{% url 'update' post.slug %}" class="btn btn-primary px-4">Update</a>
-                <a href="{% url 'delete' post.slug %}" class="btn btn-secondary px-4">Delete</a>  
+                <a href="{% url 'main:update' post.slug %}" class="btn btn-primary px-4">Update</a>
+                <a href="{% url 'main:delete' post.slug %}" class="btn btn-secondary px-4">Delete</a>  
                 {% else %}
                 <button type="button" class="btn btn-primary">Contact {{post.author}}</button>
                 {% if post.type == 'give' %}

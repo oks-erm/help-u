@@ -44,25 +44,25 @@
 <script type="text/javascript">
     $('#receive').on('change', function () {
         if ($(this).not(':checked') && ($('#give').is(':checked'))) {
-            document.location.href = "{% url 'posts_list' 'give' %}"
+            document.location.href = "{% url 'main:posts_list' 'give' %}"
         }
         if ($(this).is(':checked') && ($('#give').not(':checked'))) {
-            document.location.href = "{% url 'posts_list' 'receive' %}"
+            document.location.href = "{% url 'main:posts_list' 'receive' %}"
         }
         if ($(this).is(':checked') && ($('#give').is(':checked'))) {
-            document.location.href = "{% url 'posts_list' 'all' %}"
+            document.location.href = "{% url 'main:posts_list' 'all' %}"
         }
 
     })
     $('#give').on('change', function () {
         if ($(this).not(':checked') && ($('#receive').is(':checked'))) {
-            document.location.href = "{% url 'posts_list' 'receive' %}"
+            document.location.href = "{% url 'main:posts_list' 'receive' %}"
         }
         if ($(this).is(':checked') && ($('#receive').not(':checked'))) {
-            document.location.href = "{% url 'posts_list' 'give' %}"
+            document.location.href = "{% url 'main:posts_list' 'give' %}"
         }
         if ($(this).is(':checked') && ($('#receive').is(':checked'))) {
-            document.location.href = "{% url 'posts_list' 'all' %}"
+            document.location.href = "{% url 'main:posts_list' 'all' %}"
         }
     })
 
@@ -79,7 +79,6 @@
             data: request_parameters,
             contentType: "application/json",
             success: function (response) {
-                console.log(response);
                 listings.fadeTo('slow', 0).promise().then(() => {
                     listings.html(response["html_from_view"]);
                     listings.fadeTo('slow', 1);

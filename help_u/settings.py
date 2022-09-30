@@ -35,7 +35,7 @@ DEBUG = True
 ALLOWED_HOSTS = ['helpukr.herokuapp.com', 'localhost', '8000-okserm-helpu-4vq7cec76g9.ws-eu67.gitpod.io']
 
 
-CSRF_TRUSTED_ORIGINS = ['https://*.8000-okserm-helpu-4vq7cec76g9.ws-eu67.gitpod.io/', 'https://*.helpukr.herokuapp.com' 'https://facebook.com', 'https://*.google.com']
+CSRF_TRUSTED_ORIGINS = ['https://*.8000-okserm-helpu-4vq7cec76g9.ws-eu67.gitpod.io', 'https://*.helpukr.herokuapp.com', 'https://*.facebook.com', 'https://*.google.com']
 
 
 ACCOUNT_EMAIL_VERIFICATION = 'none'
@@ -64,12 +64,13 @@ INSTALLED_APPS = [
     "crispy_bootstrap5",
     "sslserver",
     'main',
+    'users',
 ]
 
 
 SITE_ID = 2
 
-LOGIN_REDIRECT_URL = '/'
+LOGIN_REDIRECT_URL = '/posts_list/all'
 LOGOUT_REDIRECT_URL = '/'
 
 
@@ -186,8 +187,8 @@ AUTHENTICATION_BACKENDS = (
 ACCOUNT_DEFAULT_HTTP_PROTOCOL='https'
 
 
-# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = os.environ.get('EMAIL_HOST')
 EMAIL_PORT = os.environ.get('EMAIL_PORT')
 EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')

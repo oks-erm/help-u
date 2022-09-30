@@ -667,7 +667,7 @@ body {
   /*----------------------------------------------------Search*/
   #search {
     background: url(../img/background.png);
-    height: 45vh;
+    height: 370px;
   }
 
   #search::before{
@@ -681,7 +681,7 @@ body {
   }
 
   .search-logo {
-    height: 150px;
+    height: 140px;
     width: fit-content;
   }
 
@@ -771,6 +771,12 @@ body {
       font-size: 13px;
       margin-bottom: -6px;
       padding-left: 2px;
+    }
+
+  /*----------------------------------------------------Profile*/
+    .userpic {
+      /* height: 200px;
+      border-radius: 200px; */
     }
 
   /*----------------------------------------------------Account*/
