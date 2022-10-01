@@ -29,13 +29,13 @@ TEMPLATES_DIR = os.path.join(BASE_DIR, 'templates')
 SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 
-ALLOWED_HOSTS = ['helpukr.herokuapp.com', 'localhost', '8000-okserm-helpu-4vq7cec76g9.ws-eu67.gitpod.io']
+ALLOWED_HOSTS = ['helpukr.herokuapp.com', 'localhost', '8000-okserm-helpu-4vq7cec76g9.ws-eu69.gitpod.io']
 
 
-CSRF_TRUSTED_ORIGINS = ['https://*.8000-okserm-helpu-4vq7cec76g9.ws-eu67.gitpod.io', 'https://*.helpukr.herokuapp.com', 'https://*.facebook.com', 'https://*.google.com']
+CSRF_TRUSTED_ORIGINS = ['https://*.8000-okserm-helpu-4vq7cec76g9.ws-eu69.gitpod.io', 'https://*.helpukr.herokuapp.com', 'https://*.facebook.com', 'https://*.google.com']
 
 
 ACCOUNT_EMAIL_VERIFICATION = 'none'
@@ -62,7 +62,6 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.google',
     "crispy_forms",
     "crispy_bootstrap5",
-    "sslserver",
     'main',
     'users',
 ]
@@ -187,8 +186,8 @@ AUTHENTICATION_BACKENDS = (
 ACCOUNT_DEFAULT_HTTP_PROTOCOL='https'
 
 
-# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = os.environ.get('EMAIL_HOST')
 EMAIL_PORT = os.environ.get('EMAIL_PORT')
 EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
