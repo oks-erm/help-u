@@ -14,7 +14,12 @@
                 {% endif %}
             </div>
             <div class="col-lg-6">
-                <h2>{{ post.title|title }}</h2>
+                <h2>{{ post.title|title }} 
+                    {% if post in user.userprofile.bookmarks.all %}
+                    <span class="link-primary" id="bookmark"><i class='bx bxs-bookmark-star'></i></span></h2>
+                    {% else %}
+                    <span class="link-secondary" id="bookmark"><i class='bx bxs-bookmark-star'></i></span></h2>
+                    {% endif %}
                 <p class="card-text created text-muted h6">{{ post.created_on}}</p>
                 <hr>
                 <iframe width="500" height="300" style="border:0" loading="lazy" allowfullscreen
@@ -28,8 +33,8 @@
                     ... 
                     {% endif %}
                 </p>
-                <div class="author subtitle p"><i class='bx bxs-user-circle'></i><span> {{ post.author }}
-                    </span>
+                <div class="author subtitle p"><a href="{% url 'users:profile' post.author.id %}"><i class='bx bxs-user-circle'></i><span> {{ post.author }}</span></a>
+                    
                 </div>
                 <hr>
                 <p>{{ post.text }}</p>
@@ -49,5 +54,26 @@
         </div>
     </div>
 </section>
-
+<script type="text/javascript">
+    $('#bookmark').on('click', function() {
+        $.ajax({
+            type: 'POST',
+            url: '{% url "main:bookmark" post.slug %}',
+            data: {
+                name: '{{ user.userprofile }}',
+                csrfmiddlewaretoken: '{{ csrf_token }}'
+            },
+            success: () => {
+                if ($(this).hasClass('link-secondary')) {
+                    $(this).removeClass('link-secondary');
+                    $(this).addClass('link-primary');
+                } else {
+                    $(this).removeClass('link-primary');
+                    $(this).addClass('link-secondary');
+                }
+            error: (err) => {
+                console.log(err)
+            }}
+        })})
+</script>
 {% endblock %}

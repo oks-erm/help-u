@@ -140,4 +140,15 @@ class PostDeleteView(LoginRequiredMixin, generic.DeleteView):
         return reverse('main:posts_list', kwargs={'type': self.object.type})
 
 
+class BookMark(generic.View):
+    def post(self, request, slug, *args, **kwargs):
+        post = get_object_or_404(Post, slug=slug)
+        if post.favourite.filter(id=request.user.id).exists():
+            post.favourite.remove(request.user.userprofile.id)
+        else:
+            post.favourite.add(request.user.userprofile.id)
+            print(post.favourite.all())
+
+        return HttpResponse("")
+
 

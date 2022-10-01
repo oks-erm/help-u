@@ -59,7 +59,7 @@ class Post(models.Model):
     relevance = models.IntegerField(choices=ACTIVE, default=1)
     type = models.CharField(choices=TYPE, max_length=10, blank=False)
     category = models.CharField(choices=CATEGORIES, max_length=10, blank=False)
-    favourite = models.ManyToManyField(UserProfile, related_name='fave', blank=True)
+    favourite = models.ManyToManyField(UserProfile, related_name='bookmarks', blank=True)
 
     class Meta:
         ordering = ["-created_on"]

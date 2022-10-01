@@ -14,7 +14,7 @@
                 {% endif %}
             </div>
             <div class="col-lg-8 ">
-                <h2>{{ profile.user }}</h2>
+                <h2>{{ profile.user }} {% if profile.user == request.user %} <a href="{% url 'users:update_profile' profile.pk %}" class="link-primary"><i class='bx bx-pencil' ></i></a>{% endif %}</h2>
                 <hr>
                 <p class="subtitle text-muted p"><i class='bx bx-map'></i> {{ profile.country.name }}
                     {% if profile.city != "" %}
@@ -25,12 +25,24 @@
                 <hr>
                 <div class="author subtitle p">About me:</div>
                 <p>{{ profile.bio }}</p>
-                {% if profile.user == request.user %}
-                <a href="{% url 'users:update_profile' profile.pk %}" class="btn btn-primary px-4">Update</a>
-                {% else %}
+                {% if profile.user != request.user %}
                 <button type="button" class="btn btn-primary">Contact {{profile.user}}</button>
+                {% else %}
+                <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle btn-warning" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    Saved posts
+                    </button>
+                    <ul class="dropdown-menu">
+                        {% for bookmark in user.userprofile.bookmarks.all %}
+                        <li><a class="dropdown-item" href="{% url 'main:full' bookmark.slug %}">{{bookmark}}</a></li>
+                        {% endfor %}
+                    </ul>
+                </div>
                 {% endif %}
             </div>
+
+
+
         </div>
     </div>
 </section>
