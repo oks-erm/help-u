@@ -151,7 +151,7 @@ body {
   #small-img-logo {
     height:40px;
     width: 50px;
-    background: '{% "logo_small.png" %}' center center no-repeat;
+    background: url(../img/logo_small.png) center center no-repeat;
     background-size: cover;
     margin: 0 10px 5px 10px;
     opacity: 0;
@@ -832,7 +832,7 @@ body {
   
   #footer .footer-top {
     padding: 60px 0 30px 0;
-    background: url("/static/assets/img/grateful.png") right bottom no-repeat; 
+    background: url(../img/grateful.png) right bottom no-repeat;
   }
   
   #footer .footer-top .footer-info {
