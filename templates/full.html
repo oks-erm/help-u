@@ -38,7 +38,7 @@
                 </div>
                 <hr>
                 <p>{{ post.text }}</p>
-                {% if post.author == request.user %}
+                {% if post.author.user == request.user %}
                 <a href="{% url 'main:update' post.slug %}" class="btn btn-primary px-4">Update</a>
                 <a href="{% url 'main:delete' post.slug %}" class="btn btn-secondary px-4">Delete</a>  
                 {% else %}
