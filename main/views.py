@@ -114,7 +114,7 @@ class PostCreateView(LoginRequiredMixin, generic.CreateView):
         return reverse('main:posts_list', kwargs={'type': self.object.type})
 
     def form_valid(self, form):
-        form.instance.author = self.request.user
+        form.instance.author = self.request.user.userprofile
         form.save()
         return super(PostCreateView, self).form_valid(form)
 
