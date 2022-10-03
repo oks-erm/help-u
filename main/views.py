@@ -38,18 +38,18 @@ class PostList(LoginRequiredMixin, generic.ListView):
     model = Post
     template_name = "posts_list.html"
     paginate_by = 12
-    
+
     def get_queryset(self):
         qs = super(PostList, self).get_queryset()
         if self.kwargs.get('type') in ['give', 'receive']:
             posts = qs.filter(type=self.kwargs['type'], status=1)
         else:
             posts = qs.filter(status=1)
-        
+
         query = self.request.GET.get("q")
         if query:
             posts = posts.filter(title__icontains=query)
-        
+
         return posts
 
     def get(self, request, *args, **kwargs):
@@ -150,5 +150,4 @@ class BookMark(generic.View):
             print(post.favourite.all())
 
         return HttpResponse("")
-
 
