@@ -159,6 +159,7 @@ body {
   
   #small-img-logo.small-logo-scrolled {
   opacity: 1;
+  background-size: contain;
   }
   
   @media (max-width: 992px) {
@@ -172,7 +173,7 @@ body {
   .navbar {
     padding: 0;
   }
-  
+
   .navbar ul, .auth-gr ul {
     margin: 0;
     padding: 0;
