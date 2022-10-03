@@ -26,9 +26,11 @@ class CustomUserAdmin(admin.ModelAdmin):
 class UserProfileAdmin(admin.ModelAdmin):
     fields = (('user', 'languages'),
               ('country', 'city'),
+              'thumbnail_preview',
               'userpic',
               'bio')
     list_display = ('user', 'country', 'languages', 'active', 'id')
+    readonly_fields = ('thumbnail_preview',)
     search_fields = ('user', 'bio', 'country', 'city', 'languages')
 
     def id(self, obj):
@@ -36,6 +38,12 @@ class UserProfileAdmin(admin.ModelAdmin):
 
     def active(self, obj):
         return f"{obj.user.is_active}"
+
+    def thumbnail_preview(self, obj):
+        return obj.thumbnail_preview
+
+    thumbnail_preview.short_description = 'Thumbnail Preview'
+    thumbnail_preview.allow_tags = True
 
 
 @admin.register(Post)

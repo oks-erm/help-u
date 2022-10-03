@@ -40,6 +40,12 @@ class UserProfile(models.Model):
 
     def __str__(self):
         return f"{self.user.first_name} {self.user.last_name}"
+    
+    @property
+    def thumbnail_preview(self):
+        if self.userpic:
+            return mark_safe('<img src="{}" width="auto" height="400" />'.format(self.userpic.url))
+        return ""
 
 
 class Post(models.Model):
