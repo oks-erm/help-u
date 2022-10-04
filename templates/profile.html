@@ -29,6 +29,7 @@
                 {% if profile.user != request.user %}
                 <button type="button" class="btn btn-primary">Contact {{profile.user}}</button>
                 {% else %}
+                {% if user.userprofile.bookmarks.all %}
                 <div class="accordion accordion" id="accordionFlushExample">
                     <div class="accordion-item">
                       <h2 class="accordion-header" id="flush-headingThree">
@@ -45,6 +46,7 @@
                       </div>
                     </div>
                   </div>
+                  {% endif %}
                 {% endif %}
             </div>
         </div>

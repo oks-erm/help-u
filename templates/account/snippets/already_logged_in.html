@@ -2,13 +2,10 @@
 {% load account %}
 
 {% user_display user as user_display %}
-<section>
-<div class="container login-block">
+
     <div class="row">
         <div class="col-md-6 offset-md-3 d-flex flex-column justify-content-center">
             <p><strong>{% trans "Note" %}:</strong> {% blocktrans %}you are already logged in as
                 {{ user_display }}.{% endblocktrans %}</p>
         </div>
     </div>
-</div>
-</section>

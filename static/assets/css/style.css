@@ -822,6 +822,12 @@ body {
       margin-left: .25em;
     }
 
+    form.password_reset, form.password_set, form.password_change, form.pass_change {
+      width: 250px;
+      display: flex;
+      align-self: center;
+      flex-direction: column;
+    }
   /*----------------------------------------------------Footer*/
   #footer {
     color: #444444;
