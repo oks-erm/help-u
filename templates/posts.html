@@ -10,7 +10,15 @@
         <div class="col-xxl-2 col-xl-3 col-lg-4 col-sm-6">
             <div class="card mb-3">
                 <div class="card-body">
+                    
                     <a href="{% url 'main:full' post.slug  %}">
+                        {% if 'all' in request.path %}
+                        {% if post.type == 'give' %}
+                        <span class="badge bg-success position-absolute top-20 end-0">Give</span>
+                        {% else %}
+                        <span class="badge bg-warning position-absolute top-20 end-0">Need</span>
+                        {% endif %}
+                        {% endif %}
                         <div class="image-container">
                             {% if "placeholder" in post.image.url %}
                             <img class="card-img-top" style="opacity: 0.4; scale: 0.6;"
