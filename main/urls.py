@@ -7,6 +7,7 @@ app_name = "main"
 
 urlpatterns = [
     path('', views.LandingView.as_view(), name='home'),
+    path('afterlogin/', views.after_login, name='after_login'),
     path('new/', views.PostCreateView.as_view(), name='new'),
     path('<slug:slug>/update/', views.PostUpdateView.as_view(), name='update'),
     path('<slug:slug>/delete/', views.PostDeleteView.as_view(), name='delete'),

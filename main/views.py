@@ -4,8 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.template.loader import render_to_string
 from django.http import JsonResponse, Http404, HttpResponse
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.utils.decorators import method_decorator 
-from .models import ContactFormMessage, Post, UserProfile
+from .models import ContactFormMessage, Post
 from .forms import CreatePostForm
 import os
 if os.path.exists('env.py'):
@@ -151,3 +150,11 @@ class BookMark(generic.View):
 
         return HttpResponse("")
 
+
+def after_login(request):
+    if request.user.userprofile.country == "":
+        return redirect(reverse('users:update_profile',
+                        kwargs={'pk': request.user.userprofile.id}))
+
+    return redirect(reverse('main:posts_list',
+                    kwargs={'type': 'all'}))

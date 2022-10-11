@@ -136,6 +136,11 @@
     $(".alert").delay(3000).fadeOut(1000);
 
 
+    $("#buttonClose").on("click", function () {
+      $(".modal").hide();
+      $(".modal-backdrop").hide();
+  }); 
+
     })();
 
   

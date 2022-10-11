@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views import generic
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import reverse
@@ -34,7 +34,7 @@ class UserProfileUpdateView(LoginRequiredMixin, generic.UpdateView):
     queryset = UserProfile.objects.all()
 
     def get_success_url(self):
-        return reverse('users:profile', kwargs={'pk': self.object.pk})
+        return reverse('users:profile', kwargs={'pk': self.request.user.userprofile.id})
 
     def form_valid(self, form):
         form.save()

@@ -101,4 +101,26 @@
         scheduled_function = setTimeout(ajax_call, delay_by_in_ms, endpoint, request_parameters);
     })
 </script>
+
+{% if  user.userprofile.country == "" %}
+<!-- Modal -->
+<div class="modal fade show" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+  aria-labelledby="staticBackdropLabel" style="display: block;" aria-modal="true" role="dialog">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="btn-close" id="buttonClose" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Please, complete your user profile before browsing the posts.
+      </div>
+      <div class="modal-footer">
+        <a href="{% url 'users:update_profile' user.userprofile.id %}" class="btn btn-primary">Complete Profile</a>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal-backdrop fade show"></div>
+{% endif %}
+
 {% endblock %}

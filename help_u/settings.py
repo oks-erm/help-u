@@ -32,10 +32,10 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 DEBUG = False
 
 
-ALLOWED_HOSTS = ['helpukr.herokuapp.com', 'localhost', '8000-okserm-helpu-4vq7cec76g9.ws-eu67.gitpod.io']
+ALLOWED_HOSTS = ['helpukr.herokuapp.com', 'localhost', '8000-okserm-helpu-4vq7cec76g9.ws-eu70.gitpod.io']
 
 
-CSRF_TRUSTED_ORIGINS = ['https://*.8000-okserm-helpu-4vq7cec76g9.ws-eu67.gitpod.io', 'https://*.helpukr.herokuapp.com', 'https://*.facebook.com', 'https://*.google.com']
+CSRF_TRUSTED_ORIGINS = ['https://*.8000-okserm-helpu-4vq7cec76g9.ws-eu70.gitpod.io', 'https://*.helpukr.herokuapp.com', 'https://*.facebook.com', 'https://*.google.com']
 
 
 ACCOUNT_EMAIL_VERIFICATION = 'none'
@@ -68,6 +68,7 @@ INSTALLED_APPS = [
 
 
 SITE_ID = 2
+
 
 LOGIN_REDIRECT_URL = '/posts_list/all'
 LOGOUT_REDIRECT_URL = '/'
@@ -216,7 +217,7 @@ ACCOUNT_AUTHENTICATION_METHOD = 'email'
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
 ACCOUNT_LOGIN_ON_EMAIL_CONFIRMATION = True
-ACCOUNT_EMAIL_CONFIRMATION_ANONYMOUS_REDIRECT_URL = 'home'
+ACCOUNT_EMAIL_CONFIRMATION_ANONYMOUS_REDIRECT_URL = 'main:home'
 ACCOUNT_LOGIN_ON_PASSWORD_RESET = False
 ACCOUNT_LOGOUT_ON_PASSWORD_CHANGE = True
 ACCOUNT_SESSION_REMEMBER = True 

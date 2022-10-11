@@ -3,7 +3,9 @@ from django.db import models
 from django.shortcuts import redirect
 from django.db.models.signals import post_save
 from django.contrib.auth.models import AbstractUser
+from django.dispatch import receiver
 from .managers import CustomUserManager
+from allauth.account.signals import email_confirmed
 from django.urls import reverse
 from django.utils.html import mark_safe
 from django.template.defaultfilters import slugify
@@ -35,7 +37,7 @@ class UserProfile(models.Model):
     userpic = CloudinaryField('image', default='placeholder')
     languages = models.CharField(max_length=200)
     bio = models.TextField(default='', blank=True)
-    country = CountryField(blank=True)
+    country = CountryField()
     city = models.CharField(max_length=30, blank=True)
 
     def __str__(self):
@@ -125,7 +127,6 @@ class ContactFormMessage(models.Model):
 def post_user_created_signal(sender, instance, created, **kwargs):
     if created:
         UserProfile.objects.create(user=instance)
-        return redirect('users:create-profile')
 
 
 post_save.connect(post_user_created_signal, sender=CustomUser)
