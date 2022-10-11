@@ -775,11 +775,26 @@ body {
     }
 
   /*----------------------------------------------------Profile*/
-    .userpic {
-      /* height: 200px;
-      border-radius: 200px; */
+
+    #savedPosts .accordion-button {
+      background: var(--bluesmoke);
+      padding: 15px;
+      color: var(--lightblue);
     }
 
+    #profile i {
+    color: var(--lightblue);
+    }
+
+    #profile .btn-primary {
+      background: var(--lightblue);
+      border: var(--lightblue);
+    }
+
+    #profile .btn-primary:hover {
+      background: var(--blue);
+      color: #fbee85;
+    }
   /*----------------------------------------------------Account*/
     .login-block {
       margin-top: 6%;

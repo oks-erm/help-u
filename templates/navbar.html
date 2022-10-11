@@ -9,7 +9,7 @@
       <!-- Navbar -->
       <nav id="navbar" class="navbar">
         {% if user.is_authenticated %}
-        <span id="user-name" class="nav-link"><a href="{%  url 'users:profile' user.userprofile.id %}"><i class='bx bxs-user-circle'></i>&nbsp;{{ user.first_name }}</span></a>
+        <span id="user-name" class="nav-link"><a href="{%  url 'users:profile' user.userprofile.id %}" class="fw-semibold"><i class='bx bxs-user-circle'></i>&nbsp;{{ user.first_name }}</span></a>
         {% endif %}
         <ul>
           

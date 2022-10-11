@@ -146,15 +146,5 @@ class BookMark(generic.View):
             post.favourite.remove(request.user.userprofile.id)
         else:
             post.favourite.add(request.user.userprofile.id)
-            print(post.favourite.all())
 
         return HttpResponse("")
-
-
-def after_login(request):
-    if request.user.userprofile.country == "":
-        return redirect(reverse('users:update_profile',
-                        kwargs={'pk': request.user.userprofile.id}))
-
-    return redirect(reverse('main:posts_list',
-                    kwargs={'type': 'all'}))

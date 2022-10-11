@@ -6,14 +6,14 @@
 <section id="profile">
     <div class="container d-flex flex-column justify-content-center mt-5">
         <div class="row">
-            <div class="col-lg-4 mt-2 text-center">
+            <div class="col-xl-4 col-lg-5 mt-2 text-center">
                 {% if "placeholder" in profile.userpic.url %}
                 <img style="opacity: 0.4; scale: 0.6;" src="{% static 'assets/img/grateful.png' %}">
                 {% else %}
                 {% cloudinary profile.userpic height=350 width=350 crop="fill" radius="max" gravity="face" %}
                 {% endif %}
             </div>
-            <div class="col-lg-8 ">
+            <div class="col-xl-8 col-lg-7">
                 <h2>{{ profile.user }} {% if profile.user == request.user %} <a href="{% url 'users:update_profile' profile.pk %}" class="link-primary"><i class='bx bx-pencil' ></i></a>{% endif %}</h2>
                 <hr>
                 <p class="subtitle text-muted p ms-2"><i class='bx bx-map'></i> {{ profile.country.name }}
@@ -30,23 +30,24 @@
                 <button type="button" class="btn btn-primary">Contact {{profile.user}}</button>
                 {% else %}
                 {% if user.userprofile.bookmarks.all %}
-                <div class="accordion accordion" id="accordionFlushExample">
+                <div class="accordion accordion col-lg-6" id="savedPosts">
                     <div class="accordion-item">
                       <h2 class="accordion-header" id="flush-headingThree">
-                        <button class="accordion-button collapsed fw-bold link-primary" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
+                        <button class="accordion-button collapsed fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
                           Saved posts
                         </button>
                       </h2>
-                      <div id="flush-collapseThree" class="accordion-collapse collapse" aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
+                      <div id="flush-collapseThree" class="accordion-collapse collapse" aria-labelledby="flush-headingThree" data-bs-parent="#savedPosts">
                         <div class="accordion-body">                        
                             {% for bookmark in user.userprofile.bookmarks.all %}
-                            <p><i class='bx bx-bookmarks' ></i> <a class="link-secondary" href="{% url 'main:full' bookmark.slug %}">{{bookmark}}</a></p>
+                            <i class='bx bx-bookmarks' ></i> <a class="link-secondary" href="{% url 'main:full' bookmark.slug %}">{{bookmark}}</a>
                             {% endfor %}
                         </div>
                       </div>
                     </div>
                   </div>
                   {% endif %}
+                  <a href="{% url 'main:posts_list' 'all' %}" class="btn btn-primary col-lg-6 col-sm-12 mt-4 align-self-end">Browse Posts</a>
                 {% endif %}
             </div>
         </div>
