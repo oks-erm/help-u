@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.template.loader import render_to_string
 from django.http import JsonResponse, Http404, HttpResponse
 from django.contrib.auth.mixins import LoginRequiredMixin
-from .models import ContactFormMessage, Post
+from .models import ContactFormMessage, Post, Comment
 from .forms import CreatePostForm
 import os
 if os.path.exists('env.py'):
@@ -98,10 +98,22 @@ class PostFull(LoginRequiredMixin, generic.DetailView):
     def get_queryset(self):
         queryset = Post.objects.filter(status=1)
         return queryset
+    
+    def post(self, request, slug, *args, **kwargs):
+
+        new = Comment(
+            post=self.get_object(),
+            user=request.user.userprofile,
+            body=request.POST.get('body'),
+            )
+        new.save()
+        return HttpResponse("")
 
     def get_context_data(self, **kwargs):
+        comments = Comment.objects.filter(approved=True)
         context = super().get_context_data(**kwargs)
         context['key'] = API_KEY
+        context['comments'] = comments
         return context
 
 

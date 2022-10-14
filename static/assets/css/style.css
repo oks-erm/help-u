@@ -302,7 +302,7 @@ body {
 
   #msg {
     z-index: 999;
-    opacity: 0.67;
+    opacity: 0.75;
     margin-bottom: -90px;
   }
 
@@ -569,7 +569,8 @@ body {
     padding-bottom: 8px;
   }
   
-  .contact .contact-form .error-message {
+  .contact .contact-form .error-message, 
+  #comment .error-message {
     display: none;
     color: var(--white);
     background: #ed3c0d;
@@ -578,7 +579,8 @@ body {
     font-weight: 600;
   }
   
-  .contact .contact-form .error-message br+br {
+  .contact .contact-form .error-message br+br 
+  #comment .error-message br+br {
     margin-top: 25px;
   }
   
@@ -757,15 +759,13 @@ body {
       font-family: "Poppins", sans-serif;
     }
 
-    /* #full-post .container {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-    } */
-
     #full-post img {
-      width: -webkit-fill-available;
+      /* width: -webkit-fill-available; */
       overflow: hidden;
+      max-height: 70vh;
+      min-width: 38vw;
+      object-fit: contain;
+      margin-bottom: 20px;
     }
 
     #full-post .created {
@@ -774,6 +774,10 @@ body {
       padding-left: 2px;
     }
 
+    #full-post .comment img {
+      min-width: auto;
+
+    }
   /*----------------------------------------------------Profile*/
 
     #savedPosts .accordion-button {

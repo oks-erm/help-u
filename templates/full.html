@@ -1,61 +1,120 @@
 {% extends "base.html" %}
 {% load static %}
+{% load cloudinary %}
 
 {% block content %}
 <section id="full-post">
     <div class="container d-flex flex-column justify-content-center mt-3">
-        <a href="{% url 'main:posts_list' post.type %}" class="btn btn-outline-primary mb-3 mt-1"><<< Back to the list</a>
-        <div class="row">
-            <div class="col-lg-6 mt-2">
-                {% if "placeholder" in post.image.url %}
-                <img style="opacity: 0.4; scale: 0.6;" src="{% static 'assets/img/grateful.png' %}">
-                {% else %}
-                <img src={{ post.image.url }} alt="{{ post.title|title }}">
-                {% endif %}
-            </div>
-            <div class="col-lg-6">
-                <h2>{{ post.title|title }} 
-                    {% if post in user.userprofile.bookmarks.all %}
-                    <span class="link-primary" id="bookmark"><i class='bx bxs-bookmark-star'></i></span></h2>
+        <a href="{% url 'main:posts_list' post.type %}" class="btn btn-outline-primary mb-3 mt-1">
+            <<< Back to the list</a>
+                <div class="row">
+                    <div class="col-lg-6 mt-2 d-flex flex-column justify-content-start" id="left-col">
+                        {% if "placeholder" in post.image.url %}
+                        <img style="opacity: 0.4; scale: 0.6;" src="{% static 'assets/img/grateful.png' %}">
+                        {% else %}
+                        {% cloudinary post.image %}
+                        {% endif %}
+
+                        {% if comments %}
+                        <p class="d-lg-none d-block">
+                            <button class="btn btn-success btn-sm" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#comments-block" aria-expanded="false" aria-controls="collapseExample">
+                                Comments
+                            </button>
+                        </p>
+                        <div class="collapse" id="comments-block">
+                        {% for comment in comments %}
+                        <div class="card border-0 comment">
+                            <div class="row g-0">
+                                <div class="col-3 d-flex justify-content-end align-items-center">
+                                    {% cloudinary comment.user.userpic height=80 width=80 crop="fill" radius="max" gravity="face" %}
+                                </div>
+                                <div class="col-9">
+                                    <div class="card-body">
+                                        <h5 class="card-title mt-0">{{comment.user}}</h5>
+                                        <p class="card-text mb-1">{{comment.body}}</p>
+                                        <p class="card-text"><small class="text-muted">{{comment.created_on}}</small>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+
+                </div>
+                <div class="col-lg-6">
+                    <h2>{{ post.title|title }}
+                        {% if post in user.userprofile.bookmarks.all %}
+                        <span class="link-primary" id="bookmark"><i class='bx bxs-bookmark-star'></i></span></h2>
                     {% else %}
                     <span class="link-secondary" id="bookmark"><i class='bx bxs-bookmark-star'></i></span></h2>
                     {% endif %}
-                <p class="card-text created text-muted h6">{{ post.created_on}}</p>
-                <hr>
-                <iframe width="500" height="300" style="border:0" loading="lazy" allowfullscreen
-                    referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps/embed/v1/place?key={{key}}&q={{post.area}}{{post.city}},{{post.country}}&zoom=13">
-                </iframe>
-                <p class="subtitle text-muted p"><i class='bx bx-map'></i> {{ post.country.name }},
-                    {{ post.city}}, 
-                    {% if post.area != None %}
-                    {{ post.area }}
-                    {% else %}
-                    ... 
-                    {% endif %}
-                </p>
-                <div class="author subtitle p"><a href="{% url 'users:profile' post.author.id %}"><i class='bx bxs-user-circle'></i><span> {{ post.author }}</span></a>
-                    
+                    <p class="card-text created text-muted h6">{{ post.created_on}}</p>
+                    <hr>
+                    <iframe width="500" height="300" style="border:0" loading="lazy" allowfullscreen
+                        referrerpolicy="no-referrer-when-downgrade"
+                        src="https://www.google.com/maps/embed/v1/place?key={{key}}&q={{post.area}}{{post.city}},{{post.country}}&zoom=13">
+                    </iframe>
+                    <p class="subtitle text-muted p"><i class='bx bx-map'></i> {{ post.country.name }},
+                        {{ post.city}},
+                        {% if post.area != None %}
+                        {{ post.area }}
+                        {% else %}
+                        ...
+                        {% endif %}
+                    </p>
+                    <div class="author subtitle p"><a href="{% url 'users:profile' post.author.id %}"><i
+                                class='bx bxs-user-circle'></i><span> {{ post.author }}</span></a>
+
+                    </div>
+                    <hr>
+                    <p>{{ post.text }}</p>
+                    <hr>
+                    <div class="mt-4">
+                        {% if post.author.user == request.user %}
+                        <a href="{% url 'main:update' post.slug %}" class="btn btn-primary px-4">Update</a>
+                        <a href="{% url 'main:delete' post.slug %}" class="btn btn-secondary px-4">Delete</a>
+                        {% else %}
+                        <button type="button" class="btn btn-primary">Contact {{post.author}}</button>
+                        {% if post.type == 'give' %}
+                        <!-- <button type="button" class="btn btn-success">Say Thank You</button> -->
+                        <button class="btn btn-success" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#comment" aria-expanded="false" aria-controls="collapseExample">
+                            Say Thank You
+                        </button>
+                        <div class="collapse" id="comment">
+                            <div class="card card-body mt-1">
+                                <form method="post" role="form" class="comment-form">
+                                    {% csrf_token %}
+                                    <div class="form-group mt-3">
+                                        <textarea class="form-control" name="body" id="body" rows="4"
+                                            placeholder="Share your experience here" required></textarea>
+                                    </div>
+                                    <div>
+                                        <div class="error-message">Oooops! Your comment hasn't been added. Try again!
+                                        </div>
+                                    </div>
+                                    <div class="text-end"><button class="btn btn-success px-4 mt-2"
+                                            type="submit">Publish</button></div>
+                                </form>
+                            </div>
+                        </div>
+
+                        {% endif %}
+                        {% if post.type == 'receive' %}
+                        <button type="button" class="btn btn-success">Offer Help</button>
+                        {% endif %}
+                        {% endif %}
+                    </div>
                 </div>
-                <hr>
-                <p>{{ post.text }}</p>
-                {% if post.author.user == request.user %}
-                <a href="{% url 'main:update' post.slug %}" class="btn btn-primary px-4">Update</a>
-                <a href="{% url 'main:delete' post.slug %}" class="btn btn-secondary px-4">Delete</a>  
-                {% else %}
-                <button type="button" class="btn btn-primary">Contact {{post.author}}</button>
-                {% if post.type == 'give' %}
-                <button type="button" class="btn btn-success">Say Thank You</button>
-                {% endif %}
-                {% if post.type == 'receive' %}
-                <button type="button" class="btn btn-success">Offer Help</button>
-                {% endif %}
-                {% endif %}
-            </div>
-        </div>
+    </div>
     </div>
 </section>
 <script type="text/javascript">
-    $('#bookmark').on('click', function() {
+    $('#bookmark').on('click', function () {
         $.ajax({
             type: 'POST',
             url: '{% url "main:bookmark" post.slug %}',
@@ -71,9 +130,58 @@
                     $(this).removeClass('link-primary');
                     $(this).addClass('link-secondary');
                 }
-            error: (err) => {
-                console.log(err)
-            }}
-        })})
+                error: (err) => {
+                    console.log(err)
+                }
+            }
+        })
+    })
+
+    $(document).on('submit', '.comment-form', (e) => {
+        e.preventDefault();
+        $.ajax({
+            type: 'POST',
+            url: '{% url "main:full" post.slug %}',
+            data: {
+                body: $("#body").val(),
+                csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
+            },
+            success: (response) => {
+                console.log(response);
+                $('#left-col').append(
+                    `<div class="card border-0 mt-4 comment" >
+                    <div class="row g-0">
+                      <div class="col-3 d-flex justify-content-end align-items-center">
+                        {% cloudinary user.userprofile.userpic height=80 width=80 crop="fill" radius="max" gravity="face" %}
+                      </div>
+                      <div class="col-9">
+                        <div class="card-body">
+                          <h5 class="card-title mt-0">{{user}}</h5>
+                          <p class="card-text text-muted mb-1">--Your comment was successfully added, it will be published after moderation--</p>
+                          <p class="card-text"><small class="text-muted">now</small></p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>`)
+                $('#body').val('');
+                $('body, html').animate({ scrollTop: $(".comment").offset().top }, 300);
+            },
+            error: () => {
+                $(".error-message").css('display', 'block');
+            }
+        })
+    });
+
+    
+    if ($(window).width() > 991) {
+            $('#comments-block').removeClass('collapse');
+        } 
+
+    $(window).on('resize', function () {
+        if ($(window).width() > 991) {
+            $('#comments-block').removeClass('collapse');
+        } else {
+            $('#comments-block').addClass('collapse');
+        }})
 </script>
 {% endblock %}

@@ -46,6 +46,24 @@ class UserProfileAdmin(admin.ModelAdmin):
     thumbnail_preview.allow_tags = True
 
 
+@admin.register(Comment)
+class CommentAdmin(admin.ModelAdmin):
+    fields = ('user',
+              'created_on',
+              'post',
+              'body',
+              'approved')
+    list_display = ('user', 'created_on', 'approved')
+    readonly_fields = ('user', 'post', 'created_on')
+    list_filter = ('approved', 'created_on')
+    search_fields = ('user', 'body')
+ 
+    actions = ['approve_comments']
+
+    def approve_comments(self, request, queryset):
+        queryset.update(status=True)
+
+
 @admin.register(Post)
 class PostAdmin(admin.ModelAdmin):
     fields = ('author',

@@ -7,7 +7,7 @@ from allauth.account.forms import SignupForm
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, HTML, Submit
 from cloudinary.forms import CloudinaryFileField
-from .models import Post
+from .models import Post, Comment
 
 
 class CustomSignUpForm(SignupForm):
@@ -80,3 +80,16 @@ class CreatePostForm(ModelForm):
             'type',
             'category'
         )
+
+
+# class CreateCommentForm(ModelForm):
+
+#     class Meta:
+#         model = Comment
+#         fields = ['body']
+#         widgets = {
+#                 'body': Textarea(attrs={
+#                     'style': 'height: 120px;',
+#                     'placeholder': "Share your experience here"
+#                     }),
+#             }
