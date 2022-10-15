@@ -40,7 +40,7 @@
                       <div id="flush-collapseThree" class="accordion-collapse collapse" aria-labelledby="flush-headingThree" data-bs-parent="#saved-posts">
                         <div class="accordion-body">                        
                             {% for bookmark in user.userprofile.bookmarks.all %}
-                            <i class='bx bx-bookmarks' ></i> <a class="link-secondary" href="{% url 'main:full' bookmark.slug %}">{{bookmark}}</a>
+                            <p><i class='bx bx-bookmarks' ></i> <a class="link-secondary" href="{% url 'main:full' bookmark.slug %}">{{bookmark}}</a></p>
                             {% endfor %}
                         </div>
                       </div>

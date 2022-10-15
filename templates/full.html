@@ -16,7 +16,7 @@
                         {% endif %}
 
                         {% if comments %}
-                        <div class="col-lg-6" id="comments-block">
+                        <div id="comments-block">
                             <div class="accordion-item">
                               <h2 class="accordion-header" id="comments-heading">
                                 <button class="accordion-button collapsed fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#comments" aria-expanded="false" aria-controls="comments">
@@ -28,12 +28,12 @@
                                     {% for comment in comments %}
                                     <div class="card border-0 comment">
                                         <div class="row g-0">
-                                            <div class="col-3 d-flex justify-content-end align-items-center">
+                                            <div class="col-2 d-flex justify-content-end align-items-center">
                                                 {% cloudinary comment.user.userpic height=80 width=80 crop="fill" radius="max" gravity="face" %}
                                             </div>
-                                            <div class="col-9">
+                                            <div class="col-10">
                                                 <div class="card-body">
-                                                    <h5 class="card-title mt-0">{{comment.user}}</h5>
+                                                    <h5 class="card-title mt-0"><a href="{% url 'users:profile' comment.user.id %}">{{comment.user}}</a></h5>
                                                     <p class="card-text mb-1">{{comment.body}}</p>
                                                     <p class="card-text"><small class="text-muted">{{comment.created_on}}</small>
                                                     </p>
@@ -151,22 +151,23 @@
                 csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
             },
             success: (response) => {
-                console.log(response);
-                $('#left-col').append(
-                    `<div class="card border-0 mt-4 comment" >
-                    <div class="row g-0">
-                      <div class="col-3 d-flex justify-content-end align-items-center">
-                        {% cloudinary user.userprofile.userpic height=80 width=80 crop="fill" radius="max" gravity="face" %}
-                      </div>
-                      <div class="col-9">
-                        <div class="card-body">
-                          <h5 class="card-title mt-0">{{user}}</h5>
-                          <p class="card-text text-muted mb-1">--Your comment was successfully added, it will be published after moderation--</p>
-                          <p class="card-text"><small class="text-muted">now</small></p>
+                $('#comments').addClass('show');
+                $('.accordion-body').append(
+                    `<div class="card border-0 comment">
+                        <div class="row g-0">
+                            <div class="col-3 d-flex justify-content-end align-items-center">
+                                {% cloudinary user.userprofile.userpic height=80 width=80 crop="fill" radius="max" gravity="face" %}
+                            </div>
+                            <div class="col-9">
+                                <div class="card-body">
+                                    <h5 class="card-title mt-0"><a href="{% url 'users:profile' user.userprofile.id %}">{{user}}</a></h5>
+                                    <p class="card-text text-muted mb-1">--Your comment was successfully added, it will be published after moderation--</p>
+                                    <p class="card-text"><small class="text-muted">now</small>
+                                    </p>
+                                </div>
+                            </div>
                         </div>
-                      </div>
-                    </div>
-                  </div>`)
+                    </div>`)
                 $('#body').val('');
                 $('body, html').animate({ scrollTop: $(".comment").offset().top }, 300);
             },

@@ -785,10 +785,14 @@ body {
     }
   /*----------------------------------------------------Profile*/
 
-    #savedPosts .accordion-button {
+    #saved-posts .accordion-button {
       background: var(--bluesmoke);
       padding: 15px;
       color: var(--lightblue);
+    }
+
+    #saved-posts .accordion-body:last-child {
+      padding-bottom: 0;
     }
 
     #profile i {
