@@ -776,7 +776,12 @@ body {
 
     #full-post .comment img {
       min-width: auto;
+    }
 
+    @media (max-width: 500px) {
+      iframe {
+        width: 95vw
+      }
     }
   /*----------------------------------------------------Profile*/
 

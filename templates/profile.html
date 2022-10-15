@@ -30,14 +30,14 @@
                 <button type="button" class="btn btn-primary">Contact {{profile.user}}</button>
                 {% else %}
                 {% if user.userprofile.bookmarks.all %}
-                <div class="accordion accordion col-lg-6" id="savedPosts">
+                <div class="accordion accordion col-lg-6" id="saved-posts">
                     <div class="accordion-item">
                       <h2 class="accordion-header" id="flush-headingThree">
                         <button class="accordion-button collapsed fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
                           Saved posts
                         </button>
                       </h2>
-                      <div id="flush-collapseThree" class="accordion-collapse collapse" aria-labelledby="flush-headingThree" data-bs-parent="#savedPosts">
+                      <div id="flush-collapseThree" class="accordion-collapse collapse" aria-labelledby="flush-headingThree" data-bs-parent="#saved-posts">
                         <div class="accordion-body">                        
                             {% for bookmark in user.userprofile.bookmarks.all %}
                             <i class='bx bx-bookmarks' ></i> <a class="link-secondary" href="{% url 'main:full' bookmark.slug %}">{{bookmark}}</a>

@@ -16,32 +16,36 @@
                         {% endif %}
 
                         {% if comments %}
-                        <p class="d-lg-none d-block">
-                            <button class="btn btn-success btn-sm" type="button" data-bs-toggle="collapse"
-                                data-bs-target="#comments-block" aria-expanded="false" aria-controls="collapseExample">
-                                Comments
-                            </button>
-                        </p>
-                        <div class="collapse" id="comments-block">
-                        {% for comment in comments %}
-                        <div class="card border-0 comment">
-                            <div class="row g-0">
-                                <div class="col-3 d-flex justify-content-end align-items-center">
-                                    {% cloudinary comment.user.userpic height=80 width=80 crop="fill" radius="max" gravity="face" %}
-                                </div>
-                                <div class="col-9">
-                                    <div class="card-body">
-                                        <h5 class="card-title mt-0">{{comment.user}}</h5>
-                                        <p class="card-text mb-1">{{comment.body}}</p>
-                                        <p class="card-text"><small class="text-muted">{{comment.created_on}}</small>
-                                        </p>
+                        <div class="col-lg-6" id="comments-block">
+                            <div class="accordion-item">
+                              <h2 class="accordion-header" id="comments-heading">
+                                <button class="accordion-button collapsed fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#comments" aria-expanded="false" aria-controls="comments">
+                                  Comments ({{ comments.count }})
+                                </button>
+                              </h2>
+                              <div id="comments" class="accordion-collapse collapse" aria-labelledby="comments-heading" data-bs-parent="#comments-block">
+                                <div class="accordion-body">                        
+                                    {% for comment in comments %}
+                                    <div class="card border-0 comment">
+                                        <div class="row g-0">
+                                            <div class="col-3 d-flex justify-content-end align-items-center">
+                                                {% cloudinary comment.user.userpic height=80 width=80 crop="fill" radius="max" gravity="face" %}
+                                            </div>
+                                            <div class="col-9">
+                                                <div class="card-body">
+                                                    <h5 class="card-title mt-0">{{comment.user}}</h5>
+                                                    <p class="card-text mb-1">{{comment.body}}</p>
+                                                    <p class="card-text"><small class="text-muted">{{comment.created_on}}</small>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
+                                    {% endfor %}
                                 </div>
+                              </div>
                             </div>
-                        </div>
-
-                        {% endfor %}
-                    </div>
+                          </div>
                     {% endif %}
 
                 </div>
@@ -174,14 +178,16 @@
 
     
     if ($(window).width() > 991) {
-            $('#comments-block').removeClass('collapse');
+            $('#comments').addClass('show');
         } 
 
     $(window).on('resize', function () {
         if ($(window).width() > 991) {
-            $('#comments-block').removeClass('collapse');
+            $('#comments').addClass('show');
         } else {
-            $('#comments-block').addClass('collapse');
+            $('#comments').removeClass('show');
         }})
+
+    
 </script>
 {% endblock %}
