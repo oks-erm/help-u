@@ -808,6 +808,11 @@ body {
       background: var(--blue);
       color: #fbee85;
     }
+
+    #div_id_userpic div div.input-group.mb-2,
+    #div_id_image div div.input-group.mb-2 {
+      display: none;
+    }
   /*----------------------------------------------------Account*/
     .login-block {
       margin-top: 6%;

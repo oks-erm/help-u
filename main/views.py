@@ -110,7 +110,7 @@ class PostFull(LoginRequiredMixin, generic.DetailView):
         return HttpResponse("")
 
     def get_context_data(self, **kwargs):
-        comments = Comment.objects.filter(approved=True)
+        comments = Comment.objects.filter(approved=True, post=self.object.id)
         context = super().get_context_data(**kwargs)
         context['key'] = API_KEY
         context['comments'] = comments

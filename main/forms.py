@@ -81,15 +81,3 @@ class CreatePostForm(ModelForm):
             'category'
         )
 
-
-# class CreateCommentForm(ModelForm):
-
-#     class Meta:
-#         model = Comment
-#         fields = ['body']
-#         widgets = {
-#                 'body': Textarea(attrs={
-#                     'style': 'height: 120px;',
-#                     'placeholder': "Share your experience here"
-#                     }),
-#             }

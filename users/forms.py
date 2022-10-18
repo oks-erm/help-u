@@ -6,6 +6,7 @@ from main.models import UserProfile
 
 
 class ProfileForm(forms.ModelForm):
+
     class Meta:
         model = UserProfile
         fields = ['country', 'city', 'userpic', 'languages', 'bio']
@@ -38,7 +39,7 @@ class ProfileForm(forms.ModelForm):
         self.helper.layout = Layout(
             'country',
             'city',
-            HTML("""{% if form.image.value %}<img height=400 src="{{ DEFAULT_FILE_STORAGE }}{{ form.userpic.value.url }}">{% endif %}"""),
+            HTML("""{% if form.userpic.value %}<img height=400 src="{{ DEFAULT_FILE_STORAGE }}{{ form.userpic.value.url }}">{% endif %}"""),
             'userpic',
             'languages',
             'bio',
