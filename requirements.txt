@@ -4,11 +4,12 @@ async-timeout==4.0.2
 autobahn==22.7.1
 Automat==20.2.0
 backports.zoneinfo;python_version<"3.9"
-channels==1.0.2
+channels==4.0.0
+channels-redis==4.0.0
 cloudinary==1.29.0
 constantly==15.1.0
 crispy-bootstrap5==0.6
-daphne==3.0.2
+daphne==4.0.0
 Deprecated==1.2.13
 dj-database-url==1.0.0
 dj3-cloudinary-storage==0.0.6
@@ -23,6 +24,7 @@ django-sslserver==0.22
 gunicorn==20.1.0
 hyperlink==21.0.0
 incremental==21.3.0
+msgpack==1.0.4
 msgpack-python==0.5.6
 oauthlib==3.2.1
 Pillow==9.2.0
