@@ -32,10 +32,10 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 DEBUG = False
 
 
-ALLOWED_HOSTS = ['helpukr.herokuapp.com', 'localhost', '8000-okserm-helpu-4vq7cec76g9.ws-eu70.gitpod.io']
+ALLOWED_HOSTS = ['helpukr.herokuapp.com', 'localhost', '8000-okserm-helpu-4vq7cec76g9.ws-eu71.gitpod.io']
 
 
-CSRF_TRUSTED_ORIGINS = ['https://*.8000-okserm-helpu-4vq7cec76g9.ws-eu70.gitpod.io', 'https://*.helpukr.herokuapp.com', 'https://*.facebook.com', 'https://*.google.com']
+CSRF_TRUSTED_ORIGINS = ['https://*.8000-okserm-helpu-4vq7cec76g9.ws-eu71.gitpod.io', 'https://*.helpukr.herokuapp.com', 'https://*.facebook.com', 'https://*.google.com']
 
 
 ACCOUNT_EMAIL_VERIFICATION = 'none'
@@ -44,6 +44,9 @@ ACCOUNT_EMAIL_VERIFICATION = 'none'
 # Application definition
 
 INSTALLED_APPS = [
+    'daphne',
+    'channels',
+    'channels_redis',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -64,6 +67,7 @@ INSTALLED_APPS = [
     "crispy_bootstrap5",
     'main',
     'users',
+    'messenger',
 ]
 
 
@@ -116,7 +120,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'help_u.wsgi.application'
-
+ASGI_APPLICATION = "help_u.asgi.application"
 
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
@@ -267,4 +271,13 @@ SOCIALACCOUNT_PROVIDERS = {
             'access_type': 'offline',
         }
     }
+}
+
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels_redis.core.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": [(os.environ.get("REDIS_HOST"), os.environ.get("REDIS_PORT"))],
+        },
+    },
 }
