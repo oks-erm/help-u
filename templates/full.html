@@ -82,7 +82,7 @@
                         <a href="{% url 'main:update' post.slug %}" class="btn btn-primary px-4">Update</a>
                         <a href="{% url 'main:delete' post.slug %}" class="btn btn-secondary px-4">Delete</a>
                         {% else %}
-                        <button type="button" class="btn btn-primary">Contact {{post.author}}</button>
+                        <a href="{% url 'messages:messages_with_path' 'conv' %}{{user.id}}_{{post.author.user.id}}?q=conv{{user.id}}_{{post.author.user.id}}" class="btn btn-primary">Contact {{post.author}}</a>
                         {% if post.type == 'give' %}
                         <!-- <button type="button" class="btn btn-success">Say Thank You</button> -->
                         <button class="btn btn-success" type="button" data-bs-toggle="collapse"

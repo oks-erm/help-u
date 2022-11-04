@@ -14,3 +14,5 @@ urlpatterns = [
     path('<slug:slug>/', views.PostFull.as_view(), name='full'),
     path('<slug:slug>/bookmark', views.BookMark.as_view(), name='bookmark'),
 ]
+
+

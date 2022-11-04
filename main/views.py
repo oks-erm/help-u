@@ -1,11 +1,11 @@
-from django.shortcuts import render, get_object_or_404,redirect, reverse
-from django.views import generic, View
-from django.contrib.auth.decorators import login_required
+from django.shortcuts import render, get_object_or_404, reverse
+from django.views import generic
 from django.template.loader import render_to_string
 from django.http import JsonResponse, Http404, HttpResponse
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import ContactFormMessage, Post, Comment
 from .forms import CreatePostForm
+from .serialisers import CustomUserSerializer
 import os
 if os.path.exists('env.py'):
     import env
@@ -16,11 +16,6 @@ API_KEY = os.environ.get('GOOGLE_MAPS_API_KEY')
 
 class LandingView(generic.TemplateView):
     template_name = "index.html"
-
-    # def dispatch(self, request, *args, **kwargs):
-    #     if request.user.is_authenticated:
-    #         return redirect(reverse('posts_list', kwargs={'type': 'all'}))
-    #     return super().dispatch(request, *args, **kwargs)
 
     def post(self, request):
         new = ContactFormMessage(
@@ -160,3 +155,4 @@ class BookMark(generic.View):
             post.favourite.add(request.user.userprofile.id)
 
         return HttpResponse("")
+

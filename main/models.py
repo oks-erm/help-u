@@ -3,14 +3,12 @@ from django.db import models
 from django.shortcuts import redirect
 from django.db.models.signals import post_save
 from django.contrib.auth.models import AbstractUser
-from django.dispatch import receiver
-from .managers import CustomUserManager
-from allauth.account.signals import email_confirmed
 from django.urls import reverse
 from django.utils.html import mark_safe
 from django.template.defaultfilters import slugify
 from cloudinary.models import CloudinaryField
 from django_countries.fields import CountryField
+from .managers import CustomUserManager
 
 
 STATUS = ((0, "Pending"), (1, "Approved"))

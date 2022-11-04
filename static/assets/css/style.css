@@ -813,6 +813,34 @@ body {
     #div_id_image div div.input-group.mb-2 {
       display: none;
     }
+
+
+  /*----------------------------------------------------Chat*/
+    #js-framework-home {
+      overflow-y: scroll;
+      height: 80vh;
+      margin-bottom: -30px;
+      width: 50vw;
+    }
+
+    @media (max-width: 768px){
+      #js-framework-home {
+      width: 75vw;
+      }
+    }
+
+    @media (max-width: 460px){
+      #js-framework-home {
+      width: 95vw;
+      }
+    }
+
+    @media (min-width: 1200px){
+      #js-framework-home {
+      width: 36vw;
+      }
+    }
+
   /*----------------------------------------------------Account*/
     .login-block {
       margin-top: 6%;

@@ -15,11 +15,22 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from rest_framework import routers
+from messenger.api.views import ConversationViewSet, CustomUserViewSet
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('messages/', include('messenger.urls', namespace="messages")),
     path('', include('main.urls', namespace="main")),
     path('users/', include('users.urls', namespace="users")),
-    path('accounts/', include('allauth.urls'))
+    path('accounts/', include('allauth.urls')),
+
 ]
+
+
+router = routers.DefaultRouter()
+router.register('api/users', CustomUserViewSet, basename='Users')
+router.register("api/conversations", ConversationViewSet, basename='Conversations')
+
+urlpatterns += router.urls
