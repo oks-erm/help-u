@@ -817,9 +817,8 @@ body {
 
   /*----------------------------------------------------Chat*/
     #js-framework-home {
-      overflow-y: scroll;
       height: 80vh;
-      margin-bottom: -30px;
+      margin-bottom: -50px;
       width: 50vw;
     }
 

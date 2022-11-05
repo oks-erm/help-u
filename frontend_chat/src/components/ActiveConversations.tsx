@@ -40,20 +40,20 @@ export default function ActiveConversations() {
       <Card>
       <Card.Header
       style={{
-        fontSize: "21px",
+        fontSize: "18px",
         background: "#499ef5",
         color: "#f8fbfe"
     }}
       className="px-4">
           Chats
       </Card.Header>
-      <ListGroup variant="flush">
+      <ListGroup variant='flush'>
       {conversations.map((c) => (
           <ListGroup.Item action
           className="py-0">
-        <Link 
-          to={`/chat/${createConversationName(c.other_user.id)}`}
-          key={c.other_user.id}
+        <Link
+          to={`/chat/${createConversationName(c.other_user.id)}?conversation=${createConversationName(c.other_user.id)}`}
+          key={createConversationName(c.other_user.id)}
         >
           <div className="px-3">
             <div
