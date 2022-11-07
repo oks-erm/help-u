@@ -9,11 +9,11 @@
       <!-- Navbar -->
       <nav id="navbar" class="navbar">
         {% if user.is_authenticated %}
-        <span id="user-name" class="nav-link"><a href="{%  url 'users:profile' user.userprofile.id %}" class="fw-semibold"><i class='bx bxs-user-circle'></i>&nbsp;{{ user.first_name }}</a></span>
-        {% endif %}
+        <span id="user-name" class="nav-link"><a href="{%  url 'users:profile' user.userprofile.id %}" class="fw-semibold"><i class='bx bxs-user-circle'></i>&nbsp;{{ user }}</a></span>
+        <a href="{% url 'messages:conv_list' %}" class="px-0"><i class='bx bx-envelope fs-6 text position-relative' id="messages">{% include "unread.html" %}</i></a>
+        {% endif %} 
         <ul>
           
-
           {% if request.get_full_path == '/' %}
           <li><a class="nav-link scrollto active" href="#hero">Home</a></li>
           <li><a class="nav-link scrollto" href="#about">About</a></li>

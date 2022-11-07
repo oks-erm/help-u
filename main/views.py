@@ -4,6 +4,7 @@ from django.template.loader import render_to_string
 from django.http import JsonResponse, Http404, HttpResponse
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import ContactFormMessage, Post, Comment
+from messenger.models import Message
 from .forms import CreatePostForm
 from .serialisers import CustomUserSerializer
 import os
@@ -154,5 +155,10 @@ class BookMark(generic.View):
         else:
             post.favourite.add(request.user.userprofile.id)
 
-        return HttpResponse("")
+        return HttpResponse("",)
 
+
+def messages(request):
+    unread_count = Message.objects.filter(to_user=request.user, read=False).count()
+    context = {'unread': unread_count}
+    return JsonResponse(context)

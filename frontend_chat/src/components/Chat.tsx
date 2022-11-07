@@ -34,20 +34,20 @@ export default function Chat() {
       onMessage: (e) => {
         const data = JSON.parse(e.data)
         switch (data.type) {
-          case 'welcome_message':
-            setWelcomeMessage(data.message)
-            break;
           case 'chat_message_echo':
             setMessageHistory((prev: any) => [data.message, ...prev]);
+            sendJsonMessage({
+              type: "read_messages",
+            });
+            break;
+          case "last_50_messages":
+            setMessageHistory(data.messages);
+            setHasMoreMessages(data.has_more);
+            setToUser(data.to_user)
             break;
           default:
             console.error('Unknown message type!');
             break;
-            case "last_50_messages":
-              setMessageHistory(data.messages);
-              setHasMoreMessages(data.has_more);
-              setToUser(data.to_user)
-              break;
         }
       }
     });
@@ -93,8 +93,6 @@ export default function Chat() {
         setMessageHistory((prev: MessageModel[]) => prev.concat(data.results));
       }
     }
-
-    const ID = JSON.parse(document.getElementById('id').textContent);
   
     function handleChangeMessage(e: any) {
       setMessage(e.target.value)
@@ -163,7 +161,7 @@ export default function Chat() {
             </InfiniteScroll>
         </div>
       </Card>
-      
+
       <div className="d-flex">
         <Form.Control 
           style={{ 

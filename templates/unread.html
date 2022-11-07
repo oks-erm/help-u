@@ -1,0 +1,16 @@
+<span id="count" class="position-absolute bottom-100 start-50 badge rounded-pill bg-danger">
+    <span class="visually-hidden">unread messages</span>
+  </span>
+<script>
+    $.ajax({
+        type: 'GET',
+        url: "{% url 'main:unread' %}",
+        contentType: "application/json",
+        success: function (response) {
+            $('#count').html(response['unread'])
+        },
+        error: function (error) {
+            console.log(error)
+        },
+    })
+</script>

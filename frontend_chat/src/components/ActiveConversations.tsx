@@ -2,13 +2,17 @@ import React, { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ConversationModel } from '../models/Conversation';
 import Card from 'react-bootstrap/Card';
+import Badge from 'react-bootstrap/Badge';
 import ListGroup from 'react-bootstrap/ListGroup';
+import { NotificationContext } from "../contexts/NotificationContext.tsx";
+
 
 export default function ActiveConversations() {
   const [conversations, setActiveConversations] = useState<ConversationModel[]>(
     []
   );
   const id = JSON.parse(document.getElementById('id').textContent);
+  const { unreadMessageCount } = useContext(NotificationContext);
 
   useEffect(() => {
     async function fetchConversations() {
@@ -48,28 +52,37 @@ export default function ActiveConversations() {
           }}
           className="px-4"
         >
-          Chats
+          Conversations
+          {unreadMessageCount > 0 && (
+                        <Badge pill bg="warning" 
+                        style={{height: "fit-content"}}
+                        text="dark"
+                        className="mx-2"
+                        >{unreadMessageCount}</Badge>
+                      )}
         </Card.Header>
         <ListGroup variant="flush">
           {conversations.map((c) => (
-            <ListGroup.Item action className="py-0">
+            <ListGroup.Item action className="py-0"
+            key={createConversationName(c.other_user.id)}>
               <Link
                 to={`/chat/${createConversationName(
                   c.other_user.id
                 )}?conversation=${createConversationName(c.other_user.id)}`}
-                key={createConversationName(c.other_user.id)}
+                
               >
                 <div className="px-3">
                   <div
                     className="d-flex"
                     style={{
                       flexDirection: 'row',
-                      justifyContent: 'space-between',
+                      justifyContent: 'space-between'
                     }}
                   >
                     <Card.Title>
-                      {c.other_user.first_name} {c.other_user.last_name}
+                      {c.other_user.first_name} {c.other_user.last_name}   
                     </Card.Title>
+                    
                     <p className="text-muted align-self-end mb-0">
                       {formatMessageTimestamp(c.last_message?.timestamp)}
                     </p>

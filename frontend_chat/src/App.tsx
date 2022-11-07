@@ -7,13 +7,16 @@ import {
 } from "react-router-dom";
 import Chat from "./components/Chat.tsx";
 import ActiveConversations from "./components/ActiveConversations.tsx";
-
+import { NotificationContextProvider } from "./contexts/NotificationContext.tsx";
 
 export default function App() {
     return (
       <Router basename='/messages/'>
         <Routes>
-          <Route path="" element={<ActiveConversations />} />
+          <Route path="" element={
+            <NotificationContextProvider>
+              <ActiveConversations />
+            </NotificationContextProvider>} />
           <Route path="chat/:conversationName" element={<Chat />} />
         </Routes>
       </Router>
