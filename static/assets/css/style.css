@@ -453,10 +453,6 @@ body {
     font-size: 26px;
   }
   
-  /* .about .content p:last-child {
-    margin-bottom: 0;
-  } */
-  
   .btn-learn-more {
     font-family: "Raleway", sans-serif;
     font-weight: 600;
@@ -673,7 +669,8 @@ body {
 
   /*----------------------------------------------------Search*/
   #search {
-    background: url(../img/background.png);
+    background: url("https://res.cloudinary.com/okscloud/image/upload/v1663294580/static/assets/img/background.0ebb0f1ba3d5.png") top center;
+    background-size: cover;
     height: 370px;
   }
 
@@ -764,12 +761,12 @@ body {
     }
 
     #full-post img {
-      /* width: -webkit-fill-available; */
       overflow: hidden;
       max-height: 70vh;
       min-width: 38vw;
       object-fit: contain;
       margin-bottom: 20px;
+      min-inline-size: -webkit-fill-available;
     }
 
     #full-post .created {
