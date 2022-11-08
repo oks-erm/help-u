@@ -21,6 +21,8 @@ django-countries==7.3.2
 django-crispy-forms==1.14.0
 django-model-utils==4.2.0
 django-sslserver==0.22
+djangorestframework==3.14.0
+djangorestframework-simplejwt==5.2.2
 gunicorn==20.1.0
 hyperlink==21.0.0
 incremental==21.3.0
