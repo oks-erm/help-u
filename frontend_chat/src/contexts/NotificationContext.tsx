@@ -16,7 +16,7 @@ export const NotificationContext = createContext<NotificationProps>(DefaultProps
 export const NotificationContextProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [unreadMessageCount, setUnreadMessageCount] = useState(0);
 
-  const { readyState } = useWebSocket( `wss://8000-okserm-helpu-4vq7cec76g9.ws-eu74.gitpod.io/notifications/`, {
+  const { readyState } = useWebSocket( `wss://helpukr.herokuapp.com/notifications/`, {
     onOpen: () => {
       console.log("Connected to Notifications!");
     },

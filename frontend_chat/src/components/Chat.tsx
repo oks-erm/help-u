@@ -24,7 +24,7 @@ export default function Chat() {
       messagesEndRef.current.scrollIntoView({ behavior: "smooth", block: "nearest" });
     };
   
-    const { readyState, sendJsonMessage } = useWebSocket(`wss://8000-okserm-helpu-4vq7cec76g9.ws-eu74.gitpod.io/messages/chat/${conversationName}`, {
+    const { readyState, sendJsonMessage } = useWebSocket(`wss://helpukr.herokuapp.com//messages/chat/${conversationName}`, {
       onOpen: () => {
         console.log("Connected!")
       },
@@ -72,7 +72,7 @@ export default function Chat() {
   
     async function fetchMessages() {
       const apiRes = await fetch(
-        `https://8000-okserm-helpu-4vq7cec76g9.ws-eu74.gitpod.io/api/messages/?conversation=${conversationName}&page=${page}`,
+        `https://helpukr.herokuapp.com/api/messages/?conversation=${conversationName}&page=${page}`,
         {
           method: "GET",
           headers: {
