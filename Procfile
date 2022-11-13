@@ -1,1 +1,1 @@
-web: gunicorn help_u.wsgi
+web: bin/start-stunnel daphne help_u.asgi:application --port $PORT --bind 0.0.0.0 -v2

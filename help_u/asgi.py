@@ -22,7 +22,6 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'help_u.settings')
 
 django_application = get_asgi_application()
 
-
 from . import routing  # noqa isort:skip
 
 from channels.routing import ProtocolTypeRouter, URLRouter  # noqa isort:skip
@@ -30,7 +29,7 @@ from channels.routing import ProtocolTypeRouter, URLRouter  # noqa isort:skip
 
 application = ProtocolTypeRouter(
     {
-        "http": get_asgi_application(),
+        "http": django_application,
         "websocket": AllowedHostsOriginValidator(
             AuthMiddlewareStack(
                 URLRouter(routing.websocket_urlpatterns))),
