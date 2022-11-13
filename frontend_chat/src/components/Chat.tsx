@@ -24,7 +24,7 @@ export default function Chat() {
       messagesEndRef.current.scrollIntoView({ behavior: "smooth", block: "nearest" });
     };
   
-    const { readyState, sendJsonMessage } = useWebSocket(`wss://helpukr.herokuapp.com//messages/chat/${conversationName}`, {
+    const { readyState, sendJsonMessage } = useWebSocket(`wss://helpukr.herokuapp.com/messages/chat/${conversationName}`, {
       onOpen: () => {
         console.log("Connected!")
       },
