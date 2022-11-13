@@ -276,7 +276,7 @@ CHANNEL_LAYERS = {
     "default": {
         "BACKEND": "channels_redis.core.RedisChannelLayer",
         "CONFIG": {
-            "hosts": [(REDIS_URL, os.environ.get("REDIS_PORT"))]
+            "hosts": [(os.environ.get("REDISCLOUD_URL", "REDIS_PORT"))]
         },
     },
 }
@@ -284,7 +284,7 @@ CHANNEL_LAYERS = {
 CACHES = {
     "default": {
         "BACKEND": "django_redis.cache.RedisCache",
-        "LOCATION": REDIS_URL,
+        "LOCATION": os.environ.get("REDISCLOUD_URL"),
         "OPTIONS": {
             "PASSWORD": os.environ.get("REDIS_PASSWORD"),
             "CLIENT_CLASS": "django_redis.client.DefaultClient"
