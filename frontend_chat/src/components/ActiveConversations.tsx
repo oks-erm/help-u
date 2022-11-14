@@ -13,6 +13,7 @@ export default function ActiveConversations() {
   );
   const id = JSON.parse(document.getElementById('id').textContent);
   const { unreadMessageCount } = useContext(NotificationContext);
+  const { eachUser } = useContext(NotificationContext);
 
   useEffect(() => {
     async function fetchConversations() {
@@ -81,8 +82,12 @@ export default function ActiveConversations() {
                   >
                     <Card.Title>
                       {c.other_user.first_name} {c.other_user.last_name}   
+                      <Badge pill bg="primary" 
+                        style={{height: "fit-content"}}
+                        className="mx-2"
+                        >{eachUser[c.other_user.id]}</Badge>
                     </Card.Title>
-                    
+
                     <p className="text-muted align-self-end mb-0">
                       {formatMessageTimestamp(c.last_message?.timestamp)}
                     </p>

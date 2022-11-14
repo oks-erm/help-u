@@ -18,8 +18,7 @@ class UUIDEncoder(json.JSONEncoder):
 
 class ChatConsumer(JsonWebsocketConsumer):
     """
-    This consumer is used to show user's online status,
-    and send notifications.
+    This consumer is used to send notifications.
     """
 
     def __init__(self, *args, **kwargs):
@@ -128,6 +127,9 @@ class ChatConsumer(JsonWebsocketConsumer):
 
 
 class NotificationConsumer(JsonWebsocketConsumer):
+    """
+    This consumer is used to send notifications.
+    """
     def __init__(self, *args, **kwargs):
         super().__init__(args, kwargs)
         self.notification_group_name = None
@@ -146,11 +148,17 @@ class NotificationConsumer(JsonWebsocketConsumer):
             self.channel_name,
         )
 
-        unread_count = Message.objects.filter(to_user=self.user, read=False).count()
+        have_notifications = Message.objects.filter(to_user=self.user, read=False)
+        unread_count = have_notifications.count()
+        from_user = [item.from_user.id for item in have_notifications]
+        print(from_user)
+        each = {fr_user: have_notifications.filter(from_user=fr_user).count() for fr_user in from_user}
+        print(each)
         self.send_json(
             {
                 "type": "unread_count",
                 "unread_count": unread_count,
+                "each": each,
             }
         )
 

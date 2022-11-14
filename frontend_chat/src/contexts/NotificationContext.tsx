@@ -3,18 +3,21 @@ import useWebSocket, { ReadyState } from "react-use-websocket";
 
 const DefaultProps = {
   unreadMessageCount: 0,
-  connectionStatus: "Uninstantiated"
+  connectionStatus: "Uninstantiated",
+  eachUser: {},
 };
 
 export interface NotificationProps {
   unreadMessageCount: number;
   connectionStatus: string;
+  eachUser: any;
 }
 
 export const NotificationContext = createContext<NotificationProps>(DefaultProps);
 
 export const NotificationContextProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [unreadMessageCount, setUnreadMessageCount] = useState(0);
+  const [eachUser, setEachUser] = useState("");
 
   const { readyState } = useWebSocket( `wss://helpukr.herokuapp.com/notifications/`, {
     onOpen: () => {
@@ -31,6 +34,7 @@ export const NotificationContextProvider: React.FC<{ children: ReactNode }> = ({
           break;
         case "unread_count":
           setUnreadMessageCount(data.unread_count);
+          setEachUser(data.each);
           break;
         case "new_message_notification":
           setUnreadMessageCount((count) => (count += 1));
@@ -48,7 +52,7 @@ export const NotificationContextProvider: React.FC<{ children: ReactNode }> = ({
   }[readyState];
 
   return (
-    <NotificationContext.Provider value={{ unreadMessageCount, connectionStatus }}>
+    <NotificationContext.Provider value={{ unreadMessageCount, connectionStatus, eachUser }}>
       {children}
     </NotificationContext.Provider>
   );
