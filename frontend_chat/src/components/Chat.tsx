@@ -12,7 +12,6 @@ import Card from 'react-bootstrap/Card';
 
 
 export default function Chat() {
-    const [welcomeMessage, setWelcomeMessage] = useState("");
     const [messageHistory, setMessageHistory] = useState<any>([]);
     const [message, setMessage] = useState("");
     const { conversationName } = useParams();
