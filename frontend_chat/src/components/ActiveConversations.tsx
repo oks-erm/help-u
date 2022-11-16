@@ -28,7 +28,7 @@ export default function ActiveConversations() {
           }
         );
     }
-    fetchConversations();
+    fetchConversations();  
   });
 
   function createConversationName(user_id: string) {
@@ -41,6 +41,13 @@ export default function ActiveConversations() {
     const date = new Date(timestamp);
     return date.toLocaleTimeString().slice(0, 5);
   }
+
+  function getNotifications(user_id: string) { 
+      let pickUser = eachUser.find((x: any) => x[0] == user_id);
+      if (pickUser != undefined) {
+        return pickUser[1];
+    };
+};
 
   return (
     <div>
@@ -55,37 +62,47 @@ export default function ActiveConversations() {
         >
           Conversations
           {unreadMessageCount > 0 && (
-                        <Badge pill bg="warning" 
-                        style={{height: "fit-content"}}
-                        text="dark"
-                        className="mx-2"
-                        >{unreadMessageCount}</Badge>
-                      )}
+            <Badge
+              pill
+              bg="warning"
+              style={{ height: 'fit-content' }}
+              text="dark"
+              className="mx-2"
+            >
+              {unreadMessageCount}
+            </Badge>
+          )}
         </Card.Header>
         <ListGroup variant="flush">
           {conversations.map((c) => (
-            <ListGroup.Item action className="py-0"
-            key={createConversationName(c.other_user.id)}>
+            <ListGroup.Item
+              action
+              className="py-0"
+              key={createConversationName(c.other_user.id)}
+            >
               <Link
                 to={`/chat/${createConversationName(
                   c.other_user.id
                 )}?conversation=${createConversationName(c.other_user.id)}`}
-                
               >
                 <div className="px-3">
                   <div
                     className="d-flex"
                     style={{
                       flexDirection: 'row',
-                      justifyContent: 'space-between'
+                      justifyContent: 'space-between',
                     }}
                   >
                     <Card.Title>
-                      {c.other_user.first_name} {c.other_user.last_name}   
-                      <Badge pill bg="primary" 
-                        style={{height: "fit-content"}}
+                      {c.other_user.first_name} {c.other_user.last_name}
+                      <Badge
+                        pill
+                        bg="primary"
+                        style={{ height: 'fit-content' }}
                         className="mx-2"
-                        >{eachUser[c.other_user.id]}</Badge>
+                      >
+                        {getNotifications(c.other_user.id)}
+                      </Badge>
                     </Card.Title>
 
                     <p className="text-muted align-self-end mb-0">
