@@ -85,6 +85,7 @@ class ChatConsumer(JsonWebsocketConsumer):
                 },
                 )
 
+
             notification_group_name = str(self.get_receiver().id) + "__notifications"
             async_to_sync(self.channel_layer.group_send)(
                     notification_group_name,
@@ -142,12 +143,14 @@ class NotificationConsumer(JsonWebsocketConsumer):
 
         self.accept()
 
+        # private notification group
         self.notification_group_name = str(self.user.id) + "__notifications"
         async_to_sync(self.channel_layer.group_add)(
             self.notification_group_name,
             self.channel_name,
         )
 
+        # count of unread messages
         have_notifications = Message.objects.filter(to_user=self.user, read=False)
         unread_count = have_notifications.count()
         from_user = [item.from_user.id for item in have_notifications]
