@@ -38,7 +38,13 @@ export const NotificationContextProvider: React.FC<{ children: ReactNode }> = ({
           break;
         case "new_message_notification":
           setUnreadMessageCount((count) => (count += 1));
-          eachUser.find(x => x[0] == data.message.from_user.id)[1] += 1;
+          let from_user = eachUser.find(x => x[0] == data.message.from_user.id);
+          if (from_user == undefined) {
+            eachUser.push([data.message.from_user.id, 1]);
+          }
+          else {
+            eachUser.find(x => x[0] == data.message.from_user.id)[1] += 1
+          };
           break;
       }
     }
