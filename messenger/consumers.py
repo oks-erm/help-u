@@ -32,8 +32,10 @@ class ChatConsumer(JsonWebsocketConsumer):
 
         self.accept()
         self.conversation_name = f"{self.scope['url_route']['kwargs']['q']}"
+        split_name = (list(map(int, self.conversation_name[4:].split("_"))))
+        split_name.sort()
         self.conversation, created = Conversation.objects.get_or_create(
-            name=self.conversation_name
+            name=f"conv{split_name[0]}_{split_name[1]}"
             )
 
         # because group_add is asynchronous, it would not work

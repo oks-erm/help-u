@@ -14,6 +14,7 @@ export default function ActiveConversations() {
   const id = JSON.parse(document.getElementById('id').textContent);
   const { unreadMessageCount } = useContext(NotificationContext);
   const { eachUser } = useContext(NotificationContext);
+  let uniq;
 
   useEffect(() => {
     async function fetchConversations() {
@@ -74,7 +75,7 @@ export default function ActiveConversations() {
           )}
         </Card.Header>
         <ListGroup variant="flush">
-          {conversations.map((c) => (
+          {conversations.filter(conv => conv.name.slice(4).split('_').includes(String(id))).map((c) => (
             <ListGroup.Item
               action
               className="py-0"
