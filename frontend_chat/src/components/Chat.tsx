@@ -6,6 +6,7 @@ import Form from 'react-bootstrap/Form';
 import InfiniteScroll from "react-infinite-scroll-component";
 import { ChatLoader } from "./ChatLoader.tsx";
 import { MessageModel } from "../models/Message";
+import { ConversationModel } from "../models/Conversation";
 import { Message } from "./Message.tsx";
 import ListGroup from 'react-bootstrap/ListGroup';
 import Card from 'react-bootstrap/Card';
@@ -14,6 +15,9 @@ import Card from 'react-bootstrap/Card';
 export default function Chat() {
     const [messageHistory, setMessageHistory] = useState<any>([]);
     const [message, setMessage] = useState("");
+    const [conversation, setConversation] = useState<ConversationModel | null>(
+      null
+    );
     const { conversationName } = useParams();
     const [ to_user, setToUser ] = useState("");
     const [page, setPage] = useState(2);
@@ -106,6 +110,26 @@ export default function Chat() {
       })
       setMessage("")
       }
+
+    useEffect(() => {
+      async function fetchConversation() {
+        const apiRes = await fetch(
+          `https://helpukr.herokuapp.com/api/conversations/${conversationName}/`,
+          {
+            method: "GET",
+            headers: {
+              Accept: "application/json",
+              "Content-Type": "application/json",
+            },
+          }
+        );
+        if (apiRes.status === 200) {
+          const data: ConversationModel = await apiRes.json();
+          setConversation(data);
+        }
+      }
+      fetchConversation();
+    }, [conversationName]);
   
     return (
       <div className="ms-2 me-2" >        
