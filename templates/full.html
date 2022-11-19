@@ -15,9 +15,10 @@
                         {% cloudinary post.image %}
                         {% endif %}
 
-                        {% if comments %}
+                        
                         <div id="comments-block">
                             <div class="accordion-item">
+                                {% if comments %}
                               <h2 class="accordion-header" id="comments-heading">
                                 <button class="accordion-button collapsed fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#comments" aria-expanded="false" aria-controls="comments">
                                   Comments ({{ comments.count }})
@@ -44,9 +45,10 @@
                                     {% endfor %}
                                 </div>
                               </div>
+                              {% endif %}
                             </div>
                           </div>
-                    {% endif %}
+                   
 
                 </div>
                 <div class="col-lg-6">
@@ -152,7 +154,8 @@
             },
             success: (response) => {
                 $('#comments').addClass('show');
-                $('.accordion-body').append(
+                let element = $('.accordion-body').length ? $('.accordion-body:last-child') : $('#comments-block');
+                $(element).append(
                     `<div class="card border-0 comment">
                         <div class="row g-0">
                             <div class="col-3 d-flex justify-content-end align-items-center">
@@ -167,16 +170,16 @@
                                 </div>
                             </div>
                         </div>
-                    </div>`)
+                    </div>`);
                 $('#body').val('');
-                $('body, html').animate({ scrollTop: $(".comment").offset().top }, 300);
+                $('body, html').animate({ scrollTop: $(element).offset().top }, 300);
             },
             error: () => {
                 $(".error-message").css('display', 'block');
             }
         })
     });
-    
+
     if ($(window).width() > 991) {
             $('#comments').addClass('show');
         } 
