@@ -111,10 +111,15 @@ export default function Chat() {
       setMessage("")
       }
 
+    function transformConversationName(conversationName: string) {
+      const split = conversationName?.slice(4).split('_').sort((a, b) => {return a - b});
+      return `conv${split[0]}_${split[1]}`;
+    }
+
     useEffect(() => {
       async function fetchConversation() {
         const apiRes = await fetch(
-          `https://helpukr.herokuapp.com/api/conversations/${conversationName}/`,
+          `https://helpukr.herokuapp.com/api/conversations/${transformConversationName(conversationName)}/`,
           {
             method: "GET",
             headers: {

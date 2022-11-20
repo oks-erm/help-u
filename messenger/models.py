@@ -6,21 +6,10 @@ from main.models import CustomUser
 class Conversation(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     name = models.CharField(max_length=128)
-    online = models.ManyToManyField(to=CustomUser, blank=True)
-
-    def get_online_count(self):
-        return self.online.count()
-
-    def join(self, user):
-        self.online.add(user)
-        self.save()
-
-    def leave(self, user):
-        self.online.remove(user)
-        self.save()
+    members = models.ManyToManyField(CustomUser, blank=True)
 
     def __str__(self):
-        return f"{self.name} ({self.get_online_count()})"
+        return f"{self.name}"
 
 
 class Message(models.Model):

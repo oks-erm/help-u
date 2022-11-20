@@ -9,6 +9,7 @@ from main.models import CustomUser
 
 
 class UUIDEncoder(json.JSONEncoder):
+
     def default(self, obj):
         if isinstance(obj, UUID):
             # if the obj is uuid, we simply return the value of uuid
@@ -29,15 +30,20 @@ class ChatConsumer(JsonWebsocketConsumer):
 
     def connect(self):
         self.user = self.scope['user']
+        if not self.user.is_authenticated:
+            return
 
         self.accept()
         self.conversation_name = f"{self.scope['url_route']['kwargs']['q']}"
         split_name = (list(map(int, self.conversation_name[4:].split("_"))))
         split_name.sort()
+        print(split_name)
         self.conversation, created = Conversation.objects.get_or_create(
             name=f"conv{split_name[0]}_{split_name[1]}"
-            )
-
+        )
+        for user_id in split_name:
+            self.conversation.members.add(CustomUser.objects.get(id=user_id))
+            
         # because group_add is asynchronous, it would not work
         # without being converted to a synchronous function
         async_to_sync(self.channel_layer.group_add)(
@@ -48,14 +54,15 @@ class ChatConsumer(JsonWebsocketConsumer):
         messages = self.conversation.messages.all().order_by("-timestamp")[0:50]
         user = self.get_receiver()
         message_count = self.conversation.messages.all().count()
-        self.send_json(
-            {
-                "type": "last_50_messages",
-                "messages": MessageSerializer(messages, many=True).data,
-                "to_user": CustomUserSerializer(user).data,
-                "has_more": message_count > 50,
-            }
-        )
+        if self.user in self.conversation.members.all():
+            self.send_json(
+                {
+                    "type": "last_50_messages",
+                    "messages": MessageSerializer(messages, many=True).data,
+                    "to_user": CustomUserSerializer(user).data,
+                    "has_more": message_count > 50,
+                }
+            )
 
     def disconnect(self, code):
         print("Disconnected!")
@@ -82,11 +89,10 @@ class ChatConsumer(JsonWebsocketConsumer):
                 self.conversation_name,
                 {
                     "type": "chat_message_echo",
-                    "name": self.user.id,
+                    "user_id": self.user.id,
                     "message": MessageSerializer(message).data,
                 },
                 )
-
 
             notification_group_name = str(self.get_receiver().id) + "__notifications"
             async_to_sync(self.channel_layer.group_send)(

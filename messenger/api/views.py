@@ -9,7 +9,6 @@ from messenger.api.serialisers import ConversationSerializer, CustomUserSerializ
 from messenger.models import Conversation, Message
 
 
-
 class ConversationViewSet(ListModelMixin, RetrieveModelMixin, GenericViewSet):
     serializer_class = ConversationSerializer
     queryset = Conversation.objects.none()
@@ -27,8 +26,6 @@ class ConversationViewSet(ListModelMixin, RetrieveModelMixin, GenericViewSet):
 
 class CustomUserViewSet(ModelViewSet):
     serializer_class = CustomUserSerializer
-    # queryset = CustomUser.objects.all()
-    # lookup_field = "username"
 
     def get_queryset(self):
         return [self.request.user]
@@ -50,9 +47,10 @@ class MessageViewSet(ListModelMixin, GenericViewSet):
         conversation_name = self.request.GET.get("conversation")
         queryset = (
             Message.objects.filter(
-                conversation__name__contains=self.request.user.id,
+                to_user=self.request.user.id, from_user=self.request.user.id
             )
             .filter(conversation__name=conversation_name)
             .order_by("-timestamp")
         )
+        print(queryset)
         return queryset
