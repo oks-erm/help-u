@@ -134,7 +134,7 @@ export default function Chat() {
         }
       }
       fetchConversation();
-    }, [conversationName]);
+    }, [transformConversationName(conversationName)]);
   
     return (
       <div className="ms-2 me-2" >        
