@@ -198,6 +198,7 @@ export default function Chat() {
           <InfiniteScroll
             dataLength={messageHistory.length}
             next={fetchMessages}
+            
             className="d-flex"
             style={{
               flexDirection: 'column-reverse',

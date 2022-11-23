@@ -3,6 +3,7 @@ from rest_framework.mixins import ListModelMixin, RetrieveModelMixin
 from rest_framework.decorators import action
 from rest_framework import status
 from rest_framework.response import Response
+from django.db.models import Q
 from messenger.api.pagynaters import MessagePagination
 from main.models import CustomUser
 from messenger.api.serialisers import ConversationSerializer, CustomUserSerializer, MessageSerializer
@@ -47,7 +48,8 @@ class MessageViewSet(ListModelMixin, GenericViewSet):
         conversation_name = self.request.GET.get("conversation")
         queryset = (
             Message.objects.filter(
-                to_user=self.request.user.id, from_user=self.request.user.id
+                Q(to_user=self.request.user.id) |
+                Q(from_user=self.request.user.id)
             )
             .filter(conversation__name=conversation_name)
             .order_by("-timestamp")
