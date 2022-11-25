@@ -6,9 +6,11 @@ import { Link, useParams } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import InfiniteScroll from 'react-infinite-scroll-component';
+// @ts-ignore
 import { ChatLoader } from './ChatLoader.tsx';
 import { MessageModel } from '../models/Message';
 import { ConversationModel } from '../models/Conversation';
+// @ts-ignore
 import { Message } from './Message.tsx';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Card from 'react-bootstrap/Card';

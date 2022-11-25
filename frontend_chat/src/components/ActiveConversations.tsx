@@ -4,17 +4,21 @@ import { ConversationModel } from '../models/Conversation';
 import Card from 'react-bootstrap/Card';
 import Badge from 'react-bootstrap/Badge';
 import ListGroup from 'react-bootstrap/ListGroup';
+// @ts-ignore
 import { NotificationContext } from "../contexts/NotificationContext.tsx";
+
+
 
 
 export default function ActiveConversations() {
   const [conversations, setActiveConversations] = useState<ConversationModel[]>(
     []
   );
-  const id = JSON.parse(document.getElementById('id').textContent);
-  const { unreadMessageCount } = useContext(NotificationContext);
-  const { eachUser } = useContext(NotificationContext);
-  let uniq;
+  const id = JSON.parse(document.getElementById('id')!.textContent!); 
+  // @ts-ignore
+  const { unreadMessageCount } = useContext(NotificationContext);  
+   // @ts-ignore
+  const { eachUser } = useContext(NotificationContext); 
 
   useEffect(() => {
     async function fetchConversations() {

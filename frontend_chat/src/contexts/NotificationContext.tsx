@@ -1,3 +1,4 @@
+import { AnyAaaaRecord } from "dns";
 import React, { createContext, ReactNode, useContext, useState } from "react";
 import useWebSocket, { ReadyState } from "react-use-websocket";
 
@@ -17,7 +18,7 @@ export const NotificationContext = createContext<NotificationProps>(DefaultProps
 
 export const NotificationContextProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [unreadMessageCount, setUnreadMessageCount] = useState(0);
-  const [eachUser, setEachUser] = useState(Array<Array<number>>);
+  const [eachUser, setEachUser] = useState([] as any);
 
   const { readyState } = useWebSocket( `wss://helpukr.herokuapp.com/notifications/`, {
     onOpen: () => {
@@ -38,12 +39,12 @@ export const NotificationContextProvider: React.FC<{ children: ReactNode }> = ({
           break;
         case "new_message_notification":
           setUnreadMessageCount((count) => (count += 1));
-          let from_user = eachUser.find(x => x[0] == data.message.from_user.id);
+          let from_user = eachUser.find((x: any) => x[0] == data.message.from_user.id);
           if (from_user == undefined) {
             eachUser.push([data.message.from_user.id, 1]);
           }
           else {
-            eachUser.find(x => x[0] == data.message.from_user.id)[1] += 1
+            eachUser.find((x: any) => x[0] == data.message.from_user.id)[1] += 1
           };
           break;
       }

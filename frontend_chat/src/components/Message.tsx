@@ -1,6 +1,6 @@
 import React from "react";
+// @ts-ignore
 import { MessageModel } from "../models/Message.ts";
-import ListGroup from 'react-bootstrap/ListGroup';
 import Alert from 'react-bootstrap/Alert';
 
 
@@ -9,7 +9,7 @@ export function classNames(...classes: any) {
 }
 
 export function Message({ message }: { message: MessageModel }) {
-  const id = JSON.parse(document.getElementById('id').textContent); 
+  const id = JSON.parse(document.getElementById('id')!.textContent!); 
 
   function formatMessageTimestamp(timestamp: string) {
     const date = new Date(timestamp);
