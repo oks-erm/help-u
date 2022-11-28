@@ -29,16 +29,15 @@
                     {% else %}
                     <input type="checkbox" id="receive" name="receive">
                     {% endif %}
-                    <label for="receive" class="pe-5">Requests</label>
-                    <input type="checkbox" id="location" name="location">
-                    <label for="location">Near me</label>
+                    <label for="receive">Requests</label>
+
                 </div>
             </div>
         </div>
 </section>
 <section id="listings">
-            
-    {% include 'posts.html' %}
+
+        {% include 'posts.html' %}
 
 </section>
 <script type="text/javascript">
@@ -68,14 +67,13 @@
 
     let search_input = $('#search-input')
     const listings = $('#listings')
-    const endpoint = "{{ request.path }}"
     const delay_by_in_ms = 700
     let scheduled_function = false
 
-    let ajax_call = function (endpoint, request_parameters) {
+    let ajax_call = function (request_parameters) {
         $.ajax({
             type: 'GET',
-            url: endpoint,
+            url: '{{ request.path }}',
             data: request_parameters,
             contentType: "application/json",
             success: function (response) {
@@ -87,7 +85,8 @@
             error: function (error) {
                 console.log(error)
             },
-        })}
+        })
+    }
 
     search_input.on('keyup', function () {
         const request_parameters = {
@@ -98,27 +97,31 @@
             clearTimeout(scheduled_function)
         };
         // setTimeout returns the ID of the function to be executed
-        scheduled_function = setTimeout(ajax_call, delay_by_in_ms, endpoint, request_parameters);
+        scheduled_function = setTimeout(ajax_call, delay_by_in_ms, request_parameters);
     })
+
+
 </script>
 
 {% if  user.userprofile.country == "" %}
 <!-- Modal -->
 <div class="modal fade show" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-  aria-labelledby="staticBackdropLabel" style="display: block;" aria-modal="true" role="dialog">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="btn-close" id="buttonClose" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        Please, complete your user profile before browsing the posts.
-      </div>
-      <div class="modal-footer">
-        <a href="{% url 'users:update_profile' user.userprofile.id %}" class="btn btn-primary">Complete Profile</a>
-      </div>
+    aria-labelledby="staticBackdropLabel" style="display: block;" aria-modal="true" role="dialog">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="btn-close" id="buttonClose" data-bs-dismiss="modal"
+                    aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Please, complete your user profile before browsing the posts.
+            </div>
+            <div class="modal-footer">
+                <a href="{% url 'users:update_profile' user.userprofile.id %}" class="btn btn-primary">Complete
+                    Profile</a>
+            </div>
+        </div>
     </div>
-  </div>
 </div>
 <div class="modal-backdrop fade show"></div>
 {% endif %}

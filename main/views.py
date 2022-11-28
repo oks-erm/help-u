@@ -1,17 +1,22 @@
-from django.shortcuts import render, get_object_or_404, reverse
+"""
+
+"""
+from django.shortcuts import get_object_or_404, reverse
 from django.views import generic
 from django.template.loader import render_to_string
 from django.http import JsonResponse, Http404, HttpResponse
 from django.contrib.auth.mixins import LoginRequiredMixin
-from .models import ContactFormMessage, Post, Comment
+from django.contrib.messages.views import SuccessMessageMixin
+import gettext
 from messenger.models import Message
+from .models import ContactFormMessage, Post, Comment
 from .forms import CreatePostForm
-from .serialisers import CustomUserSerializer
 import os
 if os.path.exists('env.py'):
-    import env
+    import env  # noqa # pylint: disable=unused-import
 
 
+_ = gettext.gettext
 API_KEY = os.environ.get('GOOGLE_MAPS_API_KEY')
 
 
@@ -49,31 +54,43 @@ class PostList(LoginRequiredMixin, generic.ListView):
 
     def get(self, request, *args, **kwargs):
         posts = self.get_queryset()
+        paginator, page, queryset, is_paginated = self.paginate_queryset(
+                posts, 12
+            )
+
         does_req_accept_json = self.request.accepts("application/json")
-        ajax_request = self.request.headers.get("x-requested-with") == "XMLHttpRequest" and does_req_accept_json
+        ajax_request = (self.request.headers.get("x-requested-with")
+                        == "XMLHttpRequest" and does_req_accept_json)
         if ajax_request:
             if not posts:
-                html = f"There is no '{self.request.GET.get('q')}' in our base, try a different request."
+                html = (f"There is no '{self.request.GET.get('q')}'"
+                        "in our base, try a different request.")
             else:
                 html = render_to_string(
                     template_name="posts.html",
-                    context={"post_list": posts}
-                )
+                    context={
+                        'post_list': queryset,
+                        "paginator": paginator,
+                        "page_obj": page,
+                        "is_paginated": is_paginated,
+                        "key": API_KEY
+                        }
+                    )
             return JsonResponse({"html_from_view": html}, safe=False)
         else:
             self.object_list = self.get_queryset()
             allow_empty = self.get_allow_empty()
 
             if not allow_empty:
-                if self.get_paginate_by(self.object_list) is not None and hasattr(
-                    self.object_list, "exists"
-                ):
+                if (self.get_paginate_by(self.object_list)
+                        is not None and hasattr(self.object_list, "exists")):
                     is_empty = not self.object_list.exists()
                 else:
                     is_empty = not self.object_list
                 if is_empty:
                     raise Http404(
-                        _("Empty list and “%(class_name)s.allow_empty” is False.")
+                        _('Empty list and “%(class_name)s.allow_empty”'
+                          'is False.')
                         % {
                             "class_name": self.__class__.__name__,
                         }
@@ -92,11 +109,10 @@ class PostFull(LoginRequiredMixin, generic.DetailView):
     context_object_name = "post"
 
     def get_queryset(self):
-        queryset = Post.objects.filter(status=1)
+        queryset = Post.objects.filter(status=1)  # pylint: disable=no-member
         return queryset
-    
-    def post(self, request, slug, *args, **kwargs):
 
+    def post(self, request):
         new = Comment(
             post=self.get_object(),
             user=request.user.userprofile,
@@ -106,6 +122,7 @@ class PostFull(LoginRequiredMixin, generic.DetailView):
         return HttpResponse("")
 
     def get_context_data(self, **kwargs):
+        # pylint: disable=no-member
         comments = Comment.objects.filter(approved=True, post=self.object.id)
         context = super().get_context_data(**kwargs)
         context['key'] = API_KEY
@@ -113,9 +130,11 @@ class PostFull(LoginRequiredMixin, generic.DetailView):
         return context
 
 
-class PostCreateView(LoginRequiredMixin, generic.CreateView):
+class PostCreateView(LoginRequiredMixin, SuccessMessageMixin,
+                     generic.CreateView):
     template_name = "new.html"
     form_class = CreatePostForm
+    success_message = "Your post will be published after moderation"
 
     def get_success_url(self):
         return reverse('main:posts_list', kwargs={'type': self.object.type})
@@ -129,7 +148,7 @@ class PostCreateView(LoginRequiredMixin, generic.CreateView):
 class PostUpdateView(LoginRequiredMixin, generic.UpdateView):
     template_name = "update.html"
     form_class = CreatePostForm
-    queryset = Post.objects.filter(status=1)
+    queryset = Post.objects.filter(status=1)  # pylint: disable=no-member
 
     def get_success_url(self):
         return reverse('main:full', kwargs={'slug': self.object.slug})
@@ -141,14 +160,14 @@ class PostUpdateView(LoginRequiredMixin, generic.UpdateView):
 
 class PostDeleteView(LoginRequiredMixin, generic.DeleteView):
     template_name = "delete.html"
-    queryset = Post.objects.filter(status=1)
+    queryset = Post.objects.filter(status=1)  # pylint: disable=no-member
 
     def get_success_url(self):
         return reverse('main:posts_list', kwargs={'type': self.object.type})
 
 
 class BookMark(generic.View):
-    def post(self, request, slug, *args, **kwargs):
+    def post(self, request, slug):
         post = get_object_or_404(Post, slug=slug)
         if post.favourite.filter(id=request.user.id).exists():
             post.favourite.remove(request.user.userprofile.id)
@@ -159,6 +178,8 @@ class BookMark(generic.View):
 
 
 def messages(request):
-    unread_count = Message.objects.filter(to_user=request.user, read=False).count()
+    # pylint: disable=no-member
+    unread_count = Message.objects.filter(to_user=request.user,
+                                          read=False).count()
     context = {'unread': unread_count}
     return JsonResponse(context)
