@@ -1,6 +1,5 @@
 import random
 from django.db import models
-from django.shortcuts import redirect
 from django.db.models.signals import post_save
 from django.contrib.auth.models import AbstractUser
 from django.urls import reverse
@@ -14,7 +13,9 @@ from .managers import CustomUserManager
 STATUS = ((0, "Pending"), (1, "Approved"))
 ACTIVE = ((0, "Closed"), (1, "Open"))
 TYPE = (("receive", "Receive"), ("give", "Give"))
-CATEGORIES = (("items", "Items"), ("services", "Services"), ("support", "Support"))
+CATEGORIES = (("items", "Items"),
+              ("services", "Services"),
+              ("support", "Support"))
 
 
 class CustomUser(AbstractUser):
@@ -39,12 +40,16 @@ class UserProfile(models.Model):
     city = models.CharField(max_length=30, blank=True)
 
     def __str__(self):
+        # pylint: disable=no-member
         return f"{self.user.first_name} {self.user.last_name}"
-    
+
     @property
     def thumbnail_preview(self):
         if self.userpic:
-            return mark_safe('<img src="{}" width="auto" height="400" />'.format(self.userpic.url))
+            # pylint: disable=no-member
+            return mark_safe(
+                '<img src="{}" width="auto" height="400" />'.format(
+                    self.userpic.url))
         return ""
 
 
@@ -65,7 +70,8 @@ class Post(models.Model):
     relevance = models.IntegerField(choices=ACTIVE, default=1)
     type = models.CharField(choices=TYPE, max_length=10, blank=False)
     category = models.CharField(choices=CATEGORIES, max_length=10, blank=False)
-    favourite = models.ManyToManyField(UserProfile, related_name='bookmarks', blank=True)
+    favourite = models.ManyToManyField(UserProfile, related_name='bookmarks',
+                                       blank=True)
 
     class Meta:
         ordering = ["-created_on"]
@@ -74,21 +80,25 @@ class Post(models.Model):
         return f"{self.title}"
 
     def get_absolute_url(self):
-        return reverse("full", kwargs={"slug": self.slug})
+        return reverse("main:full", kwargs={"slug": self.slug})
 
     def save(self, *args, **kwargs): 
         if not self.slug:
             draft_slug = str(self.title) + str(random.random())
+            # pylint: disable=no-member
             if Post.objects.filter(slug=draft_slug).exists():
                 draft_slug = str(self.title) + str(random.random())[::-1]
             self.slug = slugify(draft_slug)
-                
+
         return super().save(*args, **kwargs)
-    
+
     @property
     def thumbnail_preview(self):
         if self.image:
-            return mark_safe('<img src="{}" width="auto" height="400" />'.format(self.image.url))
+            # pylint: disable=no-member
+            return mark_safe(
+                '<img src="{}" width="auto" height="400" />'.format(
+                    self.image.url))
         return ""
 
 
@@ -104,8 +114,8 @@ class Comment(models.Model):
     class Meta:
         ordering = ["created_on"]
 
-    # def __str__(self):
-    #     return f"Comment {self.body} by {self.user}"
+    def __str__(self):
+        return f"Comment {self.body} by {self.user}"
 
 
 class ContactFormMessage(models.Model):
@@ -120,11 +130,12 @@ class ContactFormMessage(models.Model):
         ordering = ["-date"]
 
     def __str__(self):
-        return (f"from {self.name} | subject: {self.subject}")
+        return f"from {self.name} | subject: {self.subject}"
 
 
 def post_user_created_signal(sender, instance, created, **kwargs):
     if created:
+        # pylint: disable=no-member
         UserProfile.objects.create(user=instance)
 
 
