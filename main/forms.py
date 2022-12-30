@@ -7,14 +7,16 @@ from allauth.account.forms import SignupForm
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, HTML, Submit
 from cloudinary.forms import CloudinaryFileField
-from .models import Post, Comment
+from .models import Post
 
 
 class CustomSignUpForm(SignupForm):
     first_name = CharField(max_length=30, label='First Name', required=True,
-                           widget=TextInput(attrs={'placeholder': 'First Name', 'class': 'form-control'}))
+                           widget=TextInput(attrs={'placeholder': 'First Name',
+                                            'class': 'form-control'}))
     last_name = CharField(max_length=30, label='Last Name', required=True,
-                          widget=TextInput(attrs={'placeholder': 'Last Name', 'class': 'form-control'}))
+                          widget=TextInput(attrs={'placeholder': 'Last Name',
+                                           'class': 'form-control'}))
 
     def save(self, request):
         user = super(CustomSignUpForm, self).save(request)
@@ -50,7 +52,9 @@ class CreatePostForm(ModelForm):
                 'placeholder': 'City'
                 }),
             'area': TextInput(attrs={
-                'placeholder': 'Help to specify your location without an address (name a shopping mall or a metro station, etc)'
+                'placeholder': ('Help to specify your location '
+                                'without an address (name a shopping '
+                                'mall or a metro station, etc)')
                 }),
             'type': Select(attrs={
                 'style': 'max-width: 200px;',
@@ -68,11 +72,15 @@ class CreatePostForm(ModelForm):
     def __init__(self, *args, **kwargs):
         super(CreatePostForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper(self)
-        self.helper.add_input(Submit('save', 'Save', css_class='btn btn-primary px-5'))
+        self.helper.add_input(Submit('save', 'Save',
+                              css_class='btn btn-primary px-5'))
         self.helper.layout = Layout(
             'title',
             'text',
-            HTML("""{% if form.image.value %}<img height=400 src="{{ DEFAULT_FILE_STORAGE }}{{ form.image.value.url }}">{% endif %}"""),
+            HTML("""{% if form.image.value %}
+                 <img height=400
+                 src="{{ DEFAULT_FILE_STORAGE }}{{ form.image.value.url }}">
+                 {% endif %}"""),
             'image',
             'country',
             'city',
@@ -80,4 +88,3 @@ class CreatePostForm(ModelForm):
             'type',
             'category'
         )
-
