@@ -109,10 +109,11 @@ class PostFull(LoginRequiredMixin, generic.DetailView):
     context_object_name = "post"
 
     def get_queryset(self):
-        queryset = Post.objects.filter(status=1)  # pylint: disable=no-member
+        # pylint: disable=no-member
+        queryset = Post.objects.filter(status=1)
         return queryset
 
-    def post(self, request):
+    def post(self, request, **kwargs):
         new = Comment(
             post=self.get_object(),
             user=request.user.userprofile,
@@ -169,7 +170,7 @@ class PostDeleteView(LoginRequiredMixin, generic.DeleteView):
 class BookMark(generic.View):
     def post(self, request, slug):
         post = get_object_or_404(Post, slug=slug)
-        if post.favourite.filter(id=request.user.id).exists():
+        if post.favourite.filter(id=request.user.userprofile.id).exists():
             post.favourite.remove(request.user.userprofile.id)
         else:
             post.favourite.add(request.user.userprofile.id)
