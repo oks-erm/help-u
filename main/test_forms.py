@@ -1,4 +1,6 @@
-import datetime
+"""
+Tests for forms.py of main app.
+"""
 from unittest.mock import patch
 from io import BytesIO
 from django.test import TestCase
@@ -230,11 +232,25 @@ class TestCreatePostForm(TestCase):
         """
         Test that the form saves a new Post object to the database
         """
-        user = CustomUser(1, 'test@mail.com', datetime.datetime.now(),
-                          'True', 'First', 'Last')
-        user.save()
-        profile = UserProfile(1, 1)
-        profile.save()
+        user = CustomUser.objects.create(
+            email='test@example.com',
+            first_name='Test',
+            last_name='User',
+            password='testpass',
+            is_active=True)
+
+        try:
+            # pylint: disable=no-member
+            user_profile = UserProfile.objects.get(user=user)
+        # pylint: disable=no-member
+        except UserProfile.DoesNotExist:
+            # If not, create a new UserProfile object
+            # pylint: disable=no-member
+            user_profile = UserProfile.objects.create(
+                user=user,
+                languages='English',
+                country='PT',
+                city='Lisbon')
 
         form_data = {
             'title': 'Test title',
@@ -247,7 +263,7 @@ class TestCreatePostForm(TestCase):
             'category': 'items',
         }
         form = CreatePostForm(data=form_data, files=file_dict)
-        form.instance.author = profile
+        form.instance.author = user_profile
         self.assertTrue(form.is_valid())
 
         form.save()
@@ -255,3 +271,5 @@ class TestCreatePostForm(TestCase):
         self.assertEqual(Post.objects.count(), 1)
         # pylint: disable=no-member
         self.assertEqual(Post.objects.first().title, 'Test title')
+
+

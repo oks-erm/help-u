@@ -1,3 +1,6 @@
+"""
+Forms of main app.
+"""
 from django.forms import (ModelForm,
                           CharField,
                           TextInput,
