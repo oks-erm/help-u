@@ -1,9 +1,14 @@
+"""
+Tests for managers.py of main app.
+"""
 from django.test import TestCase
 from django.contrib.auth import get_user_model
 
 
 class CustomUserManagerTests(TestCase):
-
+    """
+    Test CustomUserManager manager.
+    """
     def test_create_user(self):
         """
         Test that a user is created with the correct email and password.
