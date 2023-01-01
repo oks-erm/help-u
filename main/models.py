@@ -1,3 +1,6 @@
+"""
+Models of main app.
+"""
 import random
 from django.db import models
 from django.db.models.signals import post_save

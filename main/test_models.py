@@ -1,3 +1,6 @@
+"""
+Tests for models.py of main app.
+"""
 import time
 from io import BytesIO
 from datetime import datetime
@@ -48,14 +51,26 @@ class UserProfileTestCase(TestCase):
             first_name='Test',
             last_name='User',
             password='testpass')
+        self.user2 = CustomUser.objects.create(
+            email='test2@example.com',
+            first_name='Test2',
+            last_name='User2',
+            password='testpass2')
         # Check if the user already has an associated UserProfile object
         try:
             # pylint: disable=no-member
             self.user_profile = UserProfile.objects.get(user=self.user)
+            self.user_profile2 = UserProfile.objects.get(user=self.user2)
         except UserProfile.DoesNotExist:
             # If not, create a new UserProfile object
             # pylint: disable=no-member
             self.user_profile = UserProfile.objects.create(
+                user=self.user,
+                languages='English',
+                userpic=image,
+                country='US',
+                city='New York')
+            self.user_profile2 = UserProfile.objects.create(
                 user=self.user,
                 languages='English',
                 country='US',
@@ -154,7 +169,13 @@ class PostTestCase(TestCase):
                 city='New York')
         # pylint: disable=no-member
         self.post = Post.objects.create(
-            author=self.user_profile, title='Test Post', slug='test-post',
+            author=self.user_profile, title='Test Post',
+            image=image, text='This is a test post.', country='US',
+            city='New York', area='Manhattan', status=0, relevance=1,
+            type='offer', category='services'
+        )
+        self.post2 = Post.objects.create(
+            author=self.user_profile, title='test post',
             image=image, text='This is a test post.', country='US',
             city='New York', area='Manhattan', status=0, relevance=1,
             type='offer', category='services'
@@ -218,7 +239,7 @@ class PostTestCase(TestCase):
         Test that the get_absolute_url method of the
         Post model returns the correct URL for the post.
         """
-        self.assertEqual(self.post.get_absolute_url(), '/test-post/')
+        self.assertEqual(self.post.get_absolute_url(), f'/{self.post.slug}/')
 
     def test_post_save_method(self):
         """
@@ -233,6 +254,7 @@ class PostTestCase(TestCase):
             category='services'
         )
         self.assertIsNotNone(post.slug)
+        self.assertFalse(self.post.slug == self.post2.slug)
 
     def test_image_default(self):
         """
@@ -374,7 +396,7 @@ class CommentTestCase(TestCase):
                 city='New York')
         # pylint: disable=no-member
         self.post = Post.objects.create(
-            author=self.user_profile, title='Test Post', slug='test-post',
+            author=self.user_profile, title='Test Post',
             image=image, text='This is a test post.', country='US',
             city='New York', area='Manhattan', status=1, relevance=1,
             type='offer', category='services'
