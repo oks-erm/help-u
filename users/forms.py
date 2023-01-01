@@ -18,7 +18,7 @@ class ProfileForm(forms.ModelForm):
             'city': forms.TextInput(attrs={
                 'placeholder': 'City or area'
                 }),
-            'area': forms.TextInput(attrs={
+            'languages': forms.TextInput(attrs={
                 'placeholder': "languages you're able to communicate"
                 }),
             'bio': forms.Textarea(attrs={
