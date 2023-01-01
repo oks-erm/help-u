@@ -1,10 +1,15 @@
+"""
+Admin of main app.
+"""
 from django.contrib import admin
-from django.contrib.auth.admin import UserAdmin
-from .models import *
+from .models import CustomUser, UserProfile, Comment, Post, ContactFormMessage
 
 
 @admin.register(CustomUser)
 class CustomUserAdmin(admin.ModelAdmin):
+    """
+    Admin for CustomUser.
+    """
     fields = (('first_name', 'last_name'),
               ('email', 'is_staff'),
               ('date_joined', 'last_login'),
@@ -24,6 +29,9 @@ class CustomUserAdmin(admin.ModelAdmin):
 
 @admin.register(UserProfile)
 class UserProfileAdmin(admin.ModelAdmin):
+    """
+    Admin for UserProfile.
+    """
     fields = (('user', 'languages'),
               ('country', 'city'),
               'thumbnail_preview',
@@ -48,6 +56,9 @@ class UserProfileAdmin(admin.ModelAdmin):
 
 @admin.register(Comment)
 class CommentAdmin(admin.ModelAdmin):
+    """
+    Admin for Comment.
+    """
     fields = ('user',
               'created_on',
               'post',
@@ -57,15 +68,18 @@ class CommentAdmin(admin.ModelAdmin):
     readonly_fields = ('user', 'post', 'created_on')
     list_filter = ('approved', 'created_on')
     search_fields = ('user', 'body')
- 
+
     actions = ['approve_comments']
 
     def approve_comments(self, request, queryset):
-        queryset.update(status=True)
+        queryset.update(approved=True)
 
 
 @admin.register(Post)
 class PostAdmin(admin.ModelAdmin):
+    """
+    Admin for Post.
+    """
     fields = ('author',
               'title',
               'image',
@@ -75,11 +89,12 @@ class PostAdmin(admin.ModelAdmin):
               'area',
               ('status', 'relevance'),
               ('type', 'category'))
-    list_display = ('title', 'author', 'country', 'created_on', 'type', 'status')
+    list_display = ('title', 'author', 'country',
+                    'created_on', 'type', 'status')
     readonly_fields = ('thumbnail_preview',)
     list_filter = ('type', 'status', 'created_on')
     search_fields = ('name', 'email', 'author', 'title')
- 
+
     actions = ['approve_posts']
 
     def approve_posts(self, request, queryset):
@@ -94,6 +109,9 @@ class PostAdmin(admin.ModelAdmin):
 
 @admin.register(ContactFormMessage)
 class ContactFormAdmin(admin.ModelAdmin):
+    """
+    Admin for ContactForm.
+    """
     fields = (('name', 'email'),
               'subject',
               'message',
@@ -108,4 +126,3 @@ class ContactFormAdmin(admin.ModelAdmin):
 
     def mark_as_responded(self, request, queryset):
         queryset.update(responded=True)
-
