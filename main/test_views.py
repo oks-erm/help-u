@@ -1,5 +1,5 @@
 """
-Tests for views.py
+Tests for views.py of main app.
 """
 from unittest.mock import patch, MagicMock, Mock
 from io import BytesIO
@@ -82,6 +82,7 @@ class PostListTestCase(TestCase):
     """
     def setUp(self):
         self.url = reverse('main:posts_list', kwargs={'type': 'all'})
+        self.view = PostList()
         self.factory = RequestFactory()
         self.client = Client()
         self.user = CustomUser.objects.create(
@@ -212,6 +213,15 @@ class PostListTestCase(TestCase):
         )
 
         self.assertEqual(response["Content-Type"], "application/json")
+
+    def test_non_ajax_request(self):
+        """
+        To test the response for a non-AJAX request.
+        """
+        self.client.force_login(user=self.user)
+        response = self.client.get(self.url)
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'posts.html')
 
     def test_post_list_only_returns_active_posts(self):
         """
@@ -404,7 +414,6 @@ class PostCreateViewTestCase(TestCase):
         sets the author of a newly created post.
         """
         self.client.force_login(user=self.user)
-        # First, check if the form submission is successful
         with patch('cloudinary.uploader.upload'):
             form = CreatePostForm(data=self.form_data, files=file_dict)
             view = PostCreateView()

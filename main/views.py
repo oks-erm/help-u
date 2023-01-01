@@ -1,10 +1,10 @@
 """
-
+Views of main app.
 """
 from django.shortcuts import get_object_or_404, reverse
 from django.views import generic
 from django.template.loader import render_to_string
-from django.http import JsonResponse, Http404, HttpResponse
+from django.http import JsonResponse, HttpResponse
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
 import gettext
@@ -79,22 +79,6 @@ class PostList(LoginRequiredMixin, generic.ListView):
             return JsonResponse({"html_from_view": html}, safe=False)
         else:
             self.object_list = self.get_queryset()
-            allow_empty = self.get_allow_empty()
-
-            if not allow_empty:
-                if (self.get_paginate_by(self.object_list)
-                        is not None and hasattr(self.object_list, "exists")):
-                    is_empty = not self.object_list.exists()
-                else:
-                    is_empty = not self.object_list
-                if is_empty:
-                    raise Http404(
-                        _('Empty list and “%(class_name)s.allow_empty”'
-                          'is False.')
-                        % {
-                            "class_name": self.__class__.__name__,
-                        }
-                    )
             context = self.get_context_data()
             return self.render_to_response(context)
 
