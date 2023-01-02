@@ -16,7 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from rest_framework import routers
-from messenger.api.views import (ConversationViewSet, CustomUserViewSet,
+from messenger.api.views import (ConversationViewSet,
                                  MessageViewSet)
 
 
@@ -31,7 +31,7 @@ urlpatterns = [
 
 
 router = routers.DefaultRouter()
-router.register('api/users', CustomUserViewSet, basename='Users')
+# router.register('api/users', CustomUserViewSet, basename='Users')
 router.register("api/conversations", ConversationViewSet,
                 basename='Conversations')
 router.register("api/messages", MessageViewSet, basename='Messages')
