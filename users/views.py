@@ -1,4 +1,6 @@
-from django.shortcuts import render, redirect
+"""
+Tests for views of users app.
+"""
 from django.views import generic
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import reverse
@@ -7,35 +9,67 @@ from .forms import ProfileForm
 
 
 class ProfileCreateView(LoginRequiredMixin, generic.CreateView):
+    """
+    ProfileCreateView is a CreateView for creating user profiles.
+    It uses the ProfileForm form class to handle form input
+    and validation.
+    """
     template_name = "create_user_profile.html"
-    form_class = ProfileForm 
+    form_class = ProfileForm
 
     def get_success_url(self):
+        """
+        Returns the URL to redirect to after a successful form submission.
+        """
         return reverse('users:profile', kwargs={'pk': self.object.pk})
 
     def form_valid(self, form):
+        """
+        Saves the form if it is valid and redirects the user
+        to the user profile page.
+        """
         form.instance.user = self.request.user
         form.save()
         return super(ProfileCreateView, self).form_valid(form)
 
 
 class UserProfileDetailView(LoginRequiredMixin, generic.DetailView):
+    """
+    UserProfileDetailView displays the details of a user's profile.
+    """
     template_name = "profile.html"
     context_object_name = "profile"
 
     def get_queryset(self):
+        """
+        Returns a queryset containing all user profiles.
+        """
+        # pylint: disable=no-member
         queryset = UserProfile.objects.all()
         return queryset
 
 
 class UserProfileUpdateView(LoginRequiredMixin, generic.UpdateView):
+    """
+    UserProfileUpdateView class is a view for updating a user's profile.
+    """
     template_name = "update_profile.html"
     form_class = ProfileForm
+    # pylint: disable=no-member
     queryset = UserProfile.objects.all()
 
     def get_success_url(self):
-        return reverse('users:profile', kwargs={'pk': self.request.user.userprofile.id})
+        """
+        Test that method returns the URL for the updated user profile page.
+        """
+        return reverse(
+            'users:profile',
+            kwargs={'pk': self.request.user.userprofile.id})
 
     def form_valid(self, form):
+        """
+        Test that method saves the form and returns the
+        superclass's form_valid method.
+        """
         form.save()
         return super(UserProfileUpdateView, self).form_valid(form)

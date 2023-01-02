@@ -1,3 +1,6 @@
+"""
+urls for users app
+"""
 from django.urls import path
 from .views import (ProfileCreateView, UserProfileDetailView,
                     UserProfileUpdateView)
