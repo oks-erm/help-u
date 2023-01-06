@@ -841,6 +841,12 @@ body {
       }
     }
 
+    .sender {
+      font-style: italic;
+      font-size: 13px;
+      color: #a6b3c5 !important;
+    }
+
   /*----------------------------------------------------Account*/
     .login-block {
       margin-top: 6%;
