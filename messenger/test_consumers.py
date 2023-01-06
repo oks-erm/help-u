@@ -19,7 +19,6 @@ class UUIDEncoderTests(TestCase):
     """
     Tests the UUIDEncoder class
     """
-
     def test_default_with_valid_uuid(self):
         """
         Test the default method of the UUIDEncoder class
@@ -66,8 +65,8 @@ class ChatConsumerTestCase(TransactionTestCase):
     @patch('channels.layers.channel_layers')
     async def test_connect(self, mock_channel_layers):
         """
-        Tests if the connection was successful and receives a JSON message
-        from the ChatConsumer class.
+        Tests if the connection is successful and sends a JSON message
+        with the last 50 messages from the ChatConsumer class.
         """
         mock_channel_layers.__getitem__.return_value = InMemoryChannelLayer()
         communicator = WebsocketCommunicator(
@@ -88,6 +87,9 @@ class ChatConsumerTestCase(TransactionTestCase):
 
     @patch('channels.layers.channel_layers')
     async def test_receive_json(self, mock_channel_layers):
+        """
+        Tests if the mothod receives and processes JSON correctly.
+        """
         mock_channel_layers.__getitem__.return_value = InMemoryChannelLayer()
         communicator = WebsocketCommunicator(
             ChatConsumer.as_asgi(), "/testws/")
@@ -231,6 +233,10 @@ class NotificationConsumerTests(TransactionTestCase):
 
     @patch('channels.layers.channel_layers')
     async def test_connect(self, mock_channel_layers):
+        """
+        Tests if the connection is successful and sends a JSON message
+        with the count of unread messages.
+        """
         mock_channel_layers.__getitem__.return_value = InMemoryChannelLayer()
         communicator = WebsocketCommunicator(
             NotificationConsumer.as_asgi(), "/testws/")

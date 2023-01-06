@@ -78,5 +78,4 @@ class MessageViewSet(ListModelMixin, GenericViewSet):
             .filter(conversation__name=conversation_name)
             .order_by("-timestamp")
         )
-        print(queryset)
         return queryset

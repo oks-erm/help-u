@@ -1,6 +1,6 @@
 from django.urls import path
 from .views import MessagesView
-from .consumers import ChatConsumer
+
 
 app_name = 'messenger'
 
