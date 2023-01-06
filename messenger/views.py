@@ -2,8 +2,12 @@ from django.views import generic
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 
-# Create your views here.
 class MessagesView(LoginRequiredMixin, generic.TemplateView):
+    """
+    MessagesView is a TemplateView that displays the "messages.html"
+    template to the user. The view also adds the user's ID and first
+    name to the context data.
+    """
     template_name = "messages.html"
 
     def get_context_data(self, **kwargs):

@@ -7,13 +7,22 @@ admin.site.register(Message)
 
 @admin.register(Conversation)
 class ConversationAdmin(admin.ModelAdmin):
+    """
+    Admin class for the Conversation model.
+    """
     fields = ('name', 'members')
     list_display = ('name',)
     readonly_fields = ('members',)
     search_fields = ('members',)
 
     def name(self, obj):
+        """
+        Returns the name including members of the conversation.
+        """
         return f"{obj.name} {obj.members}"
 
     def id(self, obj):
+        """
+        Returns the id of the conversation object.
+        """
         return f"{obj.id}"

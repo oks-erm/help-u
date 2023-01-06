@@ -1,9 +1,15 @@
+"""
+Models for messenger app
+"""
 import uuid
 from django.db import models
 from main.models import CustomUser
 
 
 class Conversation(models.Model):
+    """
+    A model representing a conversation between users.
+    """
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     name = models.CharField(max_length=128)
     members = models.ManyToManyField(CustomUser, blank=True)
@@ -13,6 +19,9 @@ class Conversation(models.Model):
 
 
 class Message(models.Model):
+    """
+    A model representing a message in a conversation.
+    """
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     conversation = models.ForeignKey(
         Conversation, on_delete=models.CASCADE, related_name="messages"
@@ -28,5 +37,6 @@ class Message(models.Model):
     read = models.BooleanField(default=False)
 
     def __str__(self):
-        return f"From {self.from_user} to {self.to_user}: {self.text} [{self.timestamp}]"
-    
+        return (f"From {self.from_user} to {self.to_user}: "
+                f"{self.text} [{self.timestamp}]")
+   
