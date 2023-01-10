@@ -686,7 +686,7 @@ body {
 
   .search-logo {
     height: 140px;
-    width: fit-content;
+    width: auto;
   }
 
   .form-control:focus ~ #search-button {
