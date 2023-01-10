@@ -14,7 +14,7 @@ global.window = dom.window;
 global.document = dom.window.document;
 global.$ = require('jquery');
 
-const main = require('../main.js').default;
+const main = require('../main.js');
 
 beforeEach(() => {
   const dom = new JSDOM(html);
