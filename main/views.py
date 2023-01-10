@@ -1,16 +1,17 @@
 """
 Views of main app.
 """
+import gettext
 from django.shortcuts import get_object_or_404, reverse
 from django.views import generic
 from django.template.loader import render_to_string
 from django.http import JsonResponse, HttpResponse
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
-import gettext
 from messenger.models import Message
 from .models import ContactFormMessage, Post, Comment
 from .forms import CreatePostForm
+
 import os
 if os.path.exists('env.py'):
     import env  # noqa # pylint: disable=unused-import
@@ -168,3 +169,4 @@ def messages(request):
                                           read=False).count()
     context = {'unread': unread_count}
     return JsonResponse(context)
+

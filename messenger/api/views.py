@@ -1,4 +1,4 @@
-from rest_framework.viewsets import GenericViewSet, ModelViewSet
+from rest_framework.viewsets import GenericViewSet
 from rest_framework.mixins import ListModelMixin, RetrieveModelMixin
 # from rest_framework.decorators import action
 # from rest_framework import status
@@ -65,7 +65,7 @@ class MessageViewSet(ListModelMixin, GenericViewSet):
 
     def get_queryset(self):
         """
-        Return a queryset of conversations that contain the current 
+        Return a queryset of conversations that contain the current
         user's ID in their name.
         """
         conversation_name = self.request.GET.get("conversation")
