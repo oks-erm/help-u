@@ -1,101 +1,195 @@
-{% extends "base.html" %}
-{% load static %}
-
-{% block content %}
+{% extends "base.html" %} {% load static %} {% block content %}
 <!-- Hero -->
 <section id="hero" class="d-flex align-items-center">
-  <div class="container position-relative" data-aos="fade-up" data-aos-delay="100">
+  <div
+    class="container position-relative"
+    data-aos="fade-up"
+    data-aos-delay="100"
+  >
     <div class="row justify-content-center">
       <div class="col-xl-7 col-lg-9 text-center">
-        <img class="img-logo" src="{% static 'assets/img/logo.png' %}"
-          alt="logo - yellow and blue heart made of leaves">
+        <img
+          class="img-logo"
+          src="{% static 'assets/img/logo.png' %}"
+          alt="logo - yellow and blue heart made of leaves"
+        />
         <h1>People for people</h1>
         <h2>We connect the ones who can help with the ones who need it</h2>
       </div>
     </div>
     <div class="text-center">
-      <a href="{% url 'main:posts_list' 'receive' %}" id="can_help" class="btn-hero scrollto">I can help</a>
-      <a href="{% url 'main:posts_list' 'give' %}" id="need_help" class="btn-hero scrollto">I need help</a>
+      <a
+        href="{% url 'main:posts_list' 'receive' %}"
+        id="can_help"
+        class="btn-hero scrollto"
+        >I can help</a
+      >
+      <a
+        href="{% url 'main:posts_list' 'give' %}"
+        id="need_help"
+        class="btn-hero scrollto"
+        >I need help</a
+      >
     </div>
   </div>
-</section><!-- End Hero -->
-<div class="container-fluid arrow fade-in-image"><i class="bi bi-chevron-double-down fade-in-down"></i></div>
+</section>
+<!-- End Hero -->
+<div class="container-fluid arrow fade-in-image">
+  <i class="bi bi-chevron-double-down fade-in-down"></i>
+</div>
 
 <main id="main">
-<!-- About -->
-<section id="about" class="about">
-  <div class="container" data-aos="fade-up">
-
-    <div class="section-title">
-      <h2>About</h2>
-      <p>At least 12 million people have fled their homes since Russia's invasion of Ukraine having to start their
-        lives all over again. If you want to help, but don't know how, you can offer help here: house items, services,
-        dinner, language practice, just yout time. Help locally. Help online. You can browse through requests for
-        help, maybe there is something you could do, just you are not aware it's needed. Many people are afraid of
-        asking
-        for help publicly on social media or intimidated with big charity centeres refrain from seeking support. Here
-        is a safe space, where nobody is going to judge anybody. </p>
-      <a href="#" class="btn-learn-more">Learn More</a>
+  <!-- About -->
+  <section id="about" class="about">
+    <div class="container" data-aos="fade-up">
+      <div class="section-title">
+        <h2>About</h2>
+        <p>
+          At least 12 million people have fled their homes, having to start
+          their lives all over, since Russia invaded Ukraine. If you want to
+          help but don't know how, you can offer help here: household items,
+          services, dinner, language practice, just your time. Help locally.
+          Help online. You can browse through help requests to see if there is
+          something you could do. Many people find it embarrassing to ask for
+          help publicly on social media or are intimidated by big charity
+          centres and therefore refrain from seeking support. Here is a safe
+          space where nobody is going to judge anyone. Sign up to browse the
+          posts and make a difference now!
+        </p>
+        <a href="https://war.ukraine.ua/" class="btn-learn-more">Learn More</a>
+      </div>
     </div>
-  </div>
-</section><!-- End About -->
+  </section>
+  <!-- End About -->
 
-<!-- FAQ -->
-<section id="faq" class="faq section-bg d-none d-sm-block">
-  <div class="container" data-aos="fade-up">
+  <!-- FAQ -->
+  <section id="faq" class="faq section-bg d-none d-sm-block">
+    <div class="container" data-aos="fade-up">
+      <div class="section-title">
+        <h2>Frequently Asked Questions</h2>
+        <p>
+          Below you'll find answers to the questions we get asked the most about
+          Help U
+        </p>
+      </div>
 
-    <div class="section-title">
-      <h2>Frequently Asked Questions</h2>
-      <p>Below you'll find answers to the questions we get asked the most about Help U </p>
+      <div class="faq-list">
+        <ul>
+          <li data-aos="fade-up">
+            <i class="bx bx-help-circle icon-help"></i>
+            <a
+              data-bs-toggle="collapse"
+              class="collapse"
+              data-bs-target="#faq-list-1"
+              >How do I know it is safe?
+              <i class="bx bx-chevron-down icon-show"></i
+              ><i class="bx bx-chevron-up icon-close"></i
+            ></a>
+            <div
+              id="faq-list-1"
+              class="collapse show"
+              data-bs-parent=".faq-list"
+            >
+              <p>
+                We take the security and privacy of our users very seriously. We
+                use SSL encryption to protect all user information and employ
+                strict access controls to prevent unauthorized access. All new
+                users go through phone and email verification. Users are
+                required to use their real photos as a profile picture. In case
+                of doubts or complaints, moderators might require an ID. All
+                content is moderated. <br> Our team of trained professionals reviews
+                and flags any inappropriate content. Our moderation process
+                follows strict guidelines and policies to ensure that the
+                website remains safe and appropriate for all users. If you come
+                across any content that you find inappropriate, suspect fraud,
+                or have any doubts, please do not hesitate to contact us.
+              </p>
+            </div>
+          </li>
+
+          <li data-aos="fade-up" data-aos-delay="100">
+            <i class="bx bx-help-circle icon-help"></i>
+            <a
+              data-bs-toggle="collapse"
+              data-bs-target="#faq-list-2"
+              class="collapsed"
+              >How do you verify users' identity?
+              <i class="bx bx-chevron-down icon-show"></i
+              ><i class="bx bx-chevron-up icon-close"></i
+            ></a>
+            <div id="faq-list-2" class="collapse" data-bs-parent=".faq-list">
+              <p>
+                All new users must pass a phone and email verification process.
+                To ensure authenticity, users must use their genuine photos as
+                their profile picture. In the event of any doubts or complaints,
+                our moderators may request an ID verification.
+              </p>
+            </div>
+          </li>
+
+          <li data-aos="fade-up" data-aos-delay="200">
+            <i class="bx bx-help-circle icon-help"></i>
+            <a
+              data-bs-toggle="collapse"
+              data-bs-target="#faq-list-3"
+              class="collapsed"
+              >How can I get help?<i class="bx bx-chevron-down icon-show"></i
+              ><i class="bx bx-chevron-up icon-close"></i
+            ></a>
+            <div id="faq-list-3" class="collapse" data-bs-parent=".faq-list">
+              <p>
+                Look through the posts and start a chat with someone whose offer
+                interests you, or post your own request for what you need help
+                with. It will be published after moderation.
+              </p>
+            </div>
+          </li>
+
+          <li data-aos="fade-up" data-aos-delay="300">
+            <i class="bx bx-help-circle icon-help"></i>
+            <a
+              data-bs-toggle="collapse"
+              data-bs-target="#faq-list-4"
+              class="collapsed"
+              >What can I do if I don't speak the language?<i
+                class="bx bx-chevron-down icon-show"
+              ></i
+              ><i class="bx bx-chevron-up icon-close"></i
+            ></a>
+            <div id="faq-list-4" class="collapse" data-bs-parent=".faq-list">
+              <p>
+                1. Use a translation tool, such as Google Translate, to help you
+                understand messages from other users and to compose your own
+                messages. Keep in mind that machine translations are not always
+                accurate. <br> 2. Try to use simple language and avoid technical or
+                specialized terms that may be difficult for the other person to
+                understand. Avoid using complex sentence structures, colloquial
+                expressions and slang. <br> 3. Avoid sarcasm and idioms: Sarcasm and
+                idioms are often difficult to translate and can lead to
+                confusion. Avoid using them to ensure that your messages are
+                clear and understood. <br> 4. Try using emojis and images to convey
+                meaning: Since the language barrier can make it hard to
+                understand some things, using emojis and images can help get
+                your message across. <br> 5. Be patient: Communication may be slower
+                due to the language barrier, so be patient with the other
+                person. Repeat yourself if necessary and ask them to do the same
+                if you don't understand something. <br> 6. Be respectful: Remember to
+                be respectful and polite when communicating with others, even if
+                you're having trouble understanding them.
+              </p>
+            </div>
+          </li>
+        </ul>
+      </div>
     </div>
+  </section>
+  <!-- End FAQ -->
 
-    <div class="faq-list">
-      <ul>
-        <li data-aos="fade-up">
-          <i class="bx bx-help-circle icon-help"></i> <a data-bs-toggle="collapse" class="collapse" data-bs-target="#faq-list-1">How do I know it is safe? <i class="bx bx-chevron-down icon-show"></i><i class="bx bx-chevron-up icon-close"></i></a>
-          <div id="faq-list-1" class="collapse show" data-bs-parent=".faq-list">
-            <p>
-              Blah-blah-blah-blah
-            </p>
-          </div>
-        </li>
+  <!-- Contact Form -->
+  <section id="contact" class="contact">
+    {% include 'contact_form.html' %}
+  </section>
+  <!-- End Contact Section -->
 
-        <li data-aos="fade-up" data-aos-delay="100">
-          <i class="bx bx-help-circle icon-help"></i> <a data-bs-toggle="collapse" data-bs-target="#faq-list-2" class="collapsed">How do you verify users' identity? <i class="bx bx-chevron-down icon-show"></i><i class="bx bx-chevron-up icon-close"></i></a>
-          <div id="faq-list-2" class="collapse" data-bs-parent=".faq-list">
-            <p>
-              Blah-blah-blah-blah
-            </p>
-          </div>
-        </li>
-
-        <li data-aos="fade-up" data-aos-delay="200">
-          <i class="bx bx-help-circle icon-help"></i> <a data-bs-toggle="collapse" data-bs-target="#faq-list-3" class="collapsed">How can I get help?<i class="bx bx-chevron-down icon-show"></i><i class="bx bx-chevron-up icon-close"></i></a>
-          <div id="faq-list-3" class="collapse" data-bs-parent=".faq-list">
-            <p>
-              Blah-blah-blah-blah
-            </p>
-          </div>
-        </li>
-
-        <li data-aos="fade-up" data-aos-delay="300">
-          <i class="bx bx-help-circle icon-help"></i> <a data-bs-toggle="collapse" data-bs-target="#faq-list-4" class="collapsed">What can I do if I don't speak the language?<i class="bx bx-chevron-down icon-show"></i><i class="bx bx-chevron-up icon-close"></i></a>
-          <div id="faq-list-4" class="collapse" data-bs-parent=".faq-list">
-            <p>
-              Blah-blah-blah-blah
-            </p>
-          </div>
-        </li>
-      </ul>
-    </div>
-  </div>
-</section><!-- End FAQ -->
-
-<!-- Contact Form -->
-<section id="contact" class="contact">
-
-  {% include 'contact_form.html' %}
-
-</section><!-- End Contact Section -->
-
-{% endblock %}
+  {% endblock %}
+</main>
