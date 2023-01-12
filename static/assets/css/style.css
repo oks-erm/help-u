@@ -151,7 +151,7 @@ body {
   #small-img-logo {
     height:40px;
     width: 50px;
-    background: url("https://res.cloudinary.com/okscloud/image/upload/v1663294579/static/assets/img/logo_small.215b38260b33.png") center center no-repeat;
+    background: url("https://res.cloudinary.com/helpu/image/upload/v1663294579/static/assets/img/logo_small.215b38260b33.png") center center no-repeat;
     background-size: cover;
     margin: 0 10px 5px 10px;
     opacity: 0;
@@ -317,7 +317,7 @@ body {
   #hero {
     width: 100%;
     height: 95vh;
-    background: url("https://res.cloudinary.com/okscloud/image/upload/v1663294580/static/assets/img/background.0ebb0f1ba3d5.png") top center;
+    background: url("https://res.cloudinary.com/helpu/image/upload/v1663294580/static/assets/img/background.0ebb0f1ba3d5.png") top center;
     background-size: cover;
     z-index: 1;
   }
@@ -669,7 +669,7 @@ body {
 
   /*----------------------------------------------------Search*/
   #search {
-    background: url("https://res.cloudinary.com/okscloud/image/upload/v1663294580/static/assets/img/background.0ebb0f1ba3d5.png") top center;
+    background: url("https://res.cloudinary.com/helpu/image/upload/v1663294580/static/assets/img/background.0ebb0f1ba3d5.png") top center;
     background-size: cover;
     height: 370px;
   }
@@ -906,7 +906,7 @@ body {
   
   #footer .footer-top {
     padding: 60px 0 30px 0;
-    background: url(https://res.cloudinary.com/okscloud/image/upload/v1663294581/static/assets/img/grateful.b05f86821b88.png) right bottom no-repeat;
+    background: url(https://res.cloudinary.com/helpu/image/upload/v1663294581/static/assets/img/grateful.b05f86821b88.png) right bottom no-repeat;
   }
   
   #footer .footer-top .footer-info {
