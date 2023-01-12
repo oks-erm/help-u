@@ -32,10 +32,12 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 DEBUG = False
 
 
-ALLOWED_HOSTS = ['helpukr.herokuapp.com', 'localhost', '8000-okserm-helpu-4vq7cec76g9.ws-eu75.gitpod.io']
+ALLOWED_HOSTS = ['helpukr.herokuapp.com', 'localhost',
+                 '8000-okserm-helpu-4vq7cec76g9.ws-eu82.gitpod.io']
 
 
-CSRF_TRUSTED_ORIGINS = ['https://*.8000-okserm-helpu-4vq7cec76g9.ws-eu75.gitpod.io', 'https://*.helpukr.herokuapp.com', 'https://*.facebook.com', 'https://*.google.com']
+CSRF_TRUSTED_ORIGINS = ['https://*.8000-okserm-helpu-4vq7cec76g9.ws-eu82.gitpod.io',
+                        'https://*.helpukr.herokuapp.com', 'https://*.facebook.com', 'https://*.google.com']
 
 
 ACCOUNT_EMAIL_VERIFICATION = 'none'
@@ -51,7 +53,6 @@ INSTALLED_APPS = [
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
-    # 'django.contrib.gis',
     'django.contrib.messages',
     'cloudinary_storage',
     'django.contrib.staticfiles',
@@ -67,7 +68,7 @@ INSTALLED_APPS = [
     "crispy_bootstrap5",
     'main',
     'users',
-    'messenger',
+    'messenger'
 ]
 
 
@@ -79,11 +80,11 @@ LOGOUT_REDIRECT_URL = '/'
 
 
 MESSAGE_TAGS = {
-        messages.DEBUG: 'alert-info',
-        messages.INFO: 'alert-info',
-        messages.SUCCESS: 'alert-success',
-        messages.WARNING: 'alert-warning',
-        messages.ERROR: 'alert-danger',
+    messages.DEBUG: 'alert-info',
+    messages.INFO: 'alert-info',
+    messages.SUCCESS: 'alert-success',
+    messages.WARNING: 'alert-warning',
+    messages.ERROR: 'alert-danger',
 }
 
 
@@ -130,7 +131,7 @@ ASGI_APPLICATION = "help_u.asgi.application"
 
 DATABASES = {
     'default': dj_database_url.parse(os.environ.get('DATABASE_URL')),
-    }
+}
 
 
 # Password validation
@@ -219,7 +220,7 @@ ACCOUNT_LOGIN_ON_EMAIL_CONFIRMATION = True
 ACCOUNT_EMAIL_CONFIRMATION_ANONYMOUS_REDIRECT_URL = 'main:home'
 ACCOUNT_LOGIN_ON_PASSWORD_RESET = False
 ACCOUNT_LOGOUT_ON_PASSWORD_CHANGE = True
-ACCOUNT_SESSION_REMEMBER = True 
+ACCOUNT_SESSION_REMEMBER = True
 ACCOUNT_EMAIL_CONFIRMATION_HMAC = True
 ACCOUNT_EMAIL_CONFIRMATION_COOLDOWN = 180
 ACCOUNT_LOGIN_ATTEMPTS_LIMIT = 10
@@ -269,7 +270,7 @@ SOCIALACCOUNT_PROVIDERS = {
 }
 
 
-REDIS_URL = os.environ.get('REDIS_URL_STUNNEL') 
+REDIS_URL = os.environ.get('REDIS_URL_STUNNEL')
 
 
 CHANNEL_LAYERS = {
