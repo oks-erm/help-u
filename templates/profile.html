@@ -27,7 +27,7 @@
                 <p>{{ profile.bio }}</p>
             </div>
                 {% if profile.user != request.user %}
-                <button type="button" class="btn btn-primary">Contact {{profile.user}}</button>
+                <a href="{% url 'messages:messages_with_path' 'conv' %}{{user.id}}_{{profile.user.id}}?q=conv{{user.id}}_{{profile.user.id}}" class="btn btn-primary">Contact {{profile.user}}</a>
                 {% else %}
                 {% if user.userprofile.bookmarks.all %}
                 <div class="accordion accordion col-lg-6" id="saved-posts">
