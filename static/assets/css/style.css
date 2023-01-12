@@ -818,7 +818,8 @@ body {
 
   /*----------------------------------------------------Chat*/
     #js-framework-home {
-      height: 80vh;
+      min-height: 80vh;
+      height: fit-content;
       margin-bottom: -50px;
       width: 50vw;
     }
