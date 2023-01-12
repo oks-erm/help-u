@@ -77,56 +77,62 @@ export default function ActiveConversations() {
           )}
         </Card.Header>
         <ListGroup variant="flush">
-          {conversations
-            .filter((conv) =>
-              conv.name.slice(4).split('_').includes(String(id))
-            )
-            .map((c) => (
-              <ListGroup.Item
-                action
-                className="py-0"
-                key={createConversationName(c.other_user.id)}
-              >
-                <Link
-                  to={`/chat/${createConversationName(
-                    c.other_user.id
-                  )}?conversation=${createConversationName(c.other_user.id)}`}
+          {conversations.length > 0 ? (
+            conversations
+              .filter((conv) =>
+                conv.name.slice(4).split('_').includes(String(id))
+              )
+              .map((c) => (
+                <ListGroup.Item
+                  action
+                  className="py-0"
+                  key={createConversationName(c.other_user.id)}
                 >
-                  <div className="px-3">
-                    <div
-                      className="d-flex"
-                      style={{
-                        flexDirection: 'row',
-                        justifyContent: 'space-between',
-                      }}
-                    >
-                      <Card.Title>
-                        {c.other_user.first_name} {c.other_user.last_name}
-                        <Badge
-                          pill
-                          bg="primary"
-                          style={{ height: 'fit-content' }}
-                          className="mx-2"
-                        >
-                          {getNotifications(c.other_user.id)}
-                        </Badge>
-                      </Card.Title>
+                  <Link
+                    to={`/chat/${createConversationName(
+                      c.other_user.id
+                    )}?conversation=${createConversationName(c.other_user.id)}`}
+                  >
+                    <div className="px-3">
+                      <div
+                        className="d-flex"
+                        style={{
+                          flexDirection: 'row',
+                          justifyContent: 'space-between',
+                        }}
+                      >
+                        <Card.Title>
+                          {c.other_user.first_name} {c.other_user.last_name}
+                          <Badge
+                            pill
+                            bg="primary"
+                            style={{ height: 'fit-content' }}
+                            className="mx-2"
+                          >
+                            {getNotifications(c.other_user.id)}
+                          </Badge>
+                        </Card.Title>
 
-                      <p className="text-muted align-self-end mb-0">
-                        {formatMessageTimestamp(c.last_message?.timestamp)}
+                        <p className="text-muted align-self-end mb-0">
+                          {formatMessageTimestamp(c.last_message?.timestamp)}
+                        </p>
+                      </div>
+                      <p className="text-muted">
+                        {' '}
+                        <span className="sender text-muted">
+                          {c.last_message?.from_user.id === id ? 'you:  ' : ''}
+                        </span>
+                        {c.last_message?.text}
                       </p>
                     </div>
-                    <p className="text-muted">
-                      {' '}
-                      <span className="sender text-muted">
-                        {c.last_message?.from_user.id === id ? 'you:  ' : ''}
-                      </span>
-                      {c.last_message?.text}
-                    </p>
-                  </div>
-                </Link>
-              </ListGroup.Item>
-            ))}
+                  </Link>
+                </ListGroup.Item>
+              ))
+          ) : (
+            <div className="text-center text-muted my-5 py-5">
+              No active conversations yet, to contact somebody start a chat from the post that interests you.
+            </div>
+          )}
         </ListGroup>
       </Card>
     </div>
