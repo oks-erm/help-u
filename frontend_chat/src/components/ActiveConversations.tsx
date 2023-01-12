@@ -82,6 +82,7 @@ export default function ActiveConversations() {
               .filter((conv) =>
                 conv.name.slice(4).split('_').includes(String(id))
               )
+              .reverse()
               .map((c) => (
                 <ListGroup.Item
                   action
@@ -130,7 +131,8 @@ export default function ActiveConversations() {
               ))
           ) : (
             <div className="text-center text-muted my-5 py-5">
-              No active conversations yet, to contact somebody start a chat from the post that interests you.
+              No active conversations yet, to contact somebody start a chat from
+              the post that interests you.
             </div>
           )}
         </ListGroup>
