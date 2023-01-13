@@ -23,8 +23,11 @@
    "files.autoSave": "off",
    "workbench.colorTheme": "Visual Studio Dark",
    "terminal.integrated.gpuAcceleration": "canvas",
-   "editor.defaultFormatter": "HookyQR.beautify",
+   "editor.defaultFormatter": "esbenp.prettier-vscode",
    "[typescriptreact]": {
       "editor.defaultFormatter": "esbenp.prettier-vscode"
+   },
+   "[python]": {
+      "editor.defaultFormatter": "ms-python.python"
    }
 }
