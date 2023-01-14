@@ -1,5 +1,5 @@
-import * as React from "react"
-import ReactDOM from "react-dom"
+import * as React from 'react';
+import ReactDOM from 'react-dom';
 import { useState, useEffect, useRef } from 'react';
 import useWebSocket, { ReadyState } from 'react-use-websocket';
 import { Link, useParams } from 'react-router-dom';
@@ -20,7 +20,7 @@ export interface NotificationProps {
   unreadMessageCount: number;
   connectionStatus: string;
   eachUser: Array<Array<number>>;
-};
+}
 
 export default function Chat() {
   const [messageHistory, setMessageHistory] = useState<any>([]);
@@ -101,7 +101,9 @@ export default function Chat() {
 
   async function fetchMessages() {
     const apiRes = await fetch(
-      `https://helpukr.herokuapp.com/api/messages/?conversation=${transformConversationName(conversationName)}&page=${page}`,
+      `https://helpukr.herokuapp.com/api/messages/?conversation=${transformConversationName(
+        conversationName
+      )}&page=${page}`,
       {
         method: 'GET',
         headers: {
@@ -196,11 +198,9 @@ export default function Chat() {
             flexDirection: 'column-reverse',
           }}
         >
-
           <InfiniteScroll
             dataLength={messageHistory.length}
             next={fetchMessages}
-            
             className="d-flex"
             style={{
               flexDirection: 'column-reverse',
@@ -210,7 +210,6 @@ export default function Chat() {
             loader={<ChatLoader />}
             scrollableTarget="scrollableDiv"
           >
-
             <div ref={messagesEndRef} />
             {messageHistory.map((message: MessageModel) => (
               <Message key={message.id} message={message} />

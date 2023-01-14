@@ -5,18 +5,17 @@ import Card from 'react-bootstrap/Card';
 import Badge from 'react-bootstrap/Badge';
 import ListGroup from 'react-bootstrap/ListGroup';
 // @ts-ignore
-import { NotificationContext } from "../contexts/NotificationContext.tsx";
-
+import { NotificationContext } from '../contexts/NotificationContext.tsx';
 
 export default function ActiveConversations() {
   const [conversations, setActiveConversations] = useState<ConversationModel[]>(
     []
   );
-  const id = JSON.parse(document.getElementById('id')!.textContent!); 
+  const id = JSON.parse(document.getElementById('id')!.textContent!);
   // @ts-ignore
-  const { unreadMessageCount } = useContext(NotificationContext);  
-   // @ts-ignore
-  const { eachUser } = useContext(NotificationContext); 
+  const { unreadMessageCount } = useContext(NotificationContext);
+  // @ts-ignore
+  const { eachUser } = useContext(NotificationContext);
 
   useEffect(() => {
     async function fetchConversations() {
@@ -31,7 +30,7 @@ export default function ActiveConversations() {
           }
         );
     }
-    fetchConversations();  
+    fetchConversations();
   });
 
   function createConversationName(user_id: string) {
@@ -39,18 +38,20 @@ export default function ActiveConversations() {
     return `conv${sorted[0]}_${sorted[1]}`;
   }
 
-  function formatMessageTimestamp(timestamp?: string) {
-    if (!timestamp) return;
+  function formatMessageTimestamp(
+    timestamp: string | undefined
+  ): [string, string] {
+    if (!timestamp) return ['', ''];
     const date = new Date(timestamp);
-    return date.toLocaleTimeString().slice(0, 5);
+    return [date.toLocaleTimeString().slice(0, 5), date.toLocaleDateString()];
   }
 
-  function getNotifications(user_id: string) { 
-      let pickUser = eachUser.find((x: any) => x[0] == user_id);
-      if (pickUser != undefined) {
-        return pickUser[1];
-    };
-};
+  function getNotifications(user_id: string) {
+    let pickUser = eachUser.find((x: any) => x[0] == user_id);
+    if (pickUser != undefined) {
+      return pickUser[1];
+    }
+  }
 
   return (
     <div>
@@ -82,7 +83,11 @@ export default function ActiveConversations() {
               .filter((conv) =>
                 conv.name.slice(4).split('_').includes(String(id))
               )
-              .reverse()
+              .sort((a: any, b: any) => {
+                let aTimestamp = new Date(a.last_message.timestamp).getTime();
+                let bTimestamp = new Date(b.last_message.timestamp).getTime();
+                return bTimestamp - aTimestamp;
+              })
               .map((c) => (
                 <ListGroup.Item
                   action
@@ -115,7 +120,16 @@ export default function ActiveConversations() {
                         </Card.Title>
 
                         <p className="text-muted align-self-end mb-0">
-                          {formatMessageTimestamp(c.last_message?.timestamp)}
+                          {formatMessageTimestamp(
+                            c.last_message?.timestamp
+                          )[0] + ' '}
+                          <span className="sender text-muted">
+                            {
+                              formatMessageTimestamp(
+                                c.last_message?.timestamp
+                              )[1]
+                            }
+                          </span>
                         </p>
                       </div>
                       <p className="text-muted">

@@ -20,36 +20,42 @@ export const NotificationContextProvider: React.FC<{ children: ReactNode }> = ({
   const [unreadMessageCount, setUnreadMessageCount] = useState(0);
   const [eachUser, setEachUser] = useState([] as any);
 
-  const { readyState } = useWebSocket( `wss://helpukr.herokuapp.com/notifications/`, {
-    onOpen: () => {
-      console.log("Connected to Notifications!");
-    },
-    onClose: () => {
-      console.log("Disconnected from Notifications!");
-    },
-    onMessage: (e) => {
-      const data = JSON.parse(e.data);
-      switch (data.type) {
-        default:
-          console.error("Unknown message type!");
-          break;
-        case "unread_count":
-          setUnreadMessageCount(data.unread_count);
-          setEachUser(data.each);
-          break;
-        case "new_message_notification":
-          setUnreadMessageCount((count) => (count += 1));
-          let from_user = eachUser.find((x: any) => x[0] == data.message.from_user.id);
-          if (from_user == undefined) {
-            eachUser.push([data.message.from_user.id, 1]);
-          }
-          else {
-            eachUser.find((x: any) => x[0] == data.message.from_user.id)[1] += 1
-          };
-          break;
-      }
+  const { readyState } = useWebSocket(
+    `wss://helpukr.herokuapp.com/notifications/`,
+    {
+      onOpen: () => {
+        console.log('Connected to Notifications!');
+      },
+      onClose: () => {
+        console.log('Disconnected from Notifications!');
+      },
+      onMessage: (e) => {
+        const data = JSON.parse(e.data);
+        switch (data.type) {
+          default:
+            console.error('Unknown message type!');
+            break;
+          case 'unread_count':
+            setUnreadMessageCount(data.unread_count);
+            setEachUser(data.each);
+            break;
+          case 'new_message_notification':
+            setUnreadMessageCount((count) => (count += 1));
+            let from_user = eachUser.find(
+              (x: any) => x[0] == data.message.from_user.id
+            );
+            if (from_user == undefined) {
+              eachUser.push([data.message.from_user.id, 1]);
+            } else {
+              eachUser.find(
+                (x: any) => x[0] == data.message.from_user.id
+              )[1] += 1;
+            }
+            break;
+        }
+      },
     }
-  });
+  );
 
   const connectionStatus = {
     [ReadyState.CONNECTING]: "Connecting",
