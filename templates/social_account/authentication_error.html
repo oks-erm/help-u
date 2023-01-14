@@ -1,11 +1,24 @@
-{% extends "socialaccount/base.html" %}
-
+{% extends "base.html" %}
+{% load static %}
 {% load i18n %}
 
 {% block head_title %}{% trans "Social Network Login Failure" %}{% endblock %}
 
 {% block content %}
-<h1>{% trans "Social Network Login Failure" %}</h1>
+<div class="container login-block">
+    <div class="row">
+        <div class="col-md-12 d-flex justify-content-center mt-lg-5 mt-md-5 mt-5 mb-4">
+          <img class="search-logo" src="{% static 'assets/img/logo_small.png' %}">
+        </div>
+      </div>
+    <div class="row">
+        <div class="col-md-12 d-flex flex-column justify-content-center mt-lg-3 mt-md-5 mt-5 mb-4">
+            <h1 class="text-center">{% trans "Social Network Login Failure" %}</h1>
 
-<p>{% trans "An error occurred while attempting to login via your social network account." %}</p>
+            <p class="text-center px-5">{% trans "An error occurred while attempting to login via your social network account." %}</p>
+
+            
+        </div>
+    </div>
+</div>
 {% endblock %}
