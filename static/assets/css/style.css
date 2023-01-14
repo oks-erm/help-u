@@ -303,7 +303,6 @@ body {
   }
 
   /*----------------------------------------------------Hero Section*/
-
   #msg {
     z-index: 999;
     opacity: 0.75;
@@ -479,7 +478,6 @@ body {
   }
 
    /*----------------------------------------------------Frequently Asked Questions*/
-   
   .faq .faq-list {
     padding: 0 100px;
   }
@@ -696,7 +694,6 @@ body {
   }
 
   /*----------------------------------------------------Listings*/
-
   #listings{
     display: flex;
     justify-content: center;
@@ -784,6 +781,7 @@ body {
         width: 95vw
       }
     }
+
   /*----------------------------------------------------Profile*/
 
     #saved-posts .accordion-button {
@@ -815,31 +813,11 @@ body {
       display: none;
     }
 
-
   /*----------------------------------------------------Chat*/
     #js-framework-home {
       min-height: 55vh;
       height: fit-content;
       margin-bottom: -50px;
-      width: 50vw;
-    }
-
-    @media (max-width: 768px){
-      #js-framework-home {
-      width: 75vw;
-      }
-    }
-
-    @media (max-width: 460px){
-      #js-framework-home {
-      width: 95vw;
-      }
-    }
-
-    @media (min-width: 1200px){
-      #js-framework-home {
-      width: 36vw;
-      }
     }
 
     .sender {
@@ -896,6 +874,7 @@ body {
       align-self: center;
       flex-direction: column;
     }
+
   /*----------------------------------------------------Footer*/
   #footer {
     color: #444444;
