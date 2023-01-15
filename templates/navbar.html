@@ -11,9 +11,7 @@
         {% if user.is_authenticated %}
         <span id="user-name" class="nav-link"><a href="{%  url 'users:profile' user.userprofile.id %}" class="fw-semibold"><i class='bx bxs-user-circle'></i>&nbsp;{{ user }}</a></span>
         <a href="{% url 'messages:conv_list' %}" class="px-0 me-2"><i class='bx bx-envelope fs-6 text position-relative' id="messages">
-        {% if request.get_full_path != '/messages/' %}
-          {% include "unread.html" %}
-        {% endif %}</i></a>
+          {% include "unread.html" %}</i></a>
         {% endif %} 
         <ul>
           

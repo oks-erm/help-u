@@ -161,12 +161,3 @@ class BookMark(generic.View):
             post.favourite.add(request.user.userprofile.id)
 
         return HttpResponse("",)
-
-
-def messages(request):
-    # pylint: disable=no-member
-    unread_count = Message.objects.filter(to_user=request.user,
-                                          read=False).count()
-    context = {'unread': unread_count}
-    return JsonResponse(context)
-
