@@ -4,13 +4,14 @@ import { ConversationModel } from '../models/Conversation';
 import Card from 'react-bootstrap/Card';
 import Badge from 'react-bootstrap/Badge';
 import ListGroup from 'react-bootstrap/ListGroup';
+import Spinner from 'react-bootstrap/Spinner';
 // @ts-ignore
 import { NotificationContext } from '../contexts/NotificationContext.tsx';
 
 export default function ActiveConversations() {
-  const [conversations, setActiveConversations] = useState<ConversationModel[]>(
-    []
-  );
+  const [conversations, setActiveConversations] = useState<Array<
+    Array<any>
+  > | null>(null);
   const id = JSON.parse(document.getElementById('id')!.textContent!);
   // @ts-ignore
   const { unreadMessageCount } = useContext(NotificationContext);
@@ -78,9 +79,14 @@ export default function ActiveConversations() {
           )}
         </Card.Header>
         <ListGroup variant="flush">
-          {conversations.length > 0 ? (
+          { conversations == null ? (
+            <div className="text-center my-5 py-5">
+              <Spinner animation="grow" variant="primary" />
+              <Spinner animation="grow" variant="warning" />
+            </div>) : (
+          conversations.length > 0 ? (
             conversations
-              .filter((conv) =>
+              .filter((conv: any) =>
                 conv.name.slice(4).split('_').includes(String(id))
               )
               .sort((a: any, b: any) => {
@@ -88,7 +94,7 @@ export default function ActiveConversations() {
                 let bTimestamp = new Date(b.last_message.timestamp).getTime();
                 return bTimestamp - aTimestamp;
               })
-              .map((c) => (
+              .map((c: any) => (
                 <ListGroup.Item
                   action
                   className="py-0"
@@ -148,7 +154,7 @@ export default function ActiveConversations() {
               No active conversations yet, to contact somebody start a chat from
               the post that interests you.
             </div>
-          )}
+          ))}
         </ListGroup>
       </Card>
     </div>
