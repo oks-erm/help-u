@@ -80,10 +80,12 @@ export default function ActiveConversations() {
         </Card.Header>
         <ListGroup variant="flush">
           { conversations == null ? (
+            // Loader
             <div className="text-center my-5 py-5">
               <Spinner animation="grow" variant="primary" />
               <Spinner animation="grow" variant="warning" />
             </div>) : (
+            // Conversations
           conversations.length > 0 ? (
             conversations
               .filter((conv: any) =>

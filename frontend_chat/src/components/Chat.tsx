@@ -71,6 +71,7 @@ export default function Chat() {
     }
   );
 
+  // to make sure a conversation name is the same for both users
   function transformConversationName(conversationName?: string) {
     const split: any = conversationName
       ?.slice(4)
