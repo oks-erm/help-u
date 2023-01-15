@@ -1,5 +1,5 @@
 """
-Forms for users app.
+Forms of the users app.
 """
 from django import forms
 from crispy_forms.helper import FormHelper
@@ -43,7 +43,7 @@ class ProfileForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         """
-        Initialize the form and set up the form layout and submit button.
+        Specifies layout to add image preview.
         """
         super(ProfileForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper(self)

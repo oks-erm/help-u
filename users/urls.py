@@ -1,11 +1,13 @@
 """
-urls for users app
+Url patterns of the users app
 """
 from django.urls import path
 from .views import (ProfileCreateView, UserProfileDetailView,
                     UserProfileUpdateView)
 
+
 app_name = 'users'
+
 
 urlpatterns = [
     path('create/', ProfileCreateView.as_view(), name='create-profile'),

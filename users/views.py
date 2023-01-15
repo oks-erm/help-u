@@ -1,5 +1,5 @@
 """
-Tests for views of users app.
+Views of the users app.
 """
 from django.views import generic
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -10,9 +10,7 @@ from .forms import ProfileForm
 
 class ProfileCreateView(LoginRequiredMixin, generic.CreateView):
     """
-    ProfileCreateView is a CreateView for creating user profiles.
-    It uses the ProfileForm form class to handle form input
-    and validation.
+    A view for creating User Profile.
     """
     template_name = "create_user_profile.html"
     form_class = ProfileForm
@@ -35,7 +33,7 @@ class ProfileCreateView(LoginRequiredMixin, generic.CreateView):
 
 class UserProfileDetailView(LoginRequiredMixin, generic.DetailView):
     """
-    UserProfileDetailView displays the details of a user's profile.
+    A view for displaying User Profile in details.
     """
     template_name = "profile.html"
     context_object_name = "profile"
@@ -51,7 +49,7 @@ class UserProfileDetailView(LoginRequiredMixin, generic.DetailView):
 
 class UserProfileUpdateView(LoginRequiredMixin, generic.UpdateView):
     """
-    UserProfileUpdateView class is a view for updating a user's profile.
+    A view for updating User Profile.
     """
     template_name = "update_profile.html"
     form_class = ProfileForm
@@ -60,7 +58,7 @@ class UserProfileUpdateView(LoginRequiredMixin, generic.UpdateView):
 
     def get_success_url(self):
         """
-        Test that method returns the URL for the updated user profile page.
+        Returns the URL for the updated user profile page.
         """
         return reverse(
             'users:profile',
@@ -68,7 +66,7 @@ class UserProfileUpdateView(LoginRequiredMixin, generic.UpdateView):
 
     def form_valid(self, form):
         """
-        Test that method saves the form and returns the
+        Saves the form and returns the
         superclass's form_valid method.
         """
         form.save()
