@@ -21,9 +21,15 @@ class CustomUserAdmin(admin.ModelAdmin):
     search_fields = ('first_name', 'last_name', 'email')
 
     def name(self, obj):
+        """
+        String representation of a user's full name.
+        """
         return f"{obj.first_name} {obj.last_name}"
 
     def id(self, obj):
+        """
+        String representation of a user id.
+        """
         return f"{obj.id}"
 
 
@@ -42,12 +48,21 @@ class UserProfileAdmin(admin.ModelAdmin):
     search_fields = ('user', 'bio', 'country', 'city', 'languages')
 
     def id(self, obj):
+        """
+        String representation of a user profile ID.
+        """
         return f"{obj.user.id}"
 
     def active(self, obj):
+        """
+        String representation of Active status.
+        """
         return f"{obj.user.is_active}"
 
     def thumbnail_preview(self, obj):
+        """
+        Userpic preview.
+        """
         return obj.thumbnail_preview
 
     thumbnail_preview.short_description = 'Thumbnail Preview'
@@ -71,7 +86,11 @@ class CommentAdmin(admin.ModelAdmin):
 
     actions = ['approve_comments']
 
+    # pylint: disable=unused-argument
     def approve_comments(self, request, queryset):
+        """
+        Approve comments in bulk.
+        """
         queryset.update(approved=True)
 
 
@@ -97,10 +116,17 @@ class PostAdmin(admin.ModelAdmin):
 
     actions = ['approve_posts']
 
+    # pylint: disable=unused-argument
     def approve_posts(self, request, queryset):
+        """
+        Approve posts in bulk.
+        """
         queryset.update(status=True)
 
     def thumbnail_preview(self, obj):
+        """
+        Post image preview.
+        """
         return obj.thumbnail_preview
 
     thumbnail_preview.short_description = 'Thumbnail Preview'
@@ -124,5 +150,9 @@ class ContactFormAdmin(admin.ModelAdmin):
 
     actions = ['mark_as_responded']
 
+    # pylint: disable=unused-argument
     def mark_as_responded(self, request, queryset):
+        """
+        Mark as responded in bulk.
+        """
         queryset.update(responded=True)

@@ -14,6 +14,9 @@ from .models import Post
 
 
 class CustomSignUpForm(SignupForm):
+    """
+    Custom sign up form.
+    """
     first_name = CharField(max_length=30, label='First Name', required=True,
                            widget=TextInput(attrs={'placeholder': 'First Name',
                                             'class': 'form-control'}))
@@ -35,7 +38,9 @@ class CustomSignUpForm(SignupForm):
 
 
 class CreatePostForm(ModelForm):
-
+    """
+    Create/update post form.
+    """
     class Meta:
         model = Post
         fields = ['title', 'text', 'image', 'country', 'city',
@@ -43,28 +48,28 @@ class CreatePostForm(ModelForm):
         widgets = {
             'title': TextInput(attrs={
                 'placeholder': 'Title'
-                }),
+            }),
             'text': Textarea(attrs={
                 'style': 'height: 150px;',
-                }),
+            }),
             'country': Select(attrs={
                 'size': '5',
                 'style': 'max-width: 400px;',
-                }),
+            }),
             'city': TextInput(attrs={
                 'placeholder': 'City'
-                }),
+            }),
             'area': TextInput(attrs={
                 'placeholder': ('Help to specify your location '
                                 'without an address (name a shopping '
                                 'mall or a metro station, etc)')
-                }),
+            }),
             'type': Select(attrs={
                 'style': 'max-width: 200px;',
-                }),
+            }),
             'category': Select(attrs={
                 'style': 'max-width: 200px;',
-                }),
+            }),
         }
     image = CloudinaryFileField(
         options={
@@ -73,6 +78,9 @@ class CreatePostForm(ModelForm):
         })
 
     def __init__(self, *args, **kwargs):
+        """
+        Specifies layout to add image preview.
+        """
         super(CreatePostForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper(self)
         self.helper.add_input(Submit('save', 'Save',
