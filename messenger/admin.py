@@ -1,3 +1,6 @@
+"""
+Admin of the Messenger app.
+"""
 from django.contrib import admin
 from .models import Conversation, Message
 
@@ -17,12 +20,13 @@ class ConversationAdmin(admin.ModelAdmin):
 
     def name(self, obj):
         """
-        Returns the name including members of the conversation.
+        String representation of a conversation instance:
+        the name including members of the conversation.
         """
         return f"{obj.name} {obj.members}"
 
     def id(self, obj):
         """
-        Returns the id of the conversation object.
+        String representation of the id of the conversation object.
         """
         return f"{obj.id}"

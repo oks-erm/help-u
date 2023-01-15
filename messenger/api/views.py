@@ -1,11 +1,7 @@
 from rest_framework.viewsets import GenericViewSet
 from rest_framework.mixins import ListModelMixin, RetrieveModelMixin
-# from rest_framework.decorators import action
-# from rest_framework import status
-# from rest_framework.response import Response
 from django.db.models import Q
 from messenger.api.pagynaters import MessagePagination
-# from main.models import CustomUser
 from messenger.api.serialisers import ConversationSerializer, MessageSerializer
 from messenger.models import Conversation, Message
 
@@ -35,23 +31,6 @@ class ConversationViewSet(ListModelMixin, RetrieveModelMixin, GenericViewSet):
         Return the request and current user in the serializer context.
         """
         return {"request": self.request, "user": self.request.user}
-
-
-# Meant for an extended version of the messenger when you will
-# need a list of users.
-
-# class CustomUserViewSet(ModelViewSet):
-#     serializer_class = CustomUserSerializer
-
-#     def get_queryset(self):
-#         return [self.request.user]
-
-#     @action(detail=False)
-#     def all(self, request):
-#         serializer = CustomUserSerializer(
-#             CustomUser.objects.all(), many=True, context={"request": request}
-#         )
-#         return Response(status=status.HTTP_200_OK, data=serializer.data)
 
 
 class MessageViewSet(ListModelMixin, GenericViewSet):

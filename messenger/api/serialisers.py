@@ -6,7 +6,7 @@ from main.models import CustomUser
 
 class ConversationSerializer(serializers.ModelSerializer):
     """
-    ConversationSerializer is a serializer class for the Conversation model.
+    Serializer class for the Conversation model.
     """
     user = serializers.PrimaryKeyRelatedField(
         read_only=True,
@@ -16,6 +16,10 @@ class ConversationSerializer(serializers.ModelSerializer):
     last_message = serializers.SerializerMethodField()
 
     class Meta:
+        """
+        Specifies the model and the fields to be included
+        in the serialized output.
+        """
         model = Conversation
         fields = ("id", "name", "other_user", "last_message", "user")
 
@@ -45,13 +49,17 @@ class ConversationSerializer(serializers.ModelSerializer):
 
 class MessageSerializer(serializers.ModelSerializer):
     """
-    MessageSerializer is a serializer class for the Message model.
+    Serializer class for the Message model.
     """
     from_user = serializers.SerializerMethodField()
     to_user = serializers.SerializerMethodField()
     conversation = serializers.SerializerMethodField()
 
     class Meta:
+        """
+        Specifies the model and the fields to be included
+        in the serialized output.
+        """
         model = Message
         fields = (
             "id",

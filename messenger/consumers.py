@@ -1,3 +1,6 @@
+"""
+Consumers of the Messenger app.
+"""
 import json
 from uuid import UUID
 from channels.generic.websocket import JsonWebsocketConsumer
@@ -12,26 +15,29 @@ class UUIDEncoder(json.JSONEncoder):
     """
     A custom JSON encoder for UUID objects.
     """
-    def default(self, obj):
+
+    def default(self, o):
         """
         Encodes a UUID object as a hexadecimal string.
         """
-        if isinstance(obj, UUID):
-            # if the obj is uuid, it returns the value of uuid
-            return obj.hex
-        return json.JSONEncoder.default(self, obj)
+        if isinstance(o, UUID):
+            # if the object is uuid, it returns the value of uuid
+            return o.hex
+        return json.JSONEncoder.default(self, o)
 
 
 class ChatConsumer(JsonWebsocketConsumer):
     """
-    This consumer is used to send chat messages.
+    This consumer is used handle chat messages between users.
     """
+
     def __init__(self, *args, **kwargs):
         super().__init__(args, kwargs)
         self.user = None
         self.conversation_name = None
         self.conversation = None
 
+    # pylint: disable=unused-argument
     def connect(self, *args):
         self.user = self.scope['user']
         if not self.user.is_authenticated:
@@ -41,7 +47,7 @@ class ChatConsumer(JsonWebsocketConsumer):
         self.conversation_name = f"{self.scope['url_route']['kwargs']['q']}"
         split_name = (list(map(int, self.conversation_name[4:].split("_"))))
         split_name.sort()
-        # pylint: disable=no-member
+        # pylint: disable=no-member, unused-variable
         self.conversation, created = Conversation.objects.get_or_create(
             name=f"conv{split_name[0]}_{split_name[1]}"
         )
@@ -55,6 +61,7 @@ class ChatConsumer(JsonWebsocketConsumer):
             self.channel_name,
         )
 
+        # sends a message containing the last 50 messages in the conversation
         messages = self.conversation.messages.all().order_by(
             "-timestamp")[0:50]
         user = self.get_receiver()
@@ -74,6 +81,9 @@ class ChatConsumer(JsonWebsocketConsumer):
         return super().disconnect(code)
 
     def get_receiver(self):
+        """
+        Retrieves another member of the conversation.
+        """
         ids = self.conversation_name[4:].split("_")
         for user_id in ids:
             if int(user_id) != self.user.id:
@@ -81,8 +91,8 @@ class ChatConsumer(JsonWebsocketConsumer):
 
     def receive_json(self, content, **kwargs):
         message_type = content["type"]
-
         if message_type == "chat_message":
+            # creates a new message
             # pylint: disable=no-member
             message = Message.objects.create(
                 from_user=self.user,
@@ -90,7 +100,7 @@ class ChatConsumer(JsonWebsocketConsumer):
                 text=content["message"],
                 conversation=self.conversation,
             )
-
+            # sends it to the other user in the conversation
             async_to_sync(self.channel_layer.group_send)(
                 self.conversation_name,
                 {
@@ -99,7 +109,7 @@ class ChatConsumer(JsonWebsocketConsumer):
                     "message": MessageSerializer(message).data,
                 },
             )
-
+            # sends a notification to the other user
             notification_group_name = str(
                 self.get_receiver().id) + "__notifications"
             async_to_sync(self.channel_layer.group_send)(
@@ -112,6 +122,7 @@ class ChatConsumer(JsonWebsocketConsumer):
             )
 
         if message_type == "read_messages":
+            # marks messages sent to the user as read
             messages_to_me = self.conversation.messages.filter(
                 to_user=self.user)
             messages_to_me.update(read=True)
@@ -131,7 +142,10 @@ class ChatConsumer(JsonWebsocketConsumer):
         return super().receive_json(content, **kwargs)
 
     def chat_message_echo(self, event):
-        print(event)
+        """
+        Sends a chat message event to the client through
+        the WebSocket connection.
+        """
         self.send_json(event)
 
     @classmethod
@@ -139,9 +153,17 @@ class ChatConsumer(JsonWebsocketConsumer):
         return json.dumps(content, cls=UUIDEncoder)
 
     def new_message_notification(self, event):
+        """
+        Sends a new message notification event to the client
+        through the WebSocket connection.
+        """
         self.send_json(event)
 
     def unread_count(self, event):
+        """
+        Sends an unread message count event to the client
+        through the WebSocket connection.
+        """
         self.send_json(event)
 
 
@@ -149,6 +171,7 @@ class NotificationConsumer(JsonWebsocketConsumer):
     """
     This consumer is used to send notifications.
     """
+
     def __init__(self, *args, **kwargs):
         super().__init__(args, kwargs)
         self.notification_group_name = None
@@ -176,7 +199,7 @@ class NotificationConsumer(JsonWebsocketConsumer):
         each = list(
             {(fr_user, have_notifications.filter(from_user=fr_user).count())
              for fr_user in from_user}
-            )
+        )
         self.send_json(
             {
                 "type": "unread_count",
@@ -193,7 +216,15 @@ class NotificationConsumer(JsonWebsocketConsumer):
         return super().disconnect(code)
 
     def new_message_notification(self, event):
+        """
+        Sends a new message notification event to the client
+        through the WebSocket connection.
+        """
         self.send_json(event)
 
     def unread_count(self, event):
+        """
+        Sends an unread message count event to the client
+        through the WebSocket connection.
+        """
         self.send_json(event)
