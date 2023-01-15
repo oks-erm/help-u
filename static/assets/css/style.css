@@ -808,6 +808,11 @@ body {
       color: #fbee85;
     }
 
+    body section div div form img {
+      width: -webkit-fill-available;
+      height: auto;
+    }
+
     #div_id_userpic div div.input-group.mb-2,
     #div_id_image div div.input-group.mb-2 {
       display: none;
