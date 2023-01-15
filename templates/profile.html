@@ -6,6 +6,7 @@
 <section id="profile">
     <div class="container d-flex flex-column justify-content-center mt-5">
         <div class="row">
+          <!-- profile userpic -->
             <div class="col-xl-4 col-lg-5 mt-2 text-center">
                 {% if "placeholder" in profile.userpic.url %}
                 <img style="opacity: 0.4; scale: 0.6;" src="{% static 'assets/img/grateful.png' %}">
@@ -13,22 +14,36 @@
                 {% cloudinary profile.userpic height=350 width=350 crop="fill" radius="max" gravity="face" %}
                 {% endif %}
             </div>
+            <!-- user name -->
             <div class="col-xl-8 col-lg-7">
-                <h2>{{ profile.user }} {% if profile.user == request.user %} <a href="{% url 'users:update_profile' profile.pk %}" class="link-primary"><i class='bx bx-pencil' ></i></a>{% endif %}</h2>
+                <h2>
+                  {{ profile.user }} 
+                  <!-- update icon -->
+                  {% if profile.user == request.user %} 
+                  <a href="{% url 'users:update_profile' profile.pk %}" class="link-primary">
+                    <i class='bx bx-pencil' ></i>
+                  </a>{% endif %}
+                </h2>
                 <hr>
-                <p class="subtitle text-muted p ms-2"><i class='bx bx-map'></i> {{ profile.country.name }}
+                <!-- country, city -->
+                <p class="subtitle text-muted p ms-2">
+                  <i class='bx bx-map'></i> {{ profile.country.name }}
                     {% if profile.city != "" %}
                     , {{ profile.city}}
                     {% endif %}
                 </p>
+                <!-- languages -->
                 <div class="author subtitle p ms-2">Languages: {{ profile.languages }}</div>
                 <hr>
+                <!-- bio -->
                 <div class="author subtitle p ms-2 mb-5">About me:
                 <p>{{ profile.bio }}</p>
             </div>
+                <!-- contact button -->
                 {% if profile.user != request.user %}
                 <a href="{% url 'messages:messages_with_path' 'conv' %}{{user.id}}_{{profile.user.id}}?q=conv{{user.id}}_{{profile.user.id}}" class="btn btn-primary">Contact {{profile.user}}</a>
                 {% else %}
+                <!-- bookmarked posts -->
                 {% if user.userprofile.bookmarks.all %}
                 <div class="accordion accordion col-lg-6" id="saved-posts">
                     <div class="accordion-item">

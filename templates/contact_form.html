@@ -6,7 +6,7 @@
             contact us. We'll get back to you as soon as possible. You might want ro read through Frequently Asked 
             Questions section first, where your question might have already been covered.</p>
     </div>
-
+    <!-- form -->
     <div class="container-fluid col-lg-8 mt-5 mt-lg-0">
         <form method="post" role="form" class="contact-form">
             {% csrf_token %}
@@ -35,7 +35,7 @@
     </div>
 </div>
 
-
+<!-- handle submit form without updating the page -->
 <script type="text/javascript">
     $(document).on('submit', '.contact-form', (e) => {
         e.preventDefault();

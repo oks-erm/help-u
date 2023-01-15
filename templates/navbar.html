@@ -8,13 +8,20 @@
 
       <!-- Navbar -->
       <nav id="navbar" class="navbar">
+        <!-- user name -->
         {% if user.is_authenticated %}
-        <span id="user-name" class="nav-link"><a href="{%  url 'users:profile' user.userprofile.id %}" class="fw-semibold"><i class='bx bxs-user-circle'></i>&nbsp;{{ user }}</a></span>
-        <a href="{% url 'messages:conv_list' %}" class="px-0 me-2"><i class='bx bx-envelope fs-6 text position-relative' id="messages">
-          {% include "unread.html" %}</i></a>
+        <span id="user-name" class="nav-link"><a href="{%  url 'users:profile' user.userprofile.id %}" class="fw-semibold">
+          <i class='bx bxs-user-circle'></i>&nbsp;{{ user }}</a>
+        </span>
+        <!-- messenger icon -->
+        <a href="{% url 'messages:conv_list' %}" class="px-0 me-2">
+          <i class='bx bx-envelope fs-6 text position-relative' id="messages">
+            {% include "unread.html" %}
+          </i>
+        </a>
         {% endif %} 
+        <!-- nav links -->
         <ul>
-          
           {% if request.get_full_path == '/' %}
           <li><a class="nav-link scrollto active" href="#hero">Home</a></li>
           <li><a class="nav-link scrollto" href="#about">About</a></li>
@@ -34,9 +41,11 @@
           <li><a class="nav-link auth" href="{% url 'account_login' %}">Login</a></li>
           {% endif %}
         </ul>
+        <!-- mobile menu icon -->
         <i class="bi bi-list mobile-nav-toggle"></i>
       </nav>
     </div>
+    <!-- django messages -->
     <div class="container-fluid gx-0 msg-box" data-aos="fade" data-aos-easing="ease-in-back" data-aos-duration="800">
       <div class="row">
         <div class="col-md-6 offset-md-3 mt-2">

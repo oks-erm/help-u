@@ -3,15 +3,18 @@
 
 {% if 'post_list' %}
 <div class="col-10  left">
+  <!-- new post button -->
     <a href="{% url 'main:new' %}" class="btn btn-success mt-1 new-post">New post</a>
     <div class="row gx-2">
 
         {% for post in post_list %}
+        <!-- single post -->
         <div class="col-xxl-2 col-xl-3 col-lg-4 col-sm-6">
             <div class="card mb-3">
                 <div class="card-body">
                     
                     <a href="{% url 'main:full' post.slug  %}">
+                        <!-- badges -->
                         {% if 'all' in request.path %}
                         {% if post.type == 'give' %}
                         <span class="badge bg-success position-absolute top-20 end-0">Give</span>
@@ -19,6 +22,7 @@
                         <span class="badge bg-warning position-absolute top-20 end-0">Need</span>
                         {% endif %}
                         {% endif %}
+                        <!-- image -->
                         <div class="image-container">
                             {% if "placeholder" in post.image.url %}
                             <img class="card-img-top" style="opacity: 0.4; scale: 0.6;"
@@ -27,13 +31,16 @@
                             {% cloudinary post.image height=350 width=350 crop="fill" class="card-img-top" %}
                             {% endif %}
                         </div>
+                        <!-- post title -->
                         <h4 class="card-title mt-3 text-truncate" title="{{ post.title|title }}">
                             {{ post.title|title }}</h4>
                     </a>
+                    <!-- location -->
                     <p class="subtitle text-truncate p"><i class='bx bx-map'></i>
                         <a href="https://www.google.com/maps/place/{{post.city}}+{{post.country.name}}" target="_blank"
                             class="geo" title="{{ post.city }}, {{ post.country.name }}">
                             {{ post.city}}, {{ post.country.name }}
+                            <!-- map toolkit -->
                             <iframe class="preview" loading="lazy" allowfullscreen
                                 referrerpolicy="no-referrer-when-downgrade"
                                 src="https://www.google.com/maps/embed/v1/place?key={{ key }}&q={{ post.city }}+{{ post.country.name }}&zoom=11">
@@ -43,9 +50,17 @@
                     {% else %}
                     <p class="subtitle text-muted p"><i class='bx bx-building-house'></i> ... </p>
                     {% endif %}
-                    <div class="author subtitle p"><a href="{% url 'users:profile' post.author.id %}"><i class='bx bxs-user-circle'></i><span> {{ post.author }}
-                        </span></a></div>
+                    <!-- author -->
+                    <div class="author subtitle p">
+                      <a href="{% url 'users:profile' post.author.id %}">
+                        <i class='bx bxs-user-circle'></i>
+                        <span> 
+                          {{ post.author }}
+                        </span>
+                      </a>
+                    </div>
                     <hr>
+                    <!-- post text -->
                     <p class="card-text content line-clamp">{{ post.text }}</p>
                     <p class="card-text text-muted h6 text-truncate">{{ post.created_on|date:"d M Y" }}</p>
 
@@ -54,7 +69,7 @@
         </div>
         {% endfor %}
     </div>
-    
+    <!-- pagination -->
     {% if page_obj.has_other_pages %}
     <nav>
         <ul class="pagination justify-content-center mt-4 mb-0">

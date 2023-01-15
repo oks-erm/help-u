@@ -5,8 +5,10 @@
 {% block content %}
 <section id="full-post">
     <div class="container d-flex flex-column justify-content-center mt-3">
+      <!-- back button -->
         <a href="{% url 'main:posts_list' post.type %}" class="btn btn-outline-primary mb-3 mt-1">
             <<< Back to the list</a>
+            <!-- post image -->
                 <div class="row">
                     <div class="col-lg-6 mt-2 d-flex flex-column justify-content-start" id="left-col">
                         {% if "placeholder" in post.image.url %}
@@ -15,10 +17,11 @@
                         {% cloudinary post.image %}
                         {% endif %}
 
-                        
+                        <!-- comments block -->
                         <div id="comments-block">
                             <div class="accordion-item">
                                 {% if comments %}
+                                <!-- single comment -->
                               <h2 class="accordion-header" id="comments-heading">
                                 <button class="accordion-button collapsed fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#comments" aria-expanded="false" aria-controls="comments">
                                   Comments ({{ comments.count }})
@@ -48,22 +51,25 @@
                               {% endif %}
                             </div>
                           </div>
-                   
-
                 </div>
                 <div class="col-lg-6">
+                  <!-- post title -->
                     <h2>{{ post.title|title }}
+                      <!-- bookmark button -->
                         {% if post in user.userprofile.bookmarks.all %}
                         <span class="link-primary" id="bookmark"><i class='bx bxs-bookmark-star'></i></span></h2>
                     {% else %}
                     <span class="link-secondary" id="bookmark"><i class='bx bxs-bookmark-star'></i></span></h2>
                     {% endif %}
+                    <!-- date created -->
                     <p class="card-text created text-muted h6">{{ post.created_on}}</p>
                     <hr>
+                    <!-- map -->
                     <iframe width="500" height="300" style="border:0" loading="lazy" allowfullscreen
                         referrerpolicy="no-referrer-when-downgrade"
                         src="https://www.google.com/maps/embed/v1/place?key={{key}}&q={{post.area}}{{post.city}},{{post.country}}&zoom=13">
                     </iframe>
+                    <!-- location -->
                     <p class="subtitle text-muted p"><i class='bx bx-map'></i> {{ post.country.name }},
                         {{ post.city}},
                         {% if post.area != None %}
@@ -72,25 +78,29 @@
                         ...
                         {% endif %}
                     </p>
+                    <!-- author -->
                     <div class="author subtitle p"><a href="{% url 'users:profile' post.author.id %}"><i
                                 class='bx bxs-user-circle'></i><span> {{ post.author }}</span></a>
 
                     </div>
                     <hr>
+                    <!-- post text -->
                     <p>{{ post.text }}</p>
                     <hr>
+
                     <div class="mt-4">
+                      <!-- buttons -->
                         {% if post.author.user == request.user %}
                         <a href="{% url 'main:update' post.slug %}" class="btn btn-primary px-4">Update</a>
                         <a href="{% url 'main:delete' post.slug %}" class="btn btn-secondary px-4">Delete</a>
                         {% else %}
                         <a href="{% url 'messages:messages_with_path' 'conv' %}{{user.id}}_{{post.author.user.id}}?q=conv{{user.id}}_{{post.author.user.id}}" class="btn btn-primary">Contact {{post.author}}</a>
                         {% if post.type == 'give' %}
-                        <!-- <button type="button" class="btn btn-success">Say Thank You</button> -->
                         <button class="btn btn-success" type="button" data-bs-toggle="collapse"
                             data-bs-target="#comment" aria-expanded="false" aria-controls="collapseExample">
                             Say Thank You
                         </button>
+                        <!-- write comment field -->
                         <div class="collapse" id="comment">
                             <div class="card card-body mt-1">
                                 <form method="post" role="form" class="comment-form">
@@ -110,15 +120,13 @@
                         </div>
 
                         {% endif %}
-                        {% if post.type == 'receive' %}
-                        <button type="button" class="btn btn-success">Offer Help</button>
-                        {% endif %}
                         {% endif %}
                     </div>
                 </div>
     </div>
     </div>
 </section>
+<!-- handle bookmarking without refreshing the page -->
 <script type="text/javascript">
     $('#bookmark').on('click', function () {
         $.ajax({
@@ -142,7 +150,7 @@
             }
         })
     })
-
+    // handle sending a comment without refreshing the page
     $(document).on('submit', '.comment-form', (e) => {
         e.preventDefault();
         $.ajax({
@@ -179,7 +187,7 @@
             }
         })
     });
-
+    // handle cooments block position depending on the screen size
     if ($(window).width() > 991) {
             $('#comments').addClass('show');
         } 

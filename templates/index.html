@@ -1,4 +1,7 @@
-{% extends "base.html" %} {% load static %} {% block content %}
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+
 <!-- Hero -->
 <section id="hero" class="d-flex align-items-center">
   <div
@@ -22,14 +25,12 @@
         href="{% url 'main:posts_list' 'receive' %}"
         id="can_help"
         class="btn-hero scrollto"
-        >I can help</a
-      >
+        >I can help</a>
       <a
         href="{% url 'main:posts_list' 'give' %}"
         id="need_help"
         class="btn-hero scrollto"
-        >I need help</a
-      >
+        >I need help</a>
     </div>
   </div>
 </section>
@@ -83,27 +84,25 @@
               class="collapse"
               data-bs-target="#faq-list-1"
               >How do I know it is safe?
-              <i class="bx bx-chevron-down icon-show"></i
-              ><i class="bx bx-chevron-up icon-close"></i
-            ></a>
+              <i class="bx bx-chevron-down icon-show"></i><i class="bx bx-chevron-up icon-close"></i>
+            </a>
             <div
               id="faq-list-1"
               class="collapse show"
-              data-bs-parent=".faq-list"
-            >
+              data-bs-parent=".faq-list">
               <p>
-                We take the security and privacy of our users very seriously. We
+                <pre>We take the security and privacy of our users very seriously. We
                 use SSL encryption to protect all user information and employ
                 strict access controls to prevent unauthorized access. All new
                 users go through phone and email verification. Users are
                 required to use their real photos as a profile picture. In case
                 of doubts or complaints, moderators might require an ID. All
-                content is moderated. <br> Our team of trained professionals reviews
+                content is moderated.</pre><br><pre>Our team of trained professionals reviews
                 and flags any inappropriate content. Our moderation process
                 follows strict guidelines and policies to ensure that the
                 website remains safe and appropriate for all users. If you come
                 across any content that you find inappropriate, suspect fraud,
-                or have any doubts, please do not hesitate to contact us.
+                or have any doubts, please do not hesitate to contact us.</pre>
               </p>
             </div>
           </li>
@@ -115,15 +114,14 @@
               data-bs-target="#faq-list-2"
               class="collapsed"
               >How do you verify users' identity?
-              <i class="bx bx-chevron-down icon-show"></i
-              ><i class="bx bx-chevron-up icon-close"></i
-            ></a>
+              <i class="bx bx-chevron-down icon-show"></i><i class="bx bx-chevron-up icon-close"></i>
+            </a>
             <div id="faq-list-2" class="collapse" data-bs-parent=".faq-list">
               <p>
-                All new users must pass a phone and email verification process.
+                <pre>All new users must pass a phone and email verification process.
                 To ensure authenticity, users must use their genuine photos as
                 their profile picture. In the event of any doubts or complaints,
-                our moderators may request an ID verification.
+                our moderators may request an ID verification.</pre>
               </p>
             </div>
           </li>
@@ -135,13 +133,13 @@
               data-bs-target="#faq-list-3"
               class="collapsed"
               >How can I get help?<i class="bx bx-chevron-down icon-show"></i
-              ><i class="bx bx-chevron-up icon-close"></i
-            ></a>
+              ><i class="bx bx-chevron-up icon-close"></i>
+            </a>
             <div id="faq-list-3" class="collapse" data-bs-parent=".faq-list">
               <p>
-                Look through the posts and start a chat with someone whose offer
+                <pre>Look through the posts and start a chat with someone whose offer
                 interests you, or post your own request for what you need help
-                with. It will be published after moderation.
+                with. It will be published after moderation.</pre>
               </p>
             </div>
           </li>
@@ -153,10 +151,8 @@
               data-bs-target="#faq-list-4"
               class="collapsed"
               >What can I do if I don't speak the language?<i
-                class="bx bx-chevron-down icon-show"
-              ></i
-              ><i class="bx bx-chevron-up icon-close"></i
-            ></a>
+                class="bx bx-chevron-down icon-show"></i><i class="bx bx-chevron-up icon-close"></i>
+            </a>
             <div id="faq-list-4" class="collapse" data-bs-parent=".faq-list">
               <p>
                 1. Use a translation tool, such as Google Translate, to help you
