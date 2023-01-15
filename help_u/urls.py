@@ -31,7 +31,7 @@ urlpatterns = [
 
 
 router = routers.DefaultRouter()
-# router.register('api/users', CustomUserViewSet, basename='Users')
+
 router.register("api/conversations", ConversationViewSet,
                 basename='Conversations')
 router.register("api/messages", MessageViewSet, basename='Messages')

@@ -15,7 +15,7 @@ import os
 import dj_database_url
 from django.contrib.messages import constants as messages
 if os.path.exists('env.py'):
-    import env
+    import env  # noqa # pylint: disable=unused-import
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -36,8 +36,12 @@ ALLOWED_HOSTS = ['helpukr.herokuapp.com', 'localhost',
                  '8000-okserm-helpu-4vq7cec76g9.ws-eu82.gitpod.io']
 
 
-CSRF_TRUSTED_ORIGINS = ['https://*.8000-okserm-helpu-4vq7cec76g9.ws-eu82.gitpod.io',
-                        'https://*.helpukr.herokuapp.com', 'https://*.facebook.com', 'https://*.google.com']
+CSRF_TRUSTED_ORIGINS = [
+    'https://*.8000-okserm-helpu-4vq7cec76g9.ws-eu82.gitpod.io',
+    'https://*.helpukr.herokuapp.com',
+    'https://*.facebook.com',
+    'https://*.google.com'
+    ]
 
 
 ACCOUNT_EMAIL_VERIFICATION = 'none'
@@ -87,6 +91,7 @@ MESSAGE_TAGS = {
     messages.ERROR: 'alert-danger',
 }
 
+# CRISPY FORMS
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 CRISPY_TEMPLATE_PACK = "bootstrap5"
@@ -128,7 +133,6 @@ ASGI_APPLICATION = "help_u.asgi.application"
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
-
 DATABASES = {
     'default': dj_database_url.parse(os.environ.get('DATABASE_URL')),
 }
@@ -139,16 +143,28 @@ DATABASES = {
 
 AUTH_PASSWORD_VALIDATORS = [
     {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+        'NAME': (
+            'django.contrib.auth.password_validation.'
+            'UserAttributeSimilarityValidator'
+        ),
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+        'NAME': (
+            'django.contrib.auth.password_validation.'
+            'MinimumLengthValidator'
+        ),
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+        'NAME': (
+            'django.contrib.auth.password_validation.'
+            'CommonPasswordValidator'
+        ),
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+        'NAME': (
+            'django.contrib.auth.password_validation.'
+            'NumericPasswordValidator'
+        ),
     },
 ]
 
@@ -169,7 +185,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
 STATIC_URL = '/static/'
-STATICFILES_STORAGE = 'cloudinary_storage.storage.StaticHashedCloudinaryStorage'
+STATICFILES_STORAGE = (
+    'cloudinary_storage.storage.StaticHashedCloudinaryStorage'
+)
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
@@ -205,9 +223,11 @@ DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
+# CUSTOM USER MODEL
 AUTH_USER_MODEL = 'main.CustomUser'
 
 
+# ALLAUTH
 ACCOUNT_FORMS = {
     'signup': 'main.forms.CustomSignUpForm',
 }
@@ -231,6 +251,8 @@ SOCIALACCOUNT_LOGIN_ON_GET = True
 SOCIALACCOUNT_EMAIL_VERIFICATION = False
 ACCOUNT_LOGOUT_ON_GET = True
 
+
+# Social auth
 
 SOCIALACCOUNT_PROVIDERS = {
     'facebook': {
@@ -269,6 +291,8 @@ SOCIALACCOUNT_PROVIDERS = {
     }
 }
 
+
+# Websoket stuff
 
 REDIS_URL = os.environ.get('REDIS_URL_STUNNEL')
 

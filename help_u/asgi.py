@@ -20,11 +20,15 @@ sys.path.append(str(ROOT_DIR / "help_u"))
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'help_u.settings')
 
+# This application object is used ASGI server.
 django_application = get_asgi_application()
 
-from . import routing  # noqa isort:skip
-
-from channels.routing import ProtocolTypeRouter, URLRouter  # noqa isort:skip
+# Import websocket app here, to ensure it is loaded before
+# the apps from django_application.
+# pylint: disable=ungrouped-imports, wrong-import-order, wrong-import-position
+from . import routing  # noqa
+# pylint: disable=ungrouped-imports, wrong-import-order, wrong-import-position
+from channels.routing import ProtocolTypeRouter, URLRouter  # noqa
 
 
 application = ProtocolTypeRouter(
