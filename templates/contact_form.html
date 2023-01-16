@@ -12,10 +12,18 @@
             {% csrf_token %}
             <div class="row">
                 <div class="col-md-6 form-group mt-3 mt-md-3">
+                    {% if user.is_authenticated %}
+                    <span>Name: {{ user }}</span>
+                    {% else %}
                     <input type="text" name="name" class="form-control" id="name" placeholder="Your Name" required>
+                    {% endif %}
                 </div>
                 <div class="col-md-6 form-group mt-3 mt-md-3">
+                    {% if user.is_authenticated %}
+                    <span>Email: {{ user.email }}</span>
+                    {% else %}
                     <input type="email" class="form-control" name="email" id="email" placeholder="Your Email" required>
+                    {% endif %}
                 </div>
             </div>
             <div class="form-group mt-3">

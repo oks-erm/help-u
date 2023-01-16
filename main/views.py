@@ -31,12 +31,19 @@ class LandingView(generic.TemplateView):
         """
         Handles post requests to create new contact form messages.
         """
+        name = request.POST.get('name')
+        email = request.POST.get('email')
+        if request.user.is_authenticated:
+            # prefill form fields with user's name and email
+            name = request.user.first_name + ' ' + request.user.last_name
+            email = request.user.email
+
         new = ContactFormMessage(
-            name=request.POST.get('name'),
-            email=request.POST.get('email'),
+            name=name,
+            email=email,
             subject=request.POST.get('subject'),
             message=request.POST.get('message'),
-            )
+        )
         new.save()
         return HttpResponse("")
 
