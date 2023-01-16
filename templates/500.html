@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% load static %}
+{% load cloudinary %}
+
+{% block content %}
+<section>
+  <div class="container justify-content-center">
+    <div class="row justify-content-center">
+      <div class="d-flex flex-column justify-content-center col-md-12 mt-xl-0 mt-xl-3">
+          <div class="col-md-12 d-flex flex-column justify-content-center mt-lg-5 mt-md-5 mt-5 mb-4">
+            <h1>error 500</h1>
+            <h4>Oh no!</h4> 
+            <h2>Something went wrong.</h2>
+            <p>Try to refresh the page or <br> to the <a href="{% url 'main:home' %}">Home page</a></p>
+              
+          </div>
+          <div class="col-md-12 d-flex justify-content-center mt-lg-5 mt-md-5 mt-5 mb-4">
+              <img class="search-logo" src="{% static 'assets/img/logo_small.png' %}">
+          </div>
+       </div>
+    </div>
+  </div>
+</section>
+{% endblock %}
