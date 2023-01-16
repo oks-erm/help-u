@@ -40,7 +40,9 @@ else:
         EC.presence_of_element_located((By.ID, "id_password"))
     )
     form_pass.clear()
-    form_pass.send_keys("qazqaz123")
+    # Paste the password from credentials.
+    form_pass.send_keys("PASTE PASSWORD HERE")
+    # can't read it from a file when tests are run on remotely on Browserstack
 
     button = WebDriverWait(driver, 5).until(
         EC.element_to_be_clickable(

@@ -1,4 +1,5 @@
 import time
+import uuid
 from selenium import webdriver
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.by import By
@@ -6,7 +7,10 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.keys import Keys
 
 
-# profile form 
+TEST_COMMENT = str(uuid.uuid4)
+
+
+# comment
 driver = webdriver.Chrome('./chromedriver')
 driver.get("https://helpukr.herokuapp.com/")
 if "Help U" not in driver.title:
@@ -39,7 +43,9 @@ else:
         EC.presence_of_element_located((By.ID, "id_password"))
     )
     form_pass.clear()
-    form_pass.send_keys("qazqaz123")
+    # Paste the password from credentials.
+    form_pass.send_keys("PASTE PASSWORD HERE")
+    # can't read it from a file when tests are run on remotely on Browserstack
 
     button = WebDriverWait(driver, 5).until(
         EC.element_to_be_clickable(
@@ -49,48 +55,45 @@ else:
     time.sleep(5)
 
     try:
-        user_name = WebDriverWait(driver, 5).until(
-            EC.presence_of_element_located(
-                (By.CSS_SELECTOR, "#user-name > a"))
+        post = WebDriverWait(driver, 8).until(
+            EC.element_to_be_clickable(
+                (By.CSS_SELECTOR, "#listings > div > div > div:nth-child(1) > div > div > a > h4"))
         )
-        user_name.click()
+        post.click()
     except:
-        print('something went wrong (user_name)')
+        print('something went wrong (post)')
     else:
-        time.sleep(5)
-        try:
-            edit = WebDriverWait(driver, 5).until(
-                EC.element_to_be_clickable(
-                    # (By.CSS_SELECTOR, "#profile > div > div > div.col-xl-8.col-lg-7 > h2 > a"))
-                    (By.CLASS_NAME, "bx-pencil"))
-            )
-            edit.click()
-        except:
-            print('something went wrong (edit)')
-        else:
-            time.sleep(3)
-            city = WebDriverWait(driver, 8).until(
-                EC.presence_of_element_located(
-                    (By.ID, "id_city"))
-            )
-            city.send_keys('+1')
-            time.sleep(3)
+        time.sleep(2)
+        button = WebDriverWait(driver, 5).until(
+            EC.element_to_be_clickable(
+                (By.CLASS_NAME, "btn-success"))
+        )
+        driver.execute_script("arguments[0].scrollIntoView();", button)
+        time.sleep(1)
+        button.click()
+        time.sleep(1)
+        publish = WebDriverWait(driver, 5).until(
+            EC.element_to_be_clickable(
+                (By.CSS_SELECTOR, "#comment > div > form > div.text-end > button"))
+        )
+        driver.execute_script("arguments[0].scrollIntoView();", publish)
 
-            save_button = WebDriverWait(driver, 5).until(
+        try:
+            text = WebDriverWait(driver, 5).until(
                 EC.presence_of_element_located(
-                    (By.ID, "submit-id-save"))
+                    (By.ID, "body"))
             )
-            driver.execute_script(
-                "arguments[0].scrollIntoView();", save_button)
-            time.sleep(1)
-            save_button.click()
-            time.sleep(5)
+            text.send_keys(TEST_COMMENT)
+            publish.click()
+            time.sleep(2)
 
             return_value = WebDriverWait(driver, 5).until(
                 EC.presence_of_element_located(
-                    (By.CSS_SELECTOR, "#profile > div > div > div.col-xl-8.col-lg-7 > p"))
+                    (By.CSS_SELECTOR, "#comments-block > div.card.border-0.comment > div > div.col-9 > div > p.card-text.text-muted.mb-1"))
             )
 
-            print(f"Success! {return_value.text.split(',')[1]}")
+            print(f"Success! {return_value.text}")
+        except:
+            print("something went wrong (text field)")
 
 driver.close()
