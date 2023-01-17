@@ -2,8 +2,7 @@ import React, {useState}  from 'react';
 import {
   BrowserRouter as Router,
   Routes,
-  Route,
-  Link
+  Route
 } from "react-router-dom";
 import Chat from "./components/Chat.tsx";
 import ActiveConversations from "./components/ActiveConversations.tsx";

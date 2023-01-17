@@ -5,6 +5,7 @@ import useWebSocket, { ReadyState } from 'react-use-websocket';
 import { Link, useParams } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
+import Spinner from 'react-bootstrap/Spinner';
 import InfiniteScroll from 'react-infinite-scroll-component';
 // @ts-ignore
 import { ChatLoader } from './ChatLoader.tsx';
@@ -40,6 +41,8 @@ export default function Chat() {
     });
   };
 
+  const [isError, setIsError] = useState(false);
+
   const { readyState, sendJsonMessage } = useWebSocket(
     `wss://helpukr.herokuapp.com/messages/chat/${conversationName}`,
     {
@@ -48,6 +51,10 @@ export default function Chat() {
       },
       onClose: () => {
         console.log('Disconnected!');
+        setIsError(true);
+      },
+      onError: () => {
+        setIsError(true);
       },
       onMessage: (e) => {
         const data = JSON.parse(e.data);
@@ -101,10 +108,9 @@ export default function Chat() {
   }, [connectionStatus, sendJsonMessage]);
 
   async function fetchMessages() {
+    try{
     const apiRes = await fetch(
-      `https://helpukr.herokuapp.com/api/messages/?conversation=${transformConversationName(
-        conversationName
-      )}&page=${page}`,
+      `/api/messages/?conversation=${transformConversationName(conversationName)}&page=${page}`,
       {
         method: 'GET',
         headers: {
@@ -124,7 +130,10 @@ export default function Chat() {
       setPage(page + 1);
       setMessageHistory((prev: MessageModel[]) => prev.concat(data.results));
     }
-  }
+  } catch (error) {
+      console.error("Something went wrong fetching messages.");
+      setIsError(true)
+  }};
 
   function handleChangeMessage(e: any) {
     setMessage(e.target.value);
@@ -142,8 +151,9 @@ export default function Chat() {
 
   useEffect(() => {
     async function fetchConversation() {
+      try {
       const apiRes = await fetch(
-        `https://helpukr.herokuapp.com/api/conversations/${transformConversationName(
+        `/api/conversations/${transformConversationName(
           conversationName
         )}/`,
         {
@@ -158,9 +168,16 @@ export default function Chat() {
         const data: ConversationModel = await apiRes.json();
         setConversation(data);
       }
-    }
+    } catch (error) {
+      console.error("Something went wrong fetching conversations.");
+      setIsError(true)
+    }};
     fetchConversation();
   }, [transformConversationName(conversationName)]);
+
+  const handleRefresh = () => {
+    window.location.reload();
+  };
 
   return (
     <div className="ms-2 me-2">
@@ -171,23 +188,20 @@ export default function Chat() {
           justifyContent: 'space-between',
           background: 'url(https://i.imgur.com/rogZEKl.jpeg)',
           backgroundRepeat: 'repeat-y',
-        }}
-      >
+        }}>
         <Card.Header
           style={{
             background: '#499ef5',
             color: '#f8fbfe',
           }}
-          className="px-4"
-        >
+          className="px-4">
           <Link to={'/'}>
             <i
               className="bx bxs-chevron-left bx-flip-vertical px-2 pb-1"
               style={{
                 fontSize: '21px',
                 color: '#f8fbfe',
-              }}
-            ></i>
+              }}></i>
           </Link>
           {to_user?.first_name} {to_user?.last_name}
         </Card.Header>
@@ -197,25 +211,42 @@ export default function Chat() {
             overflow: 'auto',
             display: 'flex',
             flexDirection: 'column-reverse',
-          }}
-        >
-          <InfiniteScroll
-            dataLength={messageHistory.length}
-            next={fetchMessages}
-            className="d-flex"
-            style={{
-              flexDirection: 'column-reverse',
-            }}
-            inverse={true}
-            hasMore={hasMoreMessages}
-            loader={<ChatLoader />}
-            scrollableTarget="scrollableDiv"
-          >
-            <div ref={messagesEndRef} />
-            {messageHistory.map((message: MessageModel) => (
-              <Message key={message.id} message={message} />
-            ))}
-          </InfiniteScroll>
+          }}>
+          {isError && (
+            <div className="text-center my-5 py-5">
+              <p>
+                An error occured trying to connect. Please, check your internet
+                connection.
+              </p>
+              <Button
+                variant="outline-dark"
+                onClick={handleRefresh}>
+                Retry
+              </Button>
+            </div>
+          )}
+          {connectionStatus !== 'Open' && isError !== true ? (
+            <div className="text-center my-5 py-5">
+              <Spinner animation="border" variant="secondary" />
+            </div>
+          ) : (
+            <InfiniteScroll
+              dataLength={messageHistory.length}
+              next={fetchMessages}
+              className="d-flex"
+              style={{
+                flexDirection: 'column-reverse',
+              }}
+              inverse={true}
+              hasMore={hasMoreMessages}
+              loader={<ChatLoader />}
+              scrollableTarget="scrollableDiv">
+              <div ref={messagesEndRef} />
+              {messageHistory.map((message: MessageModel) => (
+                <Message key={message.id} message={message} />
+              ))}
+            </InfiniteScroll>
+          )}
         </div>
       </Card>
 
@@ -236,12 +267,10 @@ export default function Chat() {
             background: 'none',
             marginLeft: '-45px',
           }}
-          onClick={handleSubmit}
-        >
+          onClick={handleSubmit}>
           <i
             className="bx bxs-send bx-flip-vertical"
-            style={{ color: '#2680e0' }}
-          ></i>
+            style={{ color: '#2680e0' }}></i>
         </Button>
       </div>
     </div>

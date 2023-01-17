@@ -1,4 +1,5 @@
 import { AnyAaaaRecord } from "dns";
+import Alert from 'react-bootstrap/Alert';
 import React, { createContext, ReactNode, useContext, useState } from "react";
 import useWebSocket, { ReadyState } from "react-use-websocket";
 
@@ -19,6 +20,7 @@ export const NotificationContext = createContext<NotificationProps>(DefaultProps
 export const NotificationContextProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [unreadMessageCount, setUnreadMessageCount] = useState(0);
   const [eachUser, setEachUser] = useState([] as any);
+  const [isError, setIsError] = useState(false);
 
   const { readyState } = useWebSocket(
     `wss://helpukr.herokuapp.com/notifications/`,
@@ -27,7 +29,11 @@ export const NotificationContextProvider: React.FC<{ children: ReactNode }> = ({
         console.log('Connected to Notifications!');
       },
       onClose: () => {
-        console.log('Disconnected from Notifications!');
+        console.log('Disconnected!');
+        setIsError(true);
+      },
+      onError: () => {
+        setIsError(true);
       },
       onMessage: (e) => {
         const data = JSON.parse(e.data);
@@ -66,8 +72,15 @@ export const NotificationContextProvider: React.FC<{ children: ReactNode }> = ({
   }[readyState];
 
   return (
-    <NotificationContext.Provider value={{ unreadMessageCount, connectionStatus, eachUser }}>
+    <NotificationContext.Provider
+      value={{ unreadMessageCount, connectionStatus, eachUser }}>
       {children}
+      {isError && (
+        <Alert key='danger' variant='danger'>
+          There's been a problem connecting, can't display message
+          notifications.
+        </Alert>
+      )}
     </NotificationContext.Provider>
   );
 };
