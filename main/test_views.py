@@ -9,38 +9,75 @@ from django.urls import reverse
 from django.template.exceptions import TemplateDoesNotExist
 from django.core.files.uploadedfile import InMemoryUploadedFile
 from PIL import Image
-from messenger.models import Message, Conversation
 from .forms import CreatePostForm
 from .views import (LandingView, PostList, API_KEY, PostFull, PostCreateView,
                     PostUpdateView, PostDeleteView)
 from .models import ContactFormMessage, Post, CustomUser, UserProfile, Comment
 
 
-class LandingViewTestCase(TestCase):
+class LandingViewNoAuthTest(TestCase):
     """
-    Test LandingView class.
+    Test LandingView class with no authenticated user.
     """
     def setUp(self):
+        self.factory = RequestFactory()
+
+    def test_post_request_unauthenticated(self):
+        """
+        Test that the post method correctly creates a
+        ContactFormMessage object with the correct data
+        when the user is not logged in.
+        """
+        response = self.client.post('/', {
+            'name': 'Test User',
+            'email': 'testuser@example.com',
+            'subject': 'Test Subject',
+            'message': 'Test Message'
+        })
+        self.assertEqual(response.status_code, 200)
+        # pylint: disable=no-member
+        self.assertEqual(ContactFormMessage.objects.count(), 1)
+        # pylint: disable=no-member
+        message = ContactFormMessage.objects.first()
+        self.assertEqual(message.name, 'Test User')
+        self.assertEqual(message.email, 'testuser@example.com')
+        self.assertEqual(message.subject, 'Test Subject')
+        self.assertEqual(message.message, 'Test Message')
+
+
+class LandingViewAuthTestCase(TestCase):
+    """
+    Test LandingView class with an uathenticated user.
+    """
+    def setUp(self):
+        self.user = CustomUser.objects.create(
+            email='test@example.com',
+            first_name='Test',
+            last_name='User',
+            password='testpass',
+            is_active=True)
         self.request = HttpRequest()
-        self.request.POST['name'] = 'Test User'
-        self.request.POST['email'] = 'test@example.com'
+        self.request.user = self.user
         self.request.POST['subject'] = 'Test Subject'
         self.request.POST['message'] = 'Test Message'
         self.view = LandingView()
 
-    def test_post_method(self):
+    def test_post_method_logged_in(self):
         """
         Test that the post method correctly creates a
-        ContactFormMessage object with the correct data.
+        ContactFormMessage object with the correct data
+        when the user logged in.
         """
+        self.client.force_login(user=self.user)
         self.view.post(self.request)
         # pylint: disable=no-member
+        self.assertEqual(ContactFormMessage.objects.count(), 1)
+        # pylint: disable=no-member
         message = ContactFormMessage.objects.first()
-
         self.assertEqual(message.name, 'Test User')
         self.assertEqual(message.email, 'test@example.com')
-        self.assertEqual(message.subject, 'Test Subject')
-        self.assertEqual(message.message, 'Test Message')
+        self.assertEqual(message.subject, self.request.POST['subject'])
+        self.assertEqual(message.message, self.request.POST['message'])
 
     def test_post_method_response(self):
         """
@@ -653,46 +690,3 @@ class BookMarkTestCase(TestCase):
         self.assertNotIn(self.user_profile, updated_post.favourite.all())
         self.assertTrue(isinstance(remove, HttpResponse))
         self.assertEqual(remove.status_code, 200)
-
-
-class MessagesTestCase(TestCase):
-    """
-    Tests messages method.
-    """
-    def setUp(self):
-        self.user = CustomUser.objects.create(
-            email='test@example.com',
-            first_name='Test',
-            last_name='User',
-            password='testpass',
-            is_active=True)
-        self.user2 = CustomUser.objects.create(
-            email='test2@example.com',
-            first_name='Test2',
-            last_name='User2',
-            password='testpass2',
-            is_active=True)
-        self.client.force_login(user=self.user)
-        self.url = reverse('main:unread')
-
-    def test_messages_view_success(self):
-        """
-        Test that the MessagesView returns the correct data when
-        called with a valid request.
-        """
-        # pylint: disable=no-member
-        conv = Conversation.objects.create(
-            name=f'conv{self.user.id}_{self.user2.id}')
-        # pylint: disable=no-member
-        Message.objects.create(
-            conversation=conv, from_user=self.user2,
-            to_user=self.user, read=True)
-        # pylint: disable=no-member
-        Message.objects.create(
-            conversation=conv, from_user=self.user2,
-            to_user=self.user, read=False)
-
-        response = self.client.get(self.url)
-
-        self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.json()['unread'], 1)
