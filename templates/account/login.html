@@ -30,8 +30,8 @@
             you don't have an account, <a class="link" href="{{ signup_url }}">sign up</a>
             first.{% endblocktrans %}</p>
             <div class="separator">OR</div>
-            <a href="{% provider_login_url 'facebook' method='oauth2' %}" class="fs-4 px-1 fb-login-button"><i class='bx bxl-facebook-square'></i></a>
-            <a href="{% provider_login_url 'google' %}" class="fs-4 text-danger px-1"><i class='bx bxl-google' ></i></a>
+            <a href="{% provider_login_url 'facebook' method='oauth2' %}" class="fs-4 px-1 fb-login-button" aria-label="login with your Facebook account"><i class='bx bxl-facebook-square'></i></a>
+            <a href="{% provider_login_url 'google' %}" class="fs-4 text-danger px-1" aria-label="login with your Google account"><i class='bx bxl-google' ></i></a>
 
           <form class="login d-flex flex-column justify-content-center text-start mt-2 px-2" method="POST"
             action="{% url 'account_login' %}">

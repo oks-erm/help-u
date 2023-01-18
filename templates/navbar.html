@@ -14,7 +14,7 @@
           <i class='bx bxs-user-circle'></i>&nbsp;{{ user }}</a>
         </span>
         <!-- messenger icon -->
-        <a href="{% url 'messages:conv_list' %}" class="px-0 me-2">
+        <a href="{% url 'messages:conv_list' %}" class="px-0 me-2" aria-label="Messages">
           <i class='bx bx-envelope fs-6 text position-relative' id="messages">
             {% include "unread.html" %}
           </i>

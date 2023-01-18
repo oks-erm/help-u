@@ -26,8 +26,8 @@
             account? Then
             please <a class=" link" href="{{ login_url }}">sign in</a> instead.{% endblocktrans %}</p>
           <div class="separator">OR</div>
-          <a href="{% provider_login_url 'facebook' %}" class="fs-4 px-1"><i class='bx bxl-facebook-square'></i></a>
-          <a href="{% provider_login_url 'google' %}" class="fs-4 text-danger px-1"><i class='bx bxl-google'></i></a>
+          <a href="{% provider_login_url 'facebook' %}" class="fs-4 px-1" aria-label="login with your Facebook account"><i class='bx bxl-facebook-square'></i></a>
+          <a href="{% provider_login_url 'google' %}" class="fs-4 text-danger px-1" aria-label="login with your Google account"><i class='bx bxl-google'></i></a>
 
           <form class="signup d-flex flex-column justify-content-center text-start px-2" id="signup_form" method="post"
             action="{% url 'account_signup' %}">
