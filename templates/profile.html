@@ -20,7 +20,7 @@
                   {{ profile.user }} 
                   <!-- update icon -->
                   {% if profile.user == request.user %} 
-                  <a href="{% url 'users:update_profile' profile.pk %}" class="link-primary">
+                  <a href="{% url 'users:update_profile' profile.pk %}" class="link-primary" alt="Edit Your Profile">
                     <i class='bx bx-pencil' ></i>
                   </a>{% endif %}
                 </h2>
