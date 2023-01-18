@@ -71,14 +71,21 @@ export const NotificationContextProvider: React.FC<{ children: ReactNode }> = ({
     [ReadyState.UNINSTANTIATED]: "Uninstantiated"
   }[readyState];
 
+  const handleRefresh = () => {
+    window.location.reload();
+  };
+
   return (
     <NotificationContext.Provider
       value={{ unreadMessageCount, connectionStatus, eachUser }}>
       {children}
       {isError && (
-        <Alert key='danger' variant='danger'>
+        <Alert key="danger" variant="danger">
           There's been a problem connecting, can't display message
-          notifications.
+          notifications.{' '}
+          <a href="#" className="link-dark" onClick={handleRefresh}>
+            Try again.
+          </a>
         </Alert>
       )}
     </NotificationContext.Provider>

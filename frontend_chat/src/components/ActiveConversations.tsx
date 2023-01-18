@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import Alert from 'react-bootstrap/Alert';
 import { ConversationModel } from '../models/Conversation';
 import Card from 'react-bootstrap/Card';
 import Badge from 'react-bootstrap/Badge';
@@ -7,11 +8,14 @@ import ListGroup from 'react-bootstrap/ListGroup';
 import Spinner from 'react-bootstrap/Spinner';
 // @ts-ignore
 import { NotificationContext } from '../contexts/NotificationContext.tsx';
+import { parse } from 'node:path/win32';
+import { parseJsonText } from 'typescript';
 
 export default function ActiveConversations() {
   const [conversations, setActiveConversations] = useState<Array<
     Array<any>
   > | null>(null);
+  const [isError, setIsError] = useState("");
   const id = JSON.parse(document.getElementById('id')!.textContent!);
   // @ts-ignore
   const { unreadMessageCount } = useContext(NotificationContext);
@@ -20,16 +24,16 @@ export default function ActiveConversations() {
 
   useEffect(() => {
     async function fetchConversations() {
-      fetch('/api/conversations/')
-        .then((res) => res.json())
-        .then(
-          (result) => {
-            setActiveConversations(result);
-          },
-          (error) => {
-            console.log(error);
-          }
-        );
+      try {
+        const res = await fetch('/api/conversations/');
+        if (res.status === 200) {
+          setActiveConversations(await res.json());
+        } else {
+          throw new Error('Unexpected response from the server.');
+        }
+      } catch (error) {
+        setIsError('Server error, please try again later.');
+      }
     }
     fetchConversations();
   });
@@ -56,6 +60,11 @@ export default function ActiveConversations() {
 
   return (
     <div>
+      {isError !== '' && (
+        <Alert key="warning" variant="warning">
+          {isError}
+        </Alert>
+      )}
       <Card>
         <Card.Header
           style={{
@@ -63,8 +72,7 @@ export default function ActiveConversations() {
             background: '#499ef5',
             color: '#f8fbfe',
           }}
-          className="px-4"
-        >
+          className="px-4">
           Conversations
           {unreadMessageCount > 0 && (
             <Badge
@@ -72,20 +80,19 @@ export default function ActiveConversations() {
               bg="warning"
               style={{ height: 'fit-content' }}
               text="dark"
-              className="mx-2"
-            >
+              className="mx-2">
               {unreadMessageCount}
             </Badge>
           )}
         </Card.Header>
         <ListGroup variant="flush">
-          { conversations == null ? (
+          {conversations == null ? (
             // Loader
             <div className="text-center my-5 py-5">
               <Spinner animation="grow" variant="primary" />
               <Spinner animation="grow" variant="warning" />
-            </div>) : (
-            // Conversations
+            </div>
+          ) : // Conversations
           conversations.length > 0 ? (
             conversations
               .filter((conv: any) =>
@@ -100,29 +107,27 @@ export default function ActiveConversations() {
                 <ListGroup.Item
                   action
                   className="py-0"
-                  key={createConversationName(c.other_user.id)}
-                >
+                  key={createConversationName(c.other_user.id)}>
                   <Link
                     to={`/chat/${createConversationName(
                       c.other_user.id
-                    )}?conversation=${createConversationName(c.other_user.id)}`}
-                  >
+                    )}?conversation=${createConversationName(
+                      c.other_user.id
+                    )}`}>
                     <div className="px-3">
                       <div
                         className="d-flex"
                         style={{
                           flexDirection: 'row',
                           justifyContent: 'space-between',
-                        }}
-                      >
+                        }}>
                         <Card.Title>
                           {c.other_user.first_name} {c.other_user.last_name}
                           <Badge
                             pill
                             bg="primary"
                             style={{ height: 'fit-content' }}
-                            className="mx-2"
-                          >
+                            className="mx-2">
                             {getNotifications(c.other_user.id)}
                           </Badge>
                         </Card.Title>
@@ -156,7 +161,7 @@ export default function ActiveConversations() {
               No active conversations yet, to contact somebody start a chat from
               the post that interests you.
             </div>
-          ))}
+          )}
         </ListGroup>
       </Card>
     </div>
