@@ -97,8 +97,15 @@
         // setTimeout returns the ID of the function to be executed
         scheduled_function = setTimeout(ajax_call, delay_by_in_ms, request_parameters);
     })
-
-
+    
+    // map toolkit
+    $('.geo')
+        .mouseover(function () {
+        $(this).children('.preview').show();
+        })
+        .mouseout(function () {
+        $(this).children('.preview').hide();
+        });
 </script>
 
 {% if  user.userprofile.country == "" %}

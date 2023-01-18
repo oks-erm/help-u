@@ -1,4 +1,5 @@
 import AOS from 'aos';
+import 'aos/dist/aos.css';
 import $ from 'jquery';
 
 export const main = (() => {
@@ -134,20 +135,7 @@ export const main = (() => {
   window.addEventListener('load', navbarlinksActive);
   onscroll(document, navbarlinksActive);
 
-  $('.geo')
-    .mouseover(function () {
-      $(this).children('.preview').show();
-    })
-    .mouseout(function () {
-      $(this).children('.preview').hide();
-    });
-
   $('.alert').delay(3000).fadeOut(1000);
-
-  $('#buttonClose').on('click', function () {
-    $('.modal').hide();
-    $('.modal-backdrop').hide();
-  });
 
   return {
     select,

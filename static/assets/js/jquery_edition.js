@@ -1,3 +1,6 @@
+// I wrote it just to practice jQuery and experiment with performance
+//of 2 different versions.
+
 (function () {
   'use strict';
   // select helper
