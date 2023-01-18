@@ -1,5 +1,8 @@
-const main = (() => {
-  'use strict';
+import AOS from 'aos';
+import $ from 'jquery';
+
+export const main = (() => {
+  ('use strict');
 
   // select helper
   const select = (el, all = false) => {
@@ -92,6 +95,7 @@ const main = (() => {
       easing: 'ease-in-out',
       once: true,
       mirror: false,
+      disable: 'mobile',
     });
   });
 
@@ -152,4 +156,4 @@ const main = (() => {
   };
 })();
 
-module.exports = main;
+

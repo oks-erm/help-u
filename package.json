@@ -4,8 +4,10 @@
   "description": "![CI logo](https://codeinstitute.s3.amazonaws.com/fullstack/ci_logo_small.png)",
   "main": "index.js",
   "dependencies": {
+    "aos": "^2.3.4",
     "asynckit": "^0.4.0",
     "axios": "^1.1.3",
+    "bootstrap": "^5.2.3",
     "combined-stream": "^1.0.8",
     "deepmerge": "^2.2.1",
     "delayed-stream": "^1.0.0",
