@@ -25,10 +25,10 @@
                         <!-- image -->
                         <div class="image-container">
                             {% if "placeholder" in post.image.url %}
-                            <img class="card-img-top" style="opacity: 0.4; scale: 0.6;"
+                            <img class="card-img-top" style="opacity: 0.4; scale: 0.6;" alt="placeholder image"
                                 src="{% static 'assets/img/logo_small.png' %}">
                             {% else %}
-                            {% cloudinary post.image height=350 width=350 crop="fill" class="card-img-top" %}
+                            {% cloudinary post.image height=350 width=350 crop="fill" class="card-img-top" alt="post image"%}
                             {% endif %}
                         </div>
                         <!-- post title -->

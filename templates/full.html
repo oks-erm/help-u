@@ -14,7 +14,7 @@
                         {% if "placeholder" in post.image.url %}
                         <img style="opacity: 0.4; scale: 0.6;" src="{% static 'assets/img/grateful.png' %}">
                         {% else %}
-                        {% cloudinary post.image %}
+                        {% cloudinary post.image alt="post image"%}
                         {% endif %}
 
                         <!-- comments block -->

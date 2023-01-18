@@ -11,7 +11,7 @@
                 {% if "placeholder" in profile.userpic.url %}
                 <img style="opacity: 0.4; scale: 0.6;" src="{% static 'assets/img/grateful.png' %}">
                 {% else %}
-                {% cloudinary profile.userpic height=350 width=350 crop="fill" radius="max" gravity="face" %}
+                {% cloudinary profile.userpic height=350 width=350 crop="fill" radius="max" gravity="face" alt="profile image" %}
                 {% endif %}
             </div>
             <!-- user name -->
