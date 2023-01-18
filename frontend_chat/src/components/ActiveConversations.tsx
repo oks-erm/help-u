@@ -8,8 +8,7 @@ import ListGroup from 'react-bootstrap/ListGroup';
 import Spinner from 'react-bootstrap/Spinner';
 // @ts-ignore
 import { NotificationContext } from '../contexts/NotificationContext.tsx';
-import { parse } from 'node:path/win32';
-import { parseJsonText } from 'typescript';
+
 
 export default function ActiveConversations() {
   const [conversations, setActiveConversations] = useState<Array<
@@ -17,8 +16,6 @@ export default function ActiveConversations() {
   > | null>(null);
   const [isError, setIsError] = useState("");
   const id = JSON.parse(document.getElementById('id')!.textContent!);
-  // @ts-ignore
-  const { unreadMessageCount } = useContext(NotificationContext);
   // @ts-ignore
   const { eachUser } = useContext(NotificationContext);
 
@@ -28,6 +25,7 @@ export default function ActiveConversations() {
         const res = await fetch('/api/conversations/');
         if (res.status === 200) {
           setActiveConversations(await res.json());
+          setIsError('');
         } else {
           throw new Error('Unexpected response from the server.');
         }
@@ -74,16 +72,7 @@ export default function ActiveConversations() {
           }}
           className="px-4">
           Conversations
-          {unreadMessageCount > 0 && (
-            <Badge
-              pill
-              bg="warning"
-              style={{ height: 'fit-content' }}
-              text="dark"
-              className="mx-2">
-              {unreadMessageCount}
-            </Badge>
-          )}
+          
         </Card.Header>
         <ListGroup variant="flush">
           {conversations == null ? (
@@ -136,7 +125,7 @@ export default function ActiveConversations() {
                           {formatMessageTimestamp(
                             c.last_message?.timestamp
                           )[0] + ' '}
-                          <span className="sender text-muted">
+                          <span className="sender">
                             {
                               formatMessageTimestamp(
                                 c.last_message?.timestamp
