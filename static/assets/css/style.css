@@ -137,10 +137,6 @@ body {
   #header .logo img {
     max-height: 40px;
   }
-  
-  .img-logo {
-    height: 35vh;
-  }
 
   #header #user-name {
     color:rgba(28, 89, 131, 0.8);
@@ -311,6 +307,11 @@ body {
 
   .msg-box {
     height: 0px;
+  }
+
+ .img-logo {
+    height: 35vh;
+    width: auto;
   }
 
   #hero {
