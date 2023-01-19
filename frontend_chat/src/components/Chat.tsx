@@ -44,7 +44,7 @@ export default function Chat() {
   const [isError, setIsError] = useState(false);
 
   const { readyState, sendJsonMessage } = useWebSocket(
-    `wss://helpukr.herokuapp.com/messages/chat/${conversationName}`,
+    `wss://helpukr.herokuapp.com//messages/chat/${conversationName}`,
     {
       onOpen: () => {
         console.log('Connected!');
@@ -188,20 +188,24 @@ export default function Chat() {
           justifyContent: 'space-between',
           background: 'url(https://i.imgur.com/rogZEKl.jpeg)',
           backgroundRepeat: 'repeat-y',
-        }}>
+        }}
+      >
         <Card.Header
           style={{
             background: '#499ef5',
             color: '#f8fbfe',
           }}
-          className="px-4">
-          <Link to={'/'}>
+          className="px-4"
+        >
+          <Link to={'/'}
+          aria-label="Back to all conversations">
             <i
               className="bx bxs-chevron-left bx-flip-vertical px-2 pb-1"
               style={{
                 fontSize: '21px',
                 color: '#f8fbfe',
-              }}></i>
+              }}
+            ></i>
           </Link>
           {to_user?.first_name} {to_user?.last_name}
         </Card.Header>
@@ -211,16 +215,15 @@ export default function Chat() {
             overflow: 'auto',
             display: 'flex',
             flexDirection: 'column-reverse',
-          }}>
+          }}
+        >
           {isError && (
             <div className="text-center my-5 py-5">
               <p>
                 An error occured trying to connect. Please, check your internet
                 connection.
               </p>
-              <Button
-                variant="outline-dark"
-                onClick={handleRefresh}>
+              <Button variant="outline-dark" onClick={handleRefresh}>
                 Retry
               </Button>
             </div>
@@ -240,7 +243,8 @@ export default function Chat() {
               inverse={true}
               hasMore={hasMoreMessages}
               loader={<ChatLoader />}
-              scrollableTarget="scrollableDiv">
+              scrollableTarget="scrollableDiv"
+            >
               <div ref={messagesEndRef} />
               {messageHistory.map((message: MessageModel) => (
                 <Message key={message.id} message={message} />
@@ -267,10 +271,13 @@ export default function Chat() {
             background: 'none',
             marginLeft: '-45px',
           }}
-          onClick={handleSubmit}>
+          onClick={handleSubmit}
+          aria-label="Send a message"
+        >
           <i
             className="bx bxs-send bx-flip-vertical"
-            style={{ color: '#2680e0' }}></i>
+            style={{ color: '#2680e0' }}
+          ></i>
         </Button>
       </div>
     </div>
