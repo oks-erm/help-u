@@ -1,6 +1,8 @@
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import $ from 'jquery';
+import 'bootstrap/js/src/collapse';
+
 
 export const main = (() => {
   ('use strict');
