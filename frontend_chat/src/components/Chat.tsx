@@ -44,7 +44,7 @@ export default function Chat() {
   const [isError, setIsError] = useState(false);
 
   const { readyState, sendJsonMessage } = useWebSocket(
-    `wss://helpukr.herokuapp.com//messages/chat/${conversationName}`,
+    `wss://helpukr.herokuapp.com/messages/chat/${conversationName}`,
     {
       onOpen: () => {
         console.log('Connected!');
