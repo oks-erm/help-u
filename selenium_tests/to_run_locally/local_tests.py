@@ -12,6 +12,13 @@ from selenium.webdriver import Chrome, ChromeOptions
 from selenium.webdriver.chrome.service import Service as ChromeService
 
 
+#####################################################
+# Install the latest version of Chrome webdriver
+# https://chromedriver.chromium.org/downloads
+# Paste path your installed Chrome Driver into options
+# at the top of the SignIn class before you run tests.
+#####################################################
+
 EMAIL_ID = "test1@test.com"
 current_dir = os.getcwd()
 file_path = os.path.join(current_dir, '1.png')
@@ -19,8 +26,7 @@ file_path = os.path.join(current_dir, '1.png')
 
 class SignIn(object):
     def __init__(self):
-        options = ChromeOptions().add_argument(
-            "--user-data-dir=/Users/oksanaerm/Library/Application Support/Google/Chrome/Profile 4")
+        options = ChromeOptions().add_argument("PATH TO YOUR CHROME")
         self.driver = Chrome(chrome_options=options)
         self.driver.get("https://helpukr.herokuapp.com/")
 
@@ -115,7 +121,7 @@ class CommentFormTestCase(unittest.TestCase):
             driver.execute_script("arguments[0].scrollIntoView();", button)
             time.sleep(1)
             button.click()
-            time.sleep(1)
+            time.sleep(3)
             publish = WebDriverWait(driver, 5).until(
                 EC.element_to_be_clickable(
                     (By.CSS_SELECTOR, "#comment > div > form > div.text-end > button"))
@@ -193,7 +199,7 @@ class PostFormTestCase(unittest.TestCase):
 
                 time.sleep(2)
 
-                button = WebDriverWait(driver, 2).until(
+                submit_button = WebDriverWait(driver, 2).until(
                     EC.element_to_be_clickable(
                         (By.ID, "submit-id-save"))
                 )
@@ -211,12 +217,12 @@ class PostFormTestCase(unittest.TestCase):
                         (By.CSS_SELECTOR, "#id_type > option:nth-child(2)"))
                 )
                 form_choice.click()
-
                 form_category = WebDriverWait(driver, 2).until(
                     EC.presence_of_element_located((By.ID, "id_category"))
                 )
                 driver.execute_script(
-                    "arguments[0].scrollIntoView();", form_category)
+                    "arguments[0].scrollIntoView();", submit_button)
+                time.sleep(0.2)
                 form_category.click()
                 time.sleep(1)
                 form_choice_2 = WebDriverWait(driver, 2).until(
@@ -226,9 +232,10 @@ class PostFormTestCase(unittest.TestCase):
                 form_choice_2.click()
 
                 time.sleep(1)
-                driver.execute_script("arguments[0].scrollIntoView();", button)
+                driver.execute_script(
+                    "arguments[0].scrollIntoView();", submit_button)
                 time.sleep(1)
-                button.click()
+                submit_button.click()
                 time.sleep(1)
 
                 return_value = WebDriverWait(driver, 5).until(
