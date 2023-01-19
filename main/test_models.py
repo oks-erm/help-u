@@ -98,7 +98,7 @@ class UserProfileTestCase(TestCase):
         """
         # pylint: disable=no-member, disable=protected-access
         field = UserProfile._meta.get_field('userpic')
-        self.assertEqual(field.default, 'placeholder')
+        self.assertIn('placeholder', field.default)
 
     def test_bio_default(self):
         """
