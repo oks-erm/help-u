@@ -4,7 +4,7 @@ import $ from 'jquery';
 import 'bootstrap/js/src/collapse';
 
 
-export const main = (() => {
+const main = (() => {
   ('use strict');
 
   // select helper
@@ -147,3 +147,4 @@ export const main = (() => {
 })();
 
 
+module.exports = main;

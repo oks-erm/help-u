@@ -3,6 +3,24 @@ import path from 'path';
 const { JSDOM } = require('jsdom');
 global.Event = require('events').Event;
 
+jest.mock('aos/dist/aos.css', () => {
+  return {
+    init: jest.fn(),
+  };
+});
+
+jest.mock('bootstrap/js/src/collapse', () => {
+  return {
+    init: jest.fn(),
+  };
+});
+
+jest.mock('aos', () => {
+  return {
+    init: jest.fn(),
+  };
+});
+
 // set up a simulated browser environment
 const htmlDocPath = path.join(
   process.cwd(),
