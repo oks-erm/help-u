@@ -27,12 +27,6 @@
     * [Security Features](#security-features)
   * [Feature Considerations](#feature-considerations)
 
-* [Technologies](#technologies)
-  * [Languages](#languages)
-  * [Programs, frameworks, libraries](#programs,-frameworks,-libraries)
-
-* [Deployment](#deployment)
-
 * [Testing](#testing)
   * [User Story Testing](#user-story-testing)
   * [Manual Testing](#manual-testing)
@@ -41,7 +35,14 @@
   * [Selenium Tests](#selenium-tests)
   * [Automated Testing](#automated-testing)
 
+* [Technologies](#technologies)
+  * [Languages](#languages)
+  * [Programs, frameworks, libraries](#programs,-frameworks,-libraries)
+
+* [Deployment](#deployment)
+
 * [Credits](#credits)
+
 
 # Purpose
 The website is built using the Django framework, which provides the backend functionality, such as user authentication, data management, and routing, and handles the majority of the frontend. One key feature of the website is a React component that allows real-time communication and updates through the use of WebSockets. This allows a seamless and interactive user experience as certain parts of the website update in real-time without the need for page refreshes. Overall, the website combines the power and flexibility of Django with the dynamic capabilities of React and WebSockets to deliver a smooth and responsive user experience.
@@ -388,5 +389,26 @@ The use of a smooth fade in and out effect for a Google map toolkit and cards du
 
 #### Hover effect
 The navbar links, all links and buttons include a hover-over effect to make the experience more interactive and navigation more intuitive. When the user engages with the link or hovers over the link, its colour or background colour changes.
-
+___
 # Architecture
+
+<img src="https://www.saaspegasus.com/static/images/web/modern-javascript/django-react-header.51a983c82dcb.png" width="300" />
+
+A hybrid architecture - a single page React app (Messenger) integrated into a Django project. This approach allows for multiple types of pages in the same project.
+
+One major advantage of using a hybrid architecture is that it allows for the use of Django's built-in tooling to handle authentication. This means that we can use the @login_required decorator or LoginRequiredMixin on the hybrid Django view serving our template, without having to rely on complex third-party authentication workflows.
+
+Another advantage of a hybrid architecture is the ability to send data to the front-end in two ways: by passing the data directly to the template using Django's built-in templating system, or by providing the data via asynchronous APIs using JavaScript and Django REST framework. This allows for fast data loading using the native fetch API, and the API is loaded by URL and authentication is handled without configuration by the Django session cookie, no wrestling with CORS.
+
+In terms of performance, by using React for the front-end of a web application, in this case just a part - a real-time Messenger, we can take advantage of its performance benefits and provide a smooth and responsive experience for the user. Additionally, React is a highly modular library, and by building a single page app, you can easily scale the different parts of the application independently as needed. This can make it easier to add new features or make changes to the application without affecting other parts of the codebase. It also allows for easier debugging and testing.
+
+As well as the mentioned above, that I prioritised in my project, React for the front-end of can significantly improve the user experience. 
+ Here a scheme of the structure:
+ 
+![](https://www.saaspegasus.com/static/images/web/modern-javascript/js-pipeline-with-django.56456c10739f.png)
+___
+# Data Model
+
+![](readme/assets/datamodel.png)
+___
+# Testing
