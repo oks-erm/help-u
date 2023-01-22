@@ -832,6 +832,16 @@ body {
       color: #8391a4 !important;
     }
 
+    .react-link {
+      font-size: 17px;
+      color: var(--bluesmoke);
+    }
+
+    .react-link:hover {
+    text-decoration: underline;
+    color: var(--white);
+}
+
   /*----------------------------------------------------Account*/
     .login-block {
       margin-top: 6%;

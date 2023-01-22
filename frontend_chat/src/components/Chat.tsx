@@ -193,12 +193,11 @@ export default function Chat() {
         <Card.Header
           style={{
             background: '#499ef5',
-            color: '#f8fbfe',
+            // color: '#f8fbfe',
           }}
           className="px-4"
         >
-          <Link to={'/'}
-          aria-label="Back to all conversations">
+          <Link to={'/'} aria-label="Back to all conversations">
             <i
               className="bx bxs-chevron-left bx-flip-vertical px-2 pb-1"
               style={{
@@ -207,7 +206,14 @@ export default function Chat() {
               }}
             ></i>
           </Link>
-          {to_user?.first_name} {to_user?.last_name}
+          <a href={`/users/profile/${to_user?.profile}`}
+            target="_blank"
+            aria-label="View user's profile (opens in a new tab)"
+            title="View user's profile (opens in a new tab)"
+            className="react-link"
+          >
+            {to_user?.first_name} {to_user?.last_name}
+          </a>
         </Card.Header>
         <div
           id="scrollableDiv"

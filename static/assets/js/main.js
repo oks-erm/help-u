@@ -98,7 +98,6 @@ const main = (() => {
       easing: 'ease-in-out',
       once: true,
       mirror: false,
-      disable: 'mobile',
     });
   });
 
@@ -137,8 +136,19 @@ const main = (() => {
   window.addEventListener('load', navbarlinksActive);
   onscroll(document, navbarlinksActive);
 
+  // messages
   $('.alert').delay(3000).fadeOut(1000);
 
+  // map toolkit
+  $('.geo')
+    .mouseover(function () {
+      $(this).children('.preview').show();
+    })
+    .mouseout(function () {
+      $(this).children('.preview').hide();
+    });
+
+  // we need to return from this IIFE to enable testing
   return {
     select,
     on,
