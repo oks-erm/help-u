@@ -65,7 +65,7 @@ class ConversationSerializerTestCase(TestCase):
 
 class MessageSerializerTestCase(TestCase):
     """
-    Test case for the MessageViewSet class.
+    Test case for the MessageSerialiser class.
     """
     def setUp(self):
         self.user1 = CustomUser.objects.create(
