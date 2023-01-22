@@ -755,6 +755,15 @@ For this project I intentionally attempted different from the ones I used in my 
 Feature testing was performed through automated unit-testing using [Unittest](https://docs.python.org/3/library/unittest.html). 
 To run the tests: 
 1. install the project's dependencies (`pip install -r requirements.txt`).
+2. set up Redis to run locally, to ensure testing websockets:
+  - `sudo apt-get update `
+  - `sudo apt-get install redis-server`
+  - `redis-server --daemonize yes`
+
+    Env variables:
+      - REDISC_URL = 'redis://localhost:6379/0'
+      - REDIS_HOST = 'redis'
+      - REDIS_PORT = '6379'
 2. `set_pg` 
 3. `python3 manage.py test` 
 4. To see a coverage report use the command `coverage run --source='.' manage.py test myapp` 
