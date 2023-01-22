@@ -23,17 +23,18 @@
 * [Data Model](#data-model)
 
 * [Features](#features)
-  * [Existing Features](#existing-features)
-    * [Security Features](#security-features)
   * [Feature Considerations](#feature-considerations)
 
 * [Testing](#testing)
   * [User Story Testing](#user-story-testing)
   * [Manual Testing](#manual-testing)
-    * [Detected Bugs](#bugs-detected)
   * [Unit Testing](#unit-testing)
-  * [Selenium Tests](#selenium-tests)
+    * [Python unit tests](python-unit-tests)
+    * [JS unit tests](js-unit-tests)
   * [Automated Testing](#automated-testing)
+      * [Selenium Tests](#selenium-tests)
+      * [Code Validation](#code-validation)
+      * [Lighthouse](#lighthouse)
 
 * [Technologies](#technologies)
   * [Languages](#languages)
@@ -343,7 +344,8 @@ ___
 ___
 # Development Plan
 
-![](readme/assets/issues.png)
+![](readme/assets/issues1.png)
+![](readme/assets/issues2.png)
 
 [See the current state of the project here.](https://github.com/users/oks-erm/projects/2/views/2?sortedBy%5Bdirection%5D=asc&sortedBy%5BcolumnId%5D=Labels&visibleFields=%5B%22Title%22%2C%22Labels%22%2C%22Assignees%22%2C%22Status%22%2C%22Reviewers%22%5D)
 ___
@@ -413,34 +415,32 @@ ___
 ___
 # Features
 
-** Name (#number of the UAC it satisfies)
-
 ## Auth
 
 Authentication is particularly important for Help U, as the subject is quite sensitive and people are vulnerable asking for help, so it should be confidential within the community and available only for authenticated users. Thus all the website, besides the home page is avalable only for authenticated users. 
 
-### User Authentication
+### User Authentication (#1)
 
 ![](readme/assets/mockup-signin.png)
 
 In this project, authentication is implemented using Django AllAuth. The project uses a custom user model with email as a user id, which means that users to register and log in to the website need to use their email address instead of a traditional username.
 
-### User Registration
+### User Registration (#1)
 
 ![](readme/assets/mockup-signup.png)
 
 Even though the website's registration process includes an email as the primary identifier for user accounts, as well as the requirement for users to provide their first and last name. This is to ensure that users are using their real names and photos, which helps to build trust among the community. To verify the authenticity of users and prevent fraud, the registration process includes email verification. In addition, phone number verification will be set up in production using services like WebOTP, Veriphone, or Twilio, to further secure the registration process.
 The registration process requires users to enter their password twice to ensure that they have typed it correctly. This is an important security measure, as it helps to prevent users from accidentally entering the wrong password.
 
-### Social Auth
+### Social Auth (#24)
 AllAuth allows users to quickly and easily register and log in to the website using their existing social media accounts. In this case Google and Facebook were chosen as the most of the most popular social media platforms in the world, with billions of active users and robust security protocols. This eliminates the need for users to create a new account or remember a separate username and password for the website, which can help to increase user engagement and retention. By offering social authentication options, we can increase the number of users who register for an account on the website. 
 
 Social authentication providers, such as Google and Facebook, have their own security protocols in place to ensure that user's personal information is secure. By using social authentication, we can rely on these established security protocols and increase the security of the website.
 
-### Reset password
+### Reset password (#1)
 The website also provides the password reset feature, which is an important security feature that allows users to reset their password if they have forgotten it or if their account has been compromised. AllAuth sends out an email notification to the user with a link to reset their password, which ensures that only the user can reset the password of their account. The password reset feature provides a better user experience by allowing users to regain access to their account quickly and easily, which helps to increase user engagement and retention.
 
-## Django Messages
+## Django Messages (#22)
 
 ![](readme/assets/dj_messages.png)
 
@@ -456,7 +456,7 @@ Responsiveness was achieved by utilizing Bootstrap in combination with JavaScrip
 The website is designed and developed with accessibility in mind: it provides alternative text for images, using semantic HTML elements, aria-labels and providing adequate color contrast.
 Keyboard navigation is possible. It's also works with screen readers, however, there's room for improvement in this aspect, to ensure that it is fully accessible to users with disabilities.
 
-## User Profile
+## User Profile (#2)
 
 ![](readme/assets/mockup-profile.png)
 
@@ -464,7 +464,7 @@ The UserProfile model is a separate model from the CustomUser model and is conne
 
 The User Profile page is a dedicated page within the website where users can view and edit their personal information such as profile picture, bio, location, languages, as it's essential for the purpose of the website. It is accessible to logged-in users and provides them with a central location to manage their account information ans bookmarked posts. Many fields are required for security reasons, such as the userpic and bio fields. The userpic field is used to display the user's profile picture, which helps in building trust between users and making the website more personal. The bio field is used to provide more information about the user and make it easier for others to connect with them. The country and city fields are also required as they provide additional information about the user's location which is essential for other users to understand if the offer is relevant based on location. 
 
-### Bookmarks
+### Bookmarks (#6)
 
 ![](readme/assets/bookmark.png)
 
@@ -472,13 +472,13 @@ Users have the ability to save posts that they find interesting or relevant for 
 
 ![](readme/assets/bookmarked.png)
 
-### Modal
+### Modal (#29)
 
 ![](readme/assets/modal.png)
 
 When a new user confirms their email address, a User Profile instance is automatically created for them. Once they follow the link provided, they are met with the modal that prompts users to complete their profile and this modal does not have an escape option other than following the link and completing the required fields. Whilst possibly controversial, this solution has a particular purpose, such as ensuring that users complete their profile before being able to engage with the content on the website, which can help to improve the overall quality and safety of the community. Requiring users to complete their profile before being able to browse posts helps to ensure that the website has accurate and complete information about its users. This can improve the overall user experience and can also help to foster a sense of community and trust among users. Having a complete user profile can also help to improve the website's performance, as it can be used to personalize the website experience for each user. For example, implemeting geography and showing offers nearby. 
 
-### Update
+### Update (#19)
 
 ![](readme/assets/mockup-profileupdate.png)
 
@@ -489,11 +489,11 @@ Users can access the profile update page by clicking on their name on the top ri
 
 ## Page elements
 
-### Loader
+### Loader (#22)
 
 The website utilizes visual cues, such as spinners, to indicate that a process is currently in progress and that the website is working to load or complete the requested action. This helps to improve the user experience by providing a visual indication of progress and reducing confusion.
 
-### Navbar 
+### Navbar (#28)
 
 ![](readme/assets/navbar.png)
 
@@ -501,7 +501,7 @@ The navbar is a key feature of the website, located at the top of the page in a 
 
 The navbar also includes several links that aid navigation on the website. The "About" link provides information about the website and its purpose. The "Contact" link allows users to get in touch with the website's support team. The "FAQ" link is dedicated to frequently asked questions. The "Login" and "Register" links are used for user authentication and are only visible to unauthenticated users. Once the user logs in, they will not see these links anymore and "Log out" will be displayed instead. The page "Posts" are only displayed to authenticated users, otherwise it's "Home" page. The user must be logged in to access all pages on the website, except for the home page. 
 
-### Message Notifications
+### Message Notifications (#26)
 
 The website features real-time message notifications that are displayed in a badge on the messenger icon. This means that whenever a new message is received, a notification will be displayed on the messenger icon, informing the user of the new message, this is achieved through the use of websockets. The badge will display the number of unread messages, allowing the user to quickly assess the number of new messages they have received. This feature is designed to improve the user experience by allowing users to quickly and easily access their messages without having to navigate to a different page. Users can access their messages with a single click on the messenger icon, and the badge serves as a visual cue that there is a new message waiting for them.
 
@@ -511,53 +511,53 @@ The website features real-time message notifications that are displayed in a bad
 
 There is a small logo next to the site name, which is designed to be displayed at all times while the user is browsing the site. This logo appears when the page is scrolled and the hero logo disappears from view. This ensures that the logo is always visible to the user, regardless of their scroll position on the page. The use of a smaller logo when the page is scrolled serves a few key purposes. Firstly, it helps to maintain consistency in branding and visual identity, as the logo is always present and easily recognizable to the user. Secondly, it helps to keep the page from becoming overloaded with multiple logos, which can be visually distracting and confusing.
 
-### Footer
+### Footer  (#28)
 
 ![](readme/assets/footer.png)
 
 The website's footer is designed to provide users with useful information and navigation options in a clear and organized manner. It is split into three columns, each serving a specific purpose. The first column contains external links that may be useful to users on the related topic. The second column includes a duplicate of the site's main navigation menu, allowing users to easily access the pages they are looking for. It also includes links to the website's terms of use and privacy policy, which are important for users to be aware of. The third column contains links to the website's social media profiles, allowing users to connect with the project activists and each other. The footer also includes an image, that gives a sense of warmth and positivity to the website and improve the overall user experience.
 
-### Back to the top
+### Back to the top (#28)
 
 ![](readme/assets/btt.png)
 
 The "back to top" button is located at the bottom right corner of the webpage and appears after the user has scrolled a certain amount down the page. The button is represented by an upward-facing arrow. When clicked, the button uses JavaScript to smoothly scroll the page back to the top, providing a convenient way for users to quickly navigate back to the top of the page without having to manually scroll back up.
 
-### Hero 
+### Hero (#21)
 
 ![](readme/assets/mockup-index.png)
 
 The hero section of the website is designed to be the first thing that users see when they land on the page. It includes a large logo and motto that helps to convey the website's overall ethos and purpose. The section also features two buttons that address different categories of users. These buttons allow users to quickly navigate to the category of posts that most interests them, whether they are looking to give or receive help. This helps to guide users towards the relevant content and make it easy for them to find what they are looking for, improving the overall user experience.
 
-### About
+### About (#21)
 
 ![](readme/assets/mockup-about.png)
 
 The "About" section of the website provides information about the purpose and mission behind the website. There is a brief introduction about the organization and its objectives, it also calls the visitor to learn more about the topic, to empathise and engage. 
 
-### FAQ
+### FAQ (#18)
 
 ![](readme/assets/mockup-faq.png)
 
 The FAQ (Frequently Asked Questions) section of a website is dedicated to answers to common questions that visitors may have about the website or the project behind it. This section is organized in a question-and-answer format inside a Bootstrap accordion component. It provides advice on how to interact with other users, as it is most likely unfamiliar international communication. It address concerns about the platform's safety and security, such as how user data is protected, how the platform deals with inappropriate content, and what measures are in place to guarantee the community is safe.
 
-### Contact Form
+### Contact Form (#14)
 
 ![](readme/assets/mockup-contact.png)
 
 The contact form on the website allows users to easily reach out to the website's support team with any questions or concerns they may have. The form includes fields for the user's name, email address, and message, as well as a subject field for specifying the nature of the inquiry. For logged-in users, the form will automatically fill in the name and email fields with the information provided in the user's profile, saving them time and simplifying the process of reaching out to the support team. The form is handled by JS without refreshing the page.
 
-### Live Search
+### Live Search (#16)
 
 ![](readme/assets/search.png)
 
 The live search feature on the website allows users to quickly and easily find the information they are looking for. As the user types in their query, the website dynamically updates the search results in real-time, providing a list of relevant results that match the user's query. This feature is implemented using a combination of JavaScript and a web API that allows the website to quickly search through its database of content and retrieve the most relevant results. The results are displayed in a list format, with the most relevant results appearing at the top. The live search feature is designed to improve the user experience by making it easy for users to find the information they need quickly and easily.
 
-### Type Checkboxes
+### Type Checkboxes (#17)
 
 These checkboxes allow users to filter posts based on whether they are looking to give or receive help. This makes it easy for users to find exactly the kind of posts they are interested in, and streamlines the search process for a better user experience.
 
-### Posts List
+### Posts List (#4, #25)
 
 ![](readme/assets/mockup-posts.png)
 
@@ -565,28 +565,32 @@ The posts list page is the main hub for users to browse and discover offers that
 
 ![](readme/assets/map-toolkit.png)
 
-### Pagination
+### Pagination (#15)
+
 ![](readme/assets/pagination.png)
 
 The pagination on the website is set to display 12 posts per page. This means that when a user visits the page with posts, they will see a maximum of 12 posts at a time. If there are more than 12 posts, the user will be able to navigate through the pages using the pagination controls. This allows the user to easily view a specific set of posts and avoid scrolling through a large number of posts at once. Additionally, this feature helps to improve the performance of the website by not loading all the posts at once.
 
-### Type Badges
+### Type Badges (#16)
+
 ![](readme/assets/badges.png)
 
 Type badges appear when both checkboxes are checked to show all offers to distinguish the different types of posts. This allows the user to quickly identify the type of post and make an informed decision about whether or not to engage with it. 
 
-### Post Detail View
+### Post Detail View (#5)
+
 ![](readme/assets/mockup-fullpost.png)
 
 The post detail view provides a detailed view of a specific post. The view includes an image of the offer, a map with a closer view of the location of the offer. The map allows the user to understand the area and neighbourhood of the offer. This map includes different scale, such as a zoomed-in view of the area and neighborhood, compared a more distant scale that is gives on the Posts List page for an approximate understanding of where the city is located. 
 There is also a detailed description of the offer, a link to the user profile of the author, and buttons to write a comment and contact the author directly. The "Say thank you" button allows the user to express gratitude for the offer, and the "Contact" button allows the user to proceed with discussing the offer with the author. 
 
-### Comments
+### Comments (#11)
+
 ![](readme/assets/comments.png)
 
 The comment section on the post detail view allows users to leave feedback. It is comprised of a list of existing comments that are displayed in chronological order, with the most recent comments appearing at the top. Each comment includes the name and userpic of the person who left the comment, as well as the comment text itself. Additionally, there is a form for users to leave their own comment. The comment section is designed to be intuitive and easy to use, with a clear and simple layout that makes it easy for users to understand the context of the conversation.
 
-### Comment field
+### Comment field (#7)
 
 ![](readme/assets/comment_form.png)
 
@@ -594,7 +598,7 @@ The form to leave a comment appears in a collapsible component, when the user cl
 
 It is important to note that all comments are moderated to ensure that the content is appropriate and relevant to the post. This helps to maintain a positive and respectful community and ensures that all users have a positive experience while using the website.
 
-### Create/ Update
+### Create/ Update Post (#3, #9)
 
 ![](readme/assets/mockup-createpost.png)
 
@@ -602,19 +606,19 @@ The create and update post view is a page that allows users to create or edit a 
 
 The new posts are moderated before appearing on the platform, to ensure that it follows the community guidelines.
 
-### Delete Post
+### Delete Post (#9)
 
 ![](readme/assets/mockup-delete.png)
 
 The delete post feature allows users to remove a post that they have previously created. This feature is accessible from the post detail view by clicking on a delete button. When the button is clicked, the user is redirected to the page to confirm the deletion. Once the user confirms the deletion, the post will be removed from the website and will no longer be accessible to other users. This feature is designed to help users clean up their profile and ensure that the platform remains organized and relevant for all users.
 
-## Messenger (React App)
+## Messenger (React App) (#8)
 
 ![](readme/assets/mockup-messenger.png)
 
 The messenger feature on the website is designed to allow users to communicate with each other in real-time. It was built using React and Typescript. It is built into a Django App page and all navigation related to the messenger happens inside it and handled by a React router. The real-time functionality is achieved through the use of websockets and Django Channels, a library that allows Django to handle websockets in addition to traditional HTTP requests. This allows for a seamless and responsive experience where users can receive and send messages instantly, without the need to refresh the page. Users are able to see the message history and receive notifications of new messages.
 
-### Websocket (Django Channels)
+### Websocket (Django Channels) 
 
 Django Channels is the package that was used to add websocket support to the Django project. Django Channels provides the necessary tools to set up a robust and efficient websocket connection in the project, and enables real-time functionality throughout the website by allowing for real-time notifications and communication. It extends the functionality of Django by allowing the handling of multiple protocols, such as the HTTP protocol which is used by default, and the websocket protocol which enables real-time functionality.
 
@@ -626,7 +630,7 @@ It might not be a good idea to handle HTTP with Daphne because Daphne is not opt
 
 In this project, Redis is utilised as the channel layer for Django Channels to facilitate real-time communication. This allows to store information about groups of users connected to a websocket and enables efficient communication across different instances of the application.
 
-### Conversations List
+### Conversations List 
 
 The active conversation list allows users to view and access all of their current conversations. This is presented as a list of conversations, each of which includes the name of the person the user is communicating with, as well as a preview of the most recent message in the thread and a notification with a number of unread messages, if there is any. Users can click on any of these threads to open and view the full conversation. 
 
@@ -636,17 +640,17 @@ The active conversation list allows users to view and access all of their curren
 
 The full conversation view allows users to view all the messages exchanged with another user in a conversation. The conversation is displayed in a chronological order, with the most recent messages appearing at the bottom. The view initially loads the last 50 messages, and as the user scrolls up, more messages are loaded via infinite scroll, allowing the user to view the entire conversation without having to reload the page. The interface also includes the ability to send new messages and view the profile of the other user in the conversation. 
 
-### Loaders
+### Loaders (#22)
 
 ![](readme/assets/chat_loader.png)
 
 The messenger has its own loaders to indicate that a process is currently in progress and that the website is working to load or complete the requested action. This helps to improve the user experience by providing a visual indication of progress and reducing confusion.
 
-### Error Warnings
+### Error Warnings (#22)
 
 The messenger handles connection issues within the React app repoting a problem and offering to refresh the page.
 
-### Django Rest API
+### Django Rest API 
 
 The Django REST framework is used to handle the creation and retrieval of data for the Messenger app. Serializers are used to convert the data between the JSON format that is used by the front-end and the Python objects used by the back-end. They also handle the validation of incoming data and provide a consistent way to handle the data throughout the application. In the messenger app, the serializers are used to handle the creation and retrieval of messages, as well as the creation and retrieval of conversations between users. They also handle the association of messages with a specific conversation, and ensure that only authorized users have access to specific conversations and messages. 
 
@@ -654,16 +658,247 @@ The Django REST framework is used to handle the creation and retrieval of data f
 
 Stunnel is a software package that is used to add SSL/TLS encryption to network connections. When Daphne is running asynchronously inside of stunnel, it is essentially wrapping the Daphne process in an SSL/TLS layer, providing an additional layer of security for the data being transmitted over the network. This is useful for protecting sensitive information such as login credentials or other user data that is being transmitted between the client and the server. 
 
-## Admin
+## Admin (#10, #12)
 
 ![](readme/assets/admin.png)
 
 The website includes a fully customised Admin pannel. The admin panel allows for the management and editing of the application's data through a web interface. This interface is only accessible to users with administrator or superuser privileges. The admin panel provides CRUD functionalities. It allows for the management of the content, users, groups, and permissions. Additionally, it allows for the execution of custom actions on selected records, such as sending an email to multiple users or deactivating multiple accounts. The admin panel can also provide statistics and analytics of the application's usage. 
 
-## Content Moderation
+## Content Moderation (#10, #12, #20)
 
 Content moderation is essential to ensure that the content is appropriate and does not violate any terms of service or community guidelines, protecting against spam or malicious content, and maintaining a positive user experience. In my project, content moderation is done for all posts and comments left on posts and is implemented by the admin users who have access to the admin panel where they can review and approve or reject comments. This helps to ensure that all the content is relevant, respectful and appropriate for the community.
+
+
+## **Feature considerations**
+
+1. Phone number verification.
+
+2. Managing conversations in the Messenger, deleting conversations and messages.
+
+3. Localisation. (#23)
+The decision to postpone implementing localisation was made because the project requires the website to be in English and there are issues with the quality of automated translations for Ukrainian. Additionally, it was decided that using a browser extension for translation would suffice for now, as it provides a similar level of translation quality. This allows for the focus to be on other aspects of the project and for localization to be implemented at a later stage, closer to the time of actual production, when manual translation can be done to ensure high-quality translations.
+
+4. Translation integrated into messenger. (#13)
+As many of displaced people are not fluent users of English, it would be useful to fit the messenger with real-time translation feature. Implementing Google Translate did not provide a good result as the quality of translation to and from other languages, rather than English, to and from Ukrainian, is not very good, as the translation happens through English anyway and Spanish > English > Ukrainian does not produce a reliable result as latin based English and Slavic Ukrainian are too distant linguistically. To improve the translation quality, we would need to integrate with other translation services, such as Yandex.translate, which translates through Russian, the closest language that has a viable translating solution. However, I have encountered some legal challenges in interacting with a Russian service. So currently I am evaluating alternative solutions and will make a decision on how to proceed in the future.
+
+5. Reporting undesirable content. (#27)
+Buttons for reporting undesirable content on a website will allow users to quickly and easily flag content that they believe is inappropriate, offensive, or violative of the website's terms of service. This allows website administrators to quickly identify and remove such content, keeping the website safe and enjoyable for all users. Additionally, reporting buttons can help to create a sense of community and shared responsibility among users, encouraging them to take an active role in maintaining the website's standards and quality. 
+
+6. Buttons to share posts on social media.
+Buttons that provide the ability for users to share content on social media allow for an increase in the reach and visibility of the content. This can lead to more traffic to the website and ultimately more engagement. The buttons make it easy for users to share content with their friends and followers on social media.
+
+When content is shared on social media, it includes a link back to the website. This can help with branding, as it increases the visibility of the website and its content, increasing positive impact.
 
 ___
 # Testing
 
+## User Story Testing
+
+| Expectations                                                                                 | Realisation                                                                                                                                                                                                                                                                                                                                                                                                                          |
+|----------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| As a **first time user**                                                                   |                                                                                                                                                                                                                                                                                                                                                                                                                                      |
+| I want to be able to access the website from any device. | The website is fully responsible and accessible on all screen sizes, starting at 350px.|
+| I want to easily understand the main purpose of the site and learn more about the topic.                           | The Home page consicely and comprehensively introduces the issue, including the FAQ section and the Contact Form in case the user has any questions.                       |
+| I want to be able to easily navigate and find content.  | 1. The navbar with a sticky top position is always present on the screen and allows to navigate the website from any point on the website.<br> 2. The main navigation links are duplicated in the footer. <br> 3. The live search is available on the Posts page.                      |
+| I want to create my personal account to see posts.                                                                     | The user can register a new account.                                                             |
+|I want to sign up with my social accounts, such as Google or Facebook.                           | The user can sign up using their existing social media account.                                                                                                                 |
+| I want to create an account fast, but I want it to be secure.                                                  | 1. Authentication is handled by Allauth. <br> 2. Email verification is required.        
+| I want to be able to contact somebody and receive a response without signing up if I have doubts or queries.                    | The website provides a contact form.                                        |
+| I want to easily access a category of posts I need and to be able to search through them.               | 1. There checkboxes with types of posts. <br>2.Live search is available.                                                                                                                                                             |
+| I want to open a post in a separate page to see all the details.                                                              | Posts could be open in a separate page to view them in detail.                                                                                                      |
+|I want a map attached to each posts to understand where the offer/request is.  | 1. A map toolkit is available in the post preview on the Posts page. <br> 2. A bigger map in a detail view.                                                                            ||
+| I want to be able to create a post myself.                   | "New Post" button is available in the Posts page and every user can create their own post, which will be published after moderation.                                                                                                 ||
+|  I want to contact another user if I see something that interests me.                    | "Contact the Author" button is present in the detail view.                                                                                                                                                      ||
+| I want to know more about other users that I interact with.              | Links to the user's profile are available from the Posts page, Detail view and the Chat.                                                                             
+| I want to be immediately notified when another user responds. | Real time notifications are available in the navbar and inside the Messenger app. |
+| I want to learn more about the project on social media. | The social media links are available in the footer and accessible from every page. |
+| I want to receive feedback from the website about what's happening to know if something went wrong. | 1. Django messages inform the user about the status of their actions. <br> 2. Loaders inform the user about the process of loading. <br>3. Error messages notify the user if something goes wrong. |
+| 
+| As a **frequent user**                                                                               |                                                                                |
+|  I want to be sure my data is protected.          | The app is additionally secured by Stunnel.                                                              ||  
+| I want to be notified about the messages I received.       | Real time notifications are available in the navbar and inside the Messenger app.                          ||
+| I want to access the messenger from anywhere on the website.          | The message icon is available in the navbar and accessible at any point.          ||
+| I want to be able to access the navbar at any point or go back to the top to navigate fast. | The navbar with a sticky top position is always present on the screen and allows to navigate the website from any point on the website. |
+|I want posts to be paginated | Posts are paginated by 12. |
+| I want to be able to report content that I find offensive, unsafe or inappropriate. | For now it is possible via the Contact Form. |
+| I want content to be moderated, so I don't need to report it. | All the content undergoes moderation before being published on the website. |
+| I want to be able to write comments to describe my experince of interacting with an offer. | Users can leave their comments in the detailed post view. |
+| I want to be able to update and delete my posts. | Users can update and delete their posts, the buttons for it are available in the detailed post view. |
+| I want to bookmark posts and easily access them. | Users can bookmark the posts and view them later in their profile. |
+| I want to be able to update my user profile. | Users can update their user profile, the button is available in the detailed profile view. |
+| I want to be able to reset my password if I forget it. | Password reset is available.
+___
+   
+## Manual Testing
+
+The project includes extensive automated testing, however visual features, websockets and React app were tested manually.
+
+The app was manually tested in Chrome, Safari and Firefox on MacBook.
+
+The protocols of manual testing: [.numbers](readme/manual-test.numbers) , [.xls](readme/manual-test.xlsx)
+
+![](readme/assets/tests/manual1.png)
+![](readme/assets/tests/manual2.png)
+![](readme/assets/tests/manual3.png)
+![](readme/assets/tests/manual4.png)
+![](readme/assets/tests/manual5.png)
+![](readme/assets/tests/manual6.png)
+![](readme/assets/tests/manual7.png)
+![](readme/assets/tests/manual8.png)
+
+
+## Unit testing
+
+For this project I intentionally attempted different from the ones I used in my previous projects testing frameworks, to gain additional experience in a variety of testing frameworks.
+
+### Python unit tests
+Feature testing was performed through automated unit-testing using [Unittest](https://docs.python.org/3/library/unittest.html). 
+To run the tests: 
+1. install the project's dependencies (`pip install -r requirements.txt`).
+2. `set_pg` 
+3. `python3 manage.py test` 
+4. To see a coverage report use the command `coverage run --source='.' manage.py test myapp` 
+5. `coverage report`. Specify the path to the file after the command to see a report on the patricular file or group of the files.
+
+Find the screenshots below:
+
+**Main App**
+
+![tests](readme/assets/tests/unittest-main.png)
+
+**Users App**
+
+![tests](readme/assets/tests/unittest-users.png)
+
+**Messenger App**
+
+![tests](readme/assets/tests/unittest-messenger.png)
+
+**Total**
+
+![tests](readme/assets/tests/unittest.png)
+
+![tests](readme/assets/tests/unittest-total.png)
+
+### JS unit tests
+
+JS unit testing was performed through [Jest](https://jestjs.io/).
+
+This project does not use a lot of JS and most of it is used for: 
+
+1. AJAX requests to handle forms and live search, which is more efficient to [test with Selenium](#selenium-tests), rather than mock responses.
+
+2. DOM manipulation and visual effects, which are notoriously difficult to unit test because they involve changes to the structure and layout of the document object model, as well as changes to the styling and appearance of elements on the page. These changes are often triggered by user interactions or other dynamic events, making them hard to predict and control in a unit testing environment. Many of these effects rely on the underlying layout and styling of the page, which can be hard to replicate in a test environment. It is also exacerbated by the fact that vusial effects JS is inside IIFE and most of the event listeners are window event listeners, the rest is implemented with jQuery. So in this case I rely on manual testing and visual inspection to ensure that they are working correctly. However what was possible to test is tested:
+
+1. `npm install`
+2. `npm test`
+
+![](readme/assets/tests/jest.png)
+
+
+## Automated Testing
+
+### **Selenium tests**
+
+Selenium tests are automated tests that simulate user interactions with a web application. They are typically used to test the functionality and usability of a website. In the project they are used to test forms.
+
+Unfortunately it is not possible to run Selenium tests from Gitpod environment, however there are 2 alternatives:
+
+- **Run locally**
+
+Download folder [to_run_locally](selenium_tests/to_run_locally/) and follow insructions from [local_tests](selenium_tests/to_run_locally/local_tests.py) to run tests locally. Code for these tests in different from BrowserStack version, because running remotely imposes a lot of constraints, because of them the code for BrowserStack tests is not very pretty.
+
+- **Run on BrowserStack**
+
+BrowserStack is a cloud-based web and mobile testing platform that provides testing on a variety of browsers, operating systems, and mobile devices. It allows to run automated and manual tests on real devices and browsers, which helps to ensure that web applications are compatible with different browsers, operating systems, and devices. 
+
+Even though, the code is "not so pretty", we can run tests in three different browsers from different OS. To run these, follow instructions in [BrowserStack tests](selenium_tests/browserstack/seleniumforms.py).
+
+### Code validation
+
+1. **[W3 Markup Validation](https://validator.w3.org/) - HTML Validation**
+
+All pages were run through HTML Validator. No errors were detected.
+
+2. **[W3 Jigsaw](https://jigsaw.w3.org/css-validator/) - CSS Validation**
+
+CSS Stylesheet was run through CSS Validator. No errors were detected.
+
+3. **[CI Python Linter](https://pep8ci.herokuapp.com) - Python Validation**
+
+All Python files were run through CI Python Linter. No errors were detected.
+
+4. **[JS Hint](https://jshint.com/) - JS Validation**
+
+All JS files were run through JS Hint. No errors were detected.
+
+4. **[VSCode TSlint](https://jshint.com/) - TypeScript Validation**
+
+All TS files were run through VSCode TSlint. No errors were detected.
+
+### Lighthouse 
+
+**Home Page**
+
+![](readme/assets/tests/lighthouse-index.png)
+
+**Home Page Mobile**
+
+![](readme/assets/tests/lighthouse-index-mobile.png)
+
+**Posts Page**
+
+![](readme/assets/tests/lighthouse-posts.png)
+
+**Posts Page Mobile**
+
+![](readme/assets/tests/lighthouse-posts-mobile.png)
+
+**Post Detail Page**
+
+![](readme/assets/tests/lighthouse-post-full.png)
+
+**Post Detail Page Mobile**
+
+![](readme/assets/tests/lighthouse-fullpost-mobile.png)
+
+**New Post Page**
+
+![](readme/assets/tests/lighthouse-new-post.png)
+
+**New Post Page Mobile**
+
+![](readme/assets/tests/lighthouse-newpost-mobile.png)
+
+**Profile Page**
+
+![](readme/assets/tests/lighthouse-profile.png)
+
+**Profile Page Mobile**
+
+![](readme/assets/tests/lighthouse-profile-mobile.png)
+
+**SignIn Page**
+
+![](readme/assets/tests/lighthouse-signin.png)
+
+**SignIn Page Mobile**
+
+![](readme/assets/tests/lighthouse-signin-mobile.png)
+
+**SignUp Page**
+
+![](readme/assets/tests/lighthouse-signup.png)
+
+**SignUp Page Mobile**
+
+![](readme/assets/tests/lighthouse-signup-mobile.png)
+
+**Messenger Page**
+
+![](readme/assets/tests/lighthouse-messenger.png)
+
+**Lighthouse VS Messenger**
+When testing the messenger, Lighthouse times out because the page keeps fetching to make sure it receives updated conversations in real-time, though it does not seem to Lighthouse to be loaded. If inspect the page visually, it loads reasonably fast and is available to interact without a significant delay.
+
+Google Lighthouse may have difficulty testing pages that use WebSockets because it relies on traditional HTTP requests and responses. WebSockets allow for real-time, bidirectional communication between a client and a server, which may not be fully captured by Lighthouse's testing process. Additionally, WebSockets may not have a clear endpoint to test, which could also cause issues for Lighthouse. 

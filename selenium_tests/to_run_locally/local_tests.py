@@ -13,10 +13,11 @@ from selenium.webdriver.chrome.service import Service as ChromeService
 
 
 #####################################################
-# Install the latest version of Chrome webdriver
+# 1. Install the latest version of Chrome webdriver
 # https://chromedriver.chromium.org/downloads
-# Paste path your installed Chrome Driver into options
+# 2. Paste path your installed Chrome Driver into options
 # at the top of the SignIn class before you run tests.
+# 3. Paste the test password into the password.txt
 #####################################################
 
 EMAIL_ID = "test1@test.com"
