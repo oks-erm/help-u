@@ -8,7 +8,7 @@
     </div>
     <!-- form -->
     <div class="container-fluid col-lg-8 mt-5 mt-lg-0">
-        <form method="post" role="form" class="contact-form">
+        <form method="post" class="contact-form">
             {% csrf_token %}
             <div class="row">
                 <div class="col-md-6 form-group mt-3 mt-md-3">
@@ -44,7 +44,7 @@
 </div>
 
 <!-- handle submit form without updating the page -->
-<script type="text/javascript">
+<script>
     $(document).on('submit', '.contact-form', (e) => {
         e.preventDefault();
         $.ajax({
