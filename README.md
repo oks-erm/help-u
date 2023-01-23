@@ -344,8 +344,18 @@ ___
 ___
 # Development Plan
 
+## Agile design
+
+The development of the website has followed an Agile methodology, using GitHub's projects to prioritize and track user stories and features. The approach enabled the implementation of ideas based on their level of importance, ensuring that the website functionality and user experience were not compromised. Following categories were applied, as well as corresponding labels were created:
+- must have
+- should have
+- would have
+- could have
+
 ![](readme/assets/issues1.png)
 ![](readme/assets/issues2.png)
+
+The development followed an AGILE approach, which allowed for the delivery of a functional and feature-rich site. The project was constrained by time limitations, which resulted in some initially listed features not being implemented. However, AGILE methodology is increadibly helpful in situations like this, as it allows for the prioritization and tracking of user stories. Completed user stories are in the "Done" section and the ones that were not prioritised for the first iteration are currently in the "To Do" section to be covered in the next iteration. 
 
 [See the current state of the project here.](https://github.com/users/oks-erm/projects/2/views/2?sortedBy%5Bdirection%5D=asc&sortedBy%5BcolumnId%5D=Labels&visibleFields=%5B%22Title%22%2C%22Labels%22%2C%22Assignees%22%2C%22Status%22%2C%22Reviewers%22%5D)
 ___
@@ -911,3 +921,138 @@ All TS files were run through VSCode TSlint. No errors were detected.
 When testing the messenger, Lighthouse times out because the page keeps fetching to make sure it receives updated conversations in real-time, though it does not seem to Lighthouse to be loaded. If inspect the page visually, it loads reasonably fast and is available to interact without a significant delay.
 
 Google Lighthouse may have difficulty testing pages that use WebSockets because it relies on traditional HTTP requests and responses. WebSockets allow for real-time, bidirectional communication between a client and a server, which may not be fully captured by Lighthouse's testing process. Additionally, WebSockets may not have a clear endpoint to test, which could also cause issues for Lighthouse. 
+
+___
+
+# Technologies
+## Languages
+- Python+Django, JavaScript, TypeScript, HTML, CSS
+## Programs, frameworks, libraries
+- [Django](https://www.djangoproject.com/) for backend and frontend functionality.
+- [React](https://reactjs.org/) for Messenger app.
+- [AllAuth](https://django-allauth.readthedocs.io/en/latest/) for authentication, registration and account management.
+- [Django Channels](https://channels.readthedocs.io/en/stable/) for websockets and ASGI.
+- [Django Rest Framework](https://www.django-rest-framework.org/) for building API.
+- [Redis](https://redis.io/) back-end for handling WebSockets, to facilitate. Django Channels channel layers.
+- [Redis Cloud](https://app.redislabs.com/#/) cloud database service based on Redis.
+- [Stunel](https://www.stunnel.org/) to add TLS encryption.
+- [PostgreSQL](https://www.postgresql.org/) relational database.
+- [Psycopg](https://www.psycopg.org/) PostgreSQL adapter for Python.
+- [Elephant SQL](https://www.elephantsql.com/) to manage PostgreSQL databases.
+- [Babel](https://babeljs.io/) for compiling JS.
+- [Webpack](https://webpack.js.org/) for bundling JS.
+- [Bootstrap](https://getbootstrap.com/) for styling.
+- [React-Bootstrap](https://react-bootstrap.netlify.app/) for styling the React app.
+- [Crispy Forms](https://django-crispy-forms.readthedocs.io/en/latest/) for pretty forms.
+- [Crispy Bootstrap](https://pypi.org/project/crispy-bootstrap5/) for styling Crispy forms.
+- [jQuery](https://jquery.com/) (JS library) for additional functionality.
+- [AOS](https://michalsnik.github.io/aos/) for animation on scroll.
+- [Boxicons](https://boxicons.com/) for icons.
+- [Google Fonts](https://fonts.google.com/) for typography.
+- [Gitpod](https://gitpod.io/) IDE to develop the app.
+- [GitHub](https://GitHub.com/) to host the source code.
+- [Heroku](https://www.heroku.com/) to deploy and host the live app.
+- Git to provide version control (to commit and push code to the repository). 
+- [Cloudinary](https://cloudinary.com/) for storing and serving static files.
+- [Django Countries](https://pypi.org/project/django-countries/) for country choice field.
+- [Pillow](https://pypi.org/project/Pillow/) to create fake images for testing.
+- [Google Maps API](https://developers.google.com/maps) for dynamic maps.
+- [Jest](https://jestjs.io/) for JS unit-testing.
+- [Unittest](https://docs.python.org/3/library/unittest.html) for Python unit-testing.
+- [Selenium](https://www.selenium.dev/documentation/test_practices/overview/) for automated testing.
+- [TinyJPG](https://tinyjpg.com/) to optimise images for readme. 
+- [Favicon.io](https://www.favicon.io/) to create the website favicon.
+- [Techsini](https://tecnisih.com) to create the Mockup image in this README.
+- [W3C HTML Markup Validator](https://validator.w3.org/) to validate HTML code.
+- [W3C Jigsaw CSS Validator](https://jigsaw.w3.org/css-validator/) to validate CSS code.
+- [JS Hint](https://jshint.com/) to validate JS code.
+- [Markdown Tables Generator](https://www.tablesgenerator.com/) to generate tables for the readme file.
+- [CI Python Linter](https://pep8ci.herokuapp.com) to validate python code.
+- [LucidChart](https://lucid.app/documents#/dashboard) for flowcharts.
+- Code Institute's Template to generate the workspace for the project.
+___
+
+# Deployment
+
+## Github
+The project was created by navigating to the CI template and clicking 'Use this template'. After a new repository was given a name, I navigated to Gitpod, where the entire project was developed. Then the Project was created and issues added to follow Agile methogology.
+
+## Heroku
+Heroku was used to host the app. Heroku is a container-based cloud Platform for building, deploying and managing apps. To enable ongoing responsive testing and avoid a heart attack when approaching the deadline this project was deployed to Heroku in its early stages. This was achieved through the following steps: 
+
+1. Use the `pip freeze -> requiremnts.txt` command in the terminal to create a list of libraries that need to be installed.
+
+2. Login or create an account on https://www.heroku.com/. Click `new` in the top right corner and choose `create new app`. Choose a unique app name and your region and click `create app`.
+
+3. Navigate to the `Settings` tab, click `Reveal Config Vars`.
+
+**Setup External Services:**
+
+  * 1.  Log in or create an account on [Cloudinary](https://cloudinary.com/).
+    2.  Navigate to the `Dashboard` on Cloudinary, copy and store the value of the 'API Environment Variable" ( begins with cloudinary:// ) and paste it into your congig vars `CLOUDINARY_URL` = `cloudinary://<your_value>`
+___
+  * 1. Log in or create an account on [ElephantSQL](https://www.elephantsql.com/) .
+    2. Create a new instance. Select the free plan Tiny Turtle and leave tags blank.
+    3. Select the region and choose the nearest data centre to your location or the one that works. The closest to me was down, when I was creating mine.
+    4. Click 'review' and check the details and click the button to create the instance.
+    5. Click on the instance you created copy the ElephantSQL database URL from the instance details and paste it into your congig vars `DATABASE_URL` = `postgres://<your_value>`
+____
+  * 1. Create an email account on [GMail](https://google.com) or anywhere you like, login.
+
+    2. Create an account on [Sendinblue](https://sendinblue.com), fill out necessary fields to start. Choose a free plan. Skip onboarding.
+
+    3. Go to the `Settings`, chose `Senders and IP`, edit a sender - name it. Navigate to `SMTP & API` in the menu on the left, paste:
+        -  SMTP Server value into your config vars as `EMAIL_HOST`,
+        -  Port value as `EMAIL_PORT`,
+        -  Login value as `EMAIL_HOST_USER`,
+        -  Master Password as `EMAIL_HOST_PASSWORD`.
+___
+  * 1. Set Up Google Maps API. Go to [Google Maps Platform](https://mapsplatform.google.com/) and lick the `Get Started` button.
+
+    2. Click on the Google Cloud Platform home in the upper left corner. Click on Billing to make sure your billing details are up-to-date. ["All Maps Embed API requests are available at no charge with unlimited usage."](https://developers.google.com/maps/documentation/embed/usage-and-billing). 
+    3. Hover to `APIs & Services` and go to `Credentials`. Select `Create a new project` and enter a project name.
+    4. Click `Create credentials` and select API key, copy it and paste into your config vars `GOOGLE_MAPS_API_KEY` = `<your value>`
+    5. Go to the `Credentials` page. Select the API key that you created. The API key property page appears. Under Key restrictions, set the `application restrictions`: to accept requests from the list of websites. Add your app's address when you have it.5 
+___
+  * 1. Login in or create an account on [Redis Cloud](https://app.redislabs.com/#/). 
+    2. Create a new database, click `connect`, the side pannel will appear on the right.
+    3. Click `copy` below the `Redic_CLI` section. Paste it in a text file for now and remove `redis-cli` from the beginning, you will need it to begin with `redis://`.
+    4. Paste the value to your config vars as `REDISCLOUD_URL`.
+    5. Paste the same value as `REDIS_URL_STUNNEL`
+____
+ 
+4. Add Django secret key to config vars `SECRET_KEY` and `DISABLE_COLLECT_STATIC` = 1
+
+5. Navigate to the `Deploy` tab and select GitHub as a deployment method.
+6. Find a repository to connect to and choose the branch to deploy.
+7. Enable automatic deployment, cross your fingers and deploy the branch. 
+8. Wait for the app to build, click on the `View`.
+
+### Fork GitHub Repo
+
+Forking in GitHub allows you to create a copy of a repository on your own account, where you can view or make changes without affecting the original repository. To fork a repository, you can follow these steps:
+
+1. Navigate to the [repository](https://github.com/oks-erm/help-u) on GitHub.
+2. Click the "Fork" button, located on the top right of the page.
+3. Choose the account where you want to fork the repository.
+4. Once the process is completed, you will have a copy of the repository on your own account.
+
+It's important to keep in mind that if you are not a member of an organization on GitHub, you will not be able to fork your own repository. You might want to create another account to do so.
+
+### Clone GitHub Repo
+
+Another option is to create a local clone of the repository: 
+
+1. Navigate to the [repository](https://github.com/oks-erm/help-u) on GitHub.
+3. Locate the `Code` button at the top, above the repository file list.
+4. Select a clone method, click the `copy` button to copy the URL to your clipboard.
+5. Open IDE of your choice, open Git Bash.
+6. Change the current working direction to the location where you want to create a clone.
+7. Type `git clone` and paste the URL from the clipboard.
+8. `$ clone https://github.com/oks-erm/help-u`
+9. Press `Enter` and the local clone will be created.
+
+# Credentials
+
+
+[Back to the Top](#help-u-website-milestone-project-4)
