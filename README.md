@@ -1027,6 +1027,7 @@ ____
 6. Find a repository to connect to and choose the branch to deploy.
 7. Enable automatic deployment, cross your fingers and deploy the branch. 
 8. Wait for the app to build, click on the `View`.
+9. Go back to config vars and remove `DISABLE_COLLECT_STATIC` = 1
 
 ### Fork GitHub Repo
 
