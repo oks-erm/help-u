@@ -4,19 +4,19 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
-<section>
+<main>
+  <section>
     <div class="row">
-        <div class="container-fluid col-lg-8 mt-1">
-            <div class="d-flex align-items-center">
-                <h1 class="section-title text-start pb-0">Create a New Post</h1>
-                <img class="search-logo" style="scale: 0.5;" alt="Site logo" src="{% static 'assets/img/logo_small.png' %}">
-            </div>
-            <form method="post"
-            enctype="multipart/form-data">
-                {% csrf_token %}
-                {% crispy form %}
-            </form>
+      <div class="container-fluid col-lg-8 mt-1">
+        <div class="d-flex align-items-center">
+          <h1 class="section-title text-start pb-0">Create a New Post</h1>
+          <img class="search-logo" style="scale: 0.5;" alt="Site logo" src="{% static 'assets/img/logo_small.png' %}">
         </div>
+
+          {% csrf_token %}
+          {% crispy form %}
+
+      </div>
     </div>
-</section>
+  </section>
 {% endblock content %}

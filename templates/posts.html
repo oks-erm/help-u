@@ -1,5 +1,6 @@
 {% load static %}
 {% load cloudinary %}
+{% load custom_tags %}
 
 {% if 'post_list' %}
 <div class="col-10  left">
@@ -36,15 +37,15 @@
                             {{ post.title|title }}</h4>
                     </a>
                     <!-- location -->
-                    <p class="subtitle text-truncate p"><i class='bx bx-map'></i>
-                        <a href="https://www.google.com/maps/place/{{post.city}}+{{post.country.name}}" target="_blank"
-                            class="geo" title="{{ post.city }}, {{ post.country.name }}">
+                    <p class="geo subtitle text-truncate p"><i class='bx bx-map'></i>
+                        <a href='https://www.google.com/maps/place/{{ post.city|replace_spaces }}+{{ post.country.name|replace_spaces }}' target="_blank"
+                            title="{{ post.city }}, {{ post.country.name }}">
                             {{ post.city}}, {{ post.country.name }}
                             <!-- map toolkit -->
-                            <iframe class="preview" loading="lazy" allowfullscreen
+</a>                            <iframe class="preview" loading="lazy" allowfullscreen
                                 referrerpolicy="no-referrer-when-downgrade"
-                                src="https://www.google.com/maps/embed/v1/place?key={{ key }}&q={{ post.city }}+{{ post.country.name }}&zoom=11">
-                            </iframe></a></p>
+                                src="https://www.google.com/maps/embed/v1/place?key={{ key }}&q={{ post.city|replace_spaces }}+{{ post.country.name|replace_spaces }}&zoom=11">
+                            </iframe></p>
                     {% if post.area != None %}
                     <p class="subtitle text-muted p"><i class='bx bx-building-house'></i>{{ post.area }}</p>
                     {% else %}

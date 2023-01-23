@@ -5,19 +5,19 @@
 
 
 {% block content %}
+<main>
+    <section>
+        <div class="row mx-1">
+            <div class="container-fluid col-lg-8 mt-1">
+                <div class="d-flex align-items-center">
+                    <h1 class="section-title text-start pb-0">Edit Post "{{ post.title|title }}"</h1>
+                    <img class="search-logo" style="scale: 0.5;" src="{% static 'assets/img/logo_small.png' %}" alt="site logo">
+                </div>
 
-<section>
-    <div class="row mx-1">
-        <div class="container-fluid col-lg-8 mt-1">
-            <div class="d-flex align-items-center">
-                <h1 class="section-title text-start pb-0">Edit Post "{{ post.title|title }}"</h1>
-                <img class="search-logo" style="scale: 0.5;" src="{% static 'assets/img/logo_small.png' %}">
+                    {% csrf_token %}
+                    {% crispy form %}
+
             </div>
-            <form method="post" enctype="multipart/form-data">
-                {% csrf_token %}
-                {% crispy form %}
-            </form>
         </div>
-    </div>
-</section>
+    </section>
 {% endblock content %}

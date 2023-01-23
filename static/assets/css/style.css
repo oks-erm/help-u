@@ -336,7 +336,7 @@ body {
     padding-top: 80px;
   }
   
-  #hero h1 {
+  #hero #slogan {
     margin: 0;
     font-size: 56px;
     font-weight: 700;
@@ -418,7 +418,9 @@ body {
     z-index: 2;
   }
   
-  section {
+  section,
+  #search,
+  #messenger {
     padding: 80px 0;
     overflow: hidden;
   }
@@ -811,6 +813,7 @@ body {
 
     body section div div form img {
       width: -webkit-fill-available;
+      max-width: 400px;
       height: auto;
     }
 

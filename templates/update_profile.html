@@ -5,21 +5,21 @@
 
 
 {% block content %}
+<main>
+    <section>
+        <div class="row mx-1">
+            <div class="container-fluid col-lg-8 mt-1">
+                <div class="d-flex align-items-center">
+                    <h1 class="section-title text-start pb-0">Edit Profile</h1>
+                    <img class="search-logo" style="scale: 0.5;" alt="Site logo" src="{% static 'assets/img/logo_small.png' %}">
+                    
+                </div>
+                <h2>{{ request.user }}</h2>
 
-<section>
-    <div class="row mx-1">
-        <div class="container-fluid col-lg-8 mt-1">
-            <div class="d-flex align-items-center">
-                <h1 class="section-title text-start pb-0">Edit Profile</h1>
-                <img class="search-logo" style="scale: 0.5;" alt="Site logo" src="{% static 'assets/img/logo_small.png' %}">
-                
+                    {% csrf_token %}
+                    {% crispy form %}
+
             </div>
-            <h2>{{ request.user }}</h2>
-            <form method="post" enctype="multipart/form-data">
-                {% csrf_token %}
-                {% crispy form %}
-            </form>
         </div>
-    </div>
-</section>
+    </section>
 {% endblock content %}

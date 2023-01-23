@@ -3,131 +3,132 @@
 {% load cloudinary %}
 
 {% block content %}
-<section id="full-post">
-    <div class="container d-flex flex-column justify-content-center mt-3">
-      <!-- back button -->
-        <a href="{% url 'main:posts_list' post.type %}" class="btn btn-outline-primary mb-3 mt-1">
-            <<< Back to the list</a>
-            <!-- post image -->
-                <div class="row">
-                    <div class="col-lg-6 mt-2 d-flex flex-column justify-content-start" id="left-col">
-                        {% if "placeholder" in post.image.url %}
-                        <img style="opacity: 0.4; scale: 0.6;" src="{% static 'assets/img/grateful.png' %}">
-                        {% else %}
-                        {% cloudinary post.image alt="post image"%}
-                        {% endif %}
+<main>
+    <section id="full-post">
+        <div class="container d-flex flex-column justify-content-center mt-3">
+        <!-- back button -->
+            <a href="{% url 'main:posts_list' post.type %}" class="btn btn-outline-primary mb-3 mt-1">
+                 &lt;&lt;&lt; Back to the list</a>
+                <!-- post image -->
+                    <div class="row">
+                        <div class="col-lg-6 mt-2 d-flex flex-column justify-content-start" id="left-col">
+                            {% if "placeholder" in post.image.url %}
+                            <img style="opacity: 0.4; scale: 0.6;" src="{% static 'assets/img/grateful.png' %}">
+                            {% else %}
+                            {% cloudinary post.image alt="post image"%}
+                            {% endif %}
 
-                        <!-- comments block -->
-                        <div id="comments-block">
-                            <div class="accordion-item">
-                                {% if comments %}
-                                <!-- single comment -->
-                              <h2 class="accordion-header" id="comments-heading">
-                                <button class="accordion-button collapsed fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#comments" aria-expanded="false" aria-controls="comments">
-                                  Comments ({{ comments.count }})
-                                </button>
-                              </h2>
-                              <div id="comments" class="accordion-collapse collapse" aria-labelledby="comments-heading" data-bs-parent="#comments-block">
-                                <div class="accordion-body">                        
-                                    {% for comment in comments %}
-                                    <div class="card border-0 comment">
-                                        <div class="row g-0">
-                                            <div class="col-2 d-flex justify-content-end align-items-center">
-                                                {% cloudinary comment.user.userpic height=80 width=80 crop="fill" radius="max" gravity="face" %}
-                                            </div>
-                                            <div class="col-10">
-                                                <div class="card-body">
-                                                    <h5 class="card-title mt-0"><a href="{% url 'users:profile' comment.user.id %}">{{comment.user}}</a></h5>
-                                                    <p class="card-text mb-1">{{comment.body}}</p>
-                                                    <p class="card-text"><small class="text-muted">{{comment.created_on}}</small>
-                                                    </p>
+                            <!-- comments block -->
+                            <div id="comments-block">
+                                <div class="accordion-item">
+                                    {% if comments %}
+                                    <!-- single comment -->
+                                <h2 class="accordion-header" id="comments-heading">
+                                    <button class="accordion-button collapsed fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#comments" aria-expanded="false" aria-controls="comments">
+                                    Comments ({{ comments.count }})
+                                    </button>
+                                </h2>
+                                <div id="comments" class="accordion-collapse collapse" aria-labelledby="comments-heading" data-bs-parent="#comments-block">
+                                    <div class="accordion-body">                        
+                                        {% for comment in comments %}
+                                        <div class="card border-0 comment">
+                                            <div class="row g-0">
+                                                <div class="col-2 d-flex justify-content-end align-items-center">
+                                                    {% cloudinary comment.user.userpic height=80 width=80 crop="fill" radius="max" gravity="face" %}
+                                                </div>
+                                                <div class="col-10">
+                                                    <div class="card-body">
+                                                        <h5 class="card-title mt-0"><a href="{% url 'users:profile' comment.user.id %}">{{comment.user}}</a></h5>
+                                                        <p class="card-text mb-1">{{comment.body}}</p>
+                                                        <p class="card-text"><small class="text-muted">{{comment.created_on}}</small>
+                                                        </p>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
+                                        {% endfor %}
                                     </div>
-                                    {% endfor %}
                                 </div>
-                              </div>
-                              {% endif %}
+                                {% endif %}
+                                </div>
                             </div>
-                          </div>
-                </div>
-                <div class="col-lg-6">
-                  <!-- post title -->
-                    <h2>{{ post.title|title }}
-                      <!-- bookmark button -->
-                        {% if post in user.userprofile.bookmarks.all %}
-                        <span class="link-primary" id="bookmark"><i class='bx bxs-bookmark-star'></i></span></h2>
-                    {% else %}
-                    <span class="link-secondary" id="bookmark"><i class='bx bxs-bookmark-star'></i></span></h2>
-                    {% endif %}
-                    <!-- date created -->
-                    <p class="card-text created text-muted h6">{{ post.created_on}}</p>
-                    <hr>
-                    <!-- map -->
-                    <iframe width="500" height="300" style="border:0" loading="lazy" allowfullscreen
-                        referrerpolicy="no-referrer-when-downgrade"
-                        src="https://www.google.com/maps/embed/v1/place?key={{key}}&q={{post.area}}{{post.city}},{{post.country}}&zoom=13">
-                    </iframe>
-                    <!-- location -->
-                    <p class="subtitle text-muted p"><i class='bx bx-map'></i> {{ post.country.name }},
-                        {{ post.city}},
-                        {% if post.area != None %}
-                        {{ post.area }}
-                        {% else %}
-                        ...
-                        {% endif %}
-                    </p>
-                    <!-- author -->
-                    <div class="author subtitle p"><a href="{% url 'users:profile' post.author.id %}"><i
-                                class='bx bxs-user-circle'></i><span> {{ post.author }}</span></a>
-
                     </div>
-                    <hr>
-                    <!-- post text -->
-                    <p>{{ post.text }}</p>
-                    <hr>
-
-                    <div class="mt-4">
-                      <!-- buttons -->
-                        {% if post.author.user == request.user %}
-                        <a href="{% url 'main:update' post.slug %}" class="btn btn-primary px-4">Update</a>
-                        <a href="{% url 'main:delete' post.slug %}" class="btn btn-secondary px-4">Delete</a>
+                    <div class="col-lg-6">
+                    <!-- post title -->
+                        <h2>{{ post.title|title }}
+                        <!-- bookmark button -->
+                            {% if post in user.userprofile.bookmarks.all %}
+                            <span class="link-primary" id="bookmark"><i class='bx bxs-bookmark-star'></i></span></h2>
                         {% else %}
-                        <a href="{% url 'messages:messages_with_path' 'conv' %}{{user.id}}_{{post.author.user.id}}?q=conv{{user.id}}_{{post.author.user.id}}" class="btn btn-primary">Contact {{post.author}}</a>
-                        {% if post.type == 'give' %}
-                        <button class="btn btn-success" type="button" data-bs-toggle="collapse"
-                            data-bs-target="#comment" aria-expanded="false" aria-controls="collapseExample">
-                            Say Thank You
-                        </button>
-                        <!-- write comment field -->
-                        <div class="collapse" id="comment">
-                            <div class="card card-body mt-1">
-                                <form method="post" role="form" class="comment-form">
-                                    {% csrf_token %}
-                                    <div class="form-group mt-3">
-                                        <textarea class="form-control" name="body" id="body" rows="4"
-                                            placeholder="Share your experience here" required></textarea>
-                                    </div>
-                                    <div>
-                                        <div class="error-message">Oooops! Your comment hasn't been added. Try again!
-                                        </div>
-                                    </div>
-                                    <div class="text-end"><button class="btn btn-success px-4 mt-2"
-                                            type="submit">Publish</button></div>
-                                </form>
-                            </div>
+                        <span class="link-secondary" id="bookmark"><i class='bx bxs-bookmark-star'></i></span></h2>
+                        {% endif %}
+                        <!-- date created -->
+                        <p class="card-text created text-muted h6">{{ post.created_on}}</p>
+                        <hr>
+                        <!-- map -->
+                        <iframe width="500" height="300" style="border:0" loading="lazy" allowfullscreen
+                            referrerpolicy="no-referrer-when-downgrade"
+                            src="https://www.google.com/maps/embed/v1/place?key={{key}}&q={{post.area}}{{post.city}},{{post.country}}&zoom=13">
+                        </iframe>
+                        <!-- location -->
+                        <p class="subtitle text-muted p"><i class='bx bx-map'></i> {{ post.country.name }},
+                            {{ post.city}},
+                            {% if post.area != None %}
+                            {{ post.area }}
+                            {% else %}
+                            ...
+                            {% endif %}
+                        </p>
+                        <!-- author -->
+                        <div class="author subtitle p"><a href="{% url 'users:profile' post.author.id %}"><i
+                                    class='bx bxs-user-circle'></i><span> {{ post.author }}</span></a>
+
                         </div>
+                        <hr>
+                        <!-- post text -->
+                        <p>{{ post.text }}</p>
+                        <hr>
 
-                        {% endif %}
-                        {% endif %}
+                        <div class="mt-4">
+                        <!-- buttons -->
+                            {% if post.author.user == request.user %}
+                            <a href="{% url 'main:update' post.slug %}" class="btn btn-primary px-4">Update</a>
+                            <a href="{% url 'main:delete' post.slug %}" class="btn btn-secondary px-4">Delete</a>
+                            {% else %}
+                            <a href="{% url 'messages:messages_with_path' 'conv' %}{{user.id}}_{{post.author.user.id}}?q=conv{{user.id}}_{{post.author.user.id}}" class="btn btn-primary">Contact {{post.author}}</a>
+                            {% if post.type == 'give' %}
+                            <button class="btn btn-success" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#comment" aria-expanded="false" aria-controls="collapseExample">
+                                Say Thank You
+                            </button>
+                            <!-- write comment field -->
+                            <div class="collapse" id="comment">
+                                <div class="card card-body mt-1">
+                                    <form method="post" role="form" class="comment-form">
+                                        {% csrf_token %}
+                                        <div class="form-group mt-3">
+                                            <textarea class="form-control" name="body" id="body" rows="4"
+                                                placeholder="Share your experience here" required></textarea>
+                                        </div>
+                                        <div>
+                                            <div class="error-message">Oooops! Your comment hasn't been added. Try again!
+                                            </div>
+                                        </div>
+                                        <div class="text-end"><button class="btn btn-success px-4 mt-2"
+                                                type="submit">Publish</button></div>
+                                    </form>
+                                </div>
+                            </div>
+
+                            {% endif %}
+                            {% endif %}
+                        </div>
                     </div>
-                </div>
-    </div>
-    </div>
-</section>
+        </div>
+        </div>
+    </section>
 <!-- handle bookmarking without refreshing the page -->
-<script type="text/javascript">
+<script>
     $('#bookmark').on('click', function () {
         $.ajax({
             type: 'POST',

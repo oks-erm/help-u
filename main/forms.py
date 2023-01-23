@@ -89,7 +89,7 @@ class CreatePostForm(ModelForm):
             'title',
             'text',
             HTML("""{% if form.image.value %}
-                 <img height=400
+                 <img height=400 alt="profile image"
                  src="{{ DEFAULT_FILE_STORAGE }}{{ form.image.value.url }}">
                  {% endif %}"""),
             'image',
