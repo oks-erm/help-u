@@ -727,6 +727,11 @@ The website includes a fully customised Admin pannel. The admin panel allows for
 
 Content moderation is essential to ensure that the content is appropriate and does not violate any terms of service or community guidelines, protecting against spam or malicious content, and maintaining a positive user experience. In my project, content moderation is done for all posts and comments left on posts and is implemented by the admin users who have access to the admin panel where they can review and approve or reject comments. This helps to ensure that all the content is relevant, respectful and appropriate for the community.
 
+## JS Bundling
+
+JavaScript bundling is an optimization technique we can use to reduce the number of server requests for JavaScript files. Webpack is a JavaScript bundler that allows to package and optimize JavaScript code for production use. It takes multiple JavaScript files, and any other assets such as images or CSS, and creates a single bundle that can be loaded by the browser. This bundle includes all the code your application needs to run, and it can also optimize the code for faster load times and better performance. The React app Messenger is bundled into a single file, including React library and all the dependencies.
+
+In the project before bundling the ode was compiled with Babel, a JavaScript transpiler that allows to write modern JS code and then convert it to a version that is compatible with older browsers. For this reason the main JS file that handles Django app was also bundled.
 
 ## **Feature considerations**
 
@@ -1197,6 +1202,46 @@ Another option is to create a local clone of the repository:
 9. Press `Enter` and the local clone will be created.
 
 # Credentials
-Comming soon
+
+## Media
+
+- [Unsplash](https://unsplash.com/),
+- [Undraw](https://undraw.co/), 
+- logo is designed in [Hatchful](https://www.shopify.com/tools/logo-maker),
+- [This Person Doesn't exist](https://this-person-does-not-exist.com) for people's faces, 
+- The rest is produced by me and my imaginary friends [Midjourney](https://midjourney.com/home/?callbackUrl=%2Fapp%2F) and locally running [Stable Diffusion](https://stablediffusionweb.com/).
+
+## Design Template
+
+- [One Page](https://bootstrapmade.com/onepage-multipurpose-bootstrap-template/), significantly modified, media replaced with original.
+
+## Code
+
+- Base CSS and JS from [One Page](https://bootstrapmade.com/onepage-multipurpose-bootstrap-template/), modified and adapted.
+- Guidance on Websockets and React app structure and code snippet for implementation were obtained from [here](https://justdjango.com/blog/chat-app-django-channels#handling-events-in-the-consumer) and modified.
+- Understanding of hybrid architecture and code snippet for setting Django Rest framework was obtained from [here](https://www.saaspegasus.com/guides/modern-javascript-for-django-developers/integrating-django-react/#client-side-url-routing) and modified.
+- A deeper understanding of Django was obtained from [documentation](https://docs.djangoproject.com/en/4.1/) and [django repo](https://github.com/django/django).
+- Guidance on Django project architecture was obtained from [justdjango.com/](https://justdjango.com/).
+- A deeper understanding of React, advanced JS practices and Selenium testing was obtained from [ZTM The Complete Web Developer](https://zerotomastery.io/courses/coding-bootcamp/).
+- Understanding of Bootstrap was obtained from [documentation](https://getbootstrap.com/docs/5.3/getting-started/introduction/).
+- Understanding of AllAuth was obtained from [documentation](https://django-allauth.readthedocs.io/en/latest/).
+- Understanding of Django Channels was obtained from [documentation](https://channels.readthedocs.io/en/stable/).
+- Understanding of Redis was obtained from [documentation]().
+- Understanding of setting up Redis Cloud was obtained [Heroku Dev Center](https://devcenter.heroku.com/articles/rediscloud).
+- Knowledge of customising admin was obtained from [Real Python](https://realpython.com/customize-django-admin-python/).
+- Guidance on Selenium testing was obtained from [AllSelenium](http://allselenium.info/python-selenium-commands-cheat-sheet-frequently-used/) and [BrowserStack](https://www.browserstack.com/automate).
+- [Django Slug Tutorial](https://learndjango.com/tutorials/django-slug-tutorial).
+- Code snippet for pagination was obtained from [here](https://ourcodeworld.com/articles/read/1757/how-to-implement-a-paginator-in-a-django-class-based-listview-compatible-with-bootstrap-5)
+- Understanding and code snippet on creating thumbnail preview from Image field was obtained from [here](https://ilovedjango.com/django/admin/how-to-show-image-from-imagefield-in-django-admin-page/).
+- Understanding of incremental search in Django app and code snippet was obtained from [here](https://openfolder.sh/django-tutorial-as-you-type-search-with-ajax) and modified.
+- Collective wisdom was obtained from [StackOverflow](https://stackoverflow.com/)
+
+## Acknowledgements
+
+I would like to thank my mentor, Ronan McClelland, for guidance, support and motivation. 
+
+<img align='right' height='150' src=static/assets/img/grateful.png> 
+
+___
 
 [Back to the Top](#help-u-website-milestone-project-4)
