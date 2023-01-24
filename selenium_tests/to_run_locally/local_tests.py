@@ -7,7 +7,6 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.keys import Keys
-
 from selenium.webdriver import Chrome, ChromeOptions
 from selenium.webdriver.chrome.service import Service as ChromeService
 
@@ -40,17 +39,17 @@ class SignIn(object):
                 menu = WebDriverWait(self.driver, 5).until(
                     EC.presence_of_element_located(
                         (By.CSS_SELECTOR, "#navbar > i"))
-                )
+                    )
                 menu.click()
-            except:
+            except Exception:
                 pass
             login = WebDriverWait(self.driver, 5).until(
                 EC.element_to_be_clickable(
                     (By.CSS_SELECTOR, "#navbar > ul > li:nth-child(6) > a"))
-            )
+                )
             login.click()
-        except:
-            print('something went wrong (login)')
+        except Exception as e:
+            print('something went wrong (login)', e)
         else:
             form_email = WebDriverWait(self.driver, 5).until(
                 EC.presence_of_element_located((By.ID, "id_login"))
@@ -68,17 +67,17 @@ class SignIn(object):
 
             button = WebDriverWait(self.driver, 5).until(
                 EC.element_to_be_clickable(
-                    (By.CSS_SELECTOR,
-                     "body > div > div:nth-child(2) > div > div > div > form > div.d-grid.gap-2 > button"))
+                     (By.CSS_SELECTOR,
+                         "body > div > div:nth-child(2) > div > div > div > form > div.d-grid.gap-2 > button"))
             )
             button.click()
             time.sleep(5)
 
             # Printing the result
             return_value = WebDriverWait(self.driver, 5).until(
-                EC.presence_of_element_located((By.ID, "search")))
+                 EC.presence_of_element_located((By.ID, "search")))
             if return_value is not None:
-                print(f"Success!")
+                print("Logged in!")
                 return True
 
     def slow_typing(self, element, text):
@@ -87,7 +86,7 @@ class SignIn(object):
             time.sleep(0.2)
 
     def close_browser(self):
-        self.driver.close()
+        self.driver.quit()
 
 
 class SignInFormTestCase(unittest.TestCase):
@@ -111,8 +110,8 @@ class CommentFormTestCase(unittest.TestCase):
                     (By.CSS_SELECTOR, "#listings > div > div > div:nth-child(1) > div > div > a > h4"))
             )
             post.click()
-        except:
-            print('something went wrong (post)')
+        except Exception as e:
+            print('something went wrong (post)', e)
         else:
             time.sleep(2)
             button = WebDriverWait(driver, 5).until(
@@ -127,7 +126,9 @@ class CommentFormTestCase(unittest.TestCase):
                 EC.element_to_be_clickable(
                     (By.CSS_SELECTOR, "#comment > div > form > div.text-end > button"))
             )
+            time.sleep(1)
             driver.execute_script("arguments[0].scrollIntoView();", publish)
+            time.sleep(1)
 
             try:
                 text = WebDriverWait(driver, 5).until(
@@ -144,10 +145,10 @@ class CommentFormTestCase(unittest.TestCase):
                          "#comments-block > div.card.border-0.comment > div > div.col-9 > div > p.card-text.text-muted.mb-1"))
                 )
 
-                print(f"Success! {return_value.text}")
-            except:
+                print(f"Success! Comment sent! {return_value.text}")
+            except Exception as e:
                 return_value = None
-                print("something went wrong (text field)")
+                print("something went wrong (text field)", e)
 
             expected = "--Your comment was successfully added, it will be published after moderation--"
             self.assertEqual(return_value.text, expected)
@@ -165,8 +166,8 @@ class PostFormTestCase(unittest.TestCase):
                     (By.CLASS_NAME, "btn-success"))
             )
             new_post.click()
-        except:
-            print('something went wrong (new post)')
+        except Exception as e:
+            print('something went wrong (new post)', e)
         else:
             try:
                 time.sleep(2)
@@ -210,7 +211,7 @@ class PostFormTestCase(unittest.TestCase):
                 )
                 driver.execute_script(
                     "arguments[0].scrollIntoView();", form_type)
-                time.sleep(0.2)
+                time.sleep(1)
                 form_type.click()
                 time.sleep(1)
                 form_choice = WebDriverWait(driver, 2).until(
@@ -223,30 +224,31 @@ class PostFormTestCase(unittest.TestCase):
                 )
                 driver.execute_script(
                     "arguments[0].scrollIntoView();", submit_button)
-                time.sleep(0.2)
+                time.sleep(1)
                 form_category.click()
                 time.sleep(1)
                 form_choice_2 = WebDriverWait(driver, 2).until(
                     EC.presence_of_element_located(
                         (By.CSS_SELECTOR, "#id_category > option:nth-child(2)"))
                 )
+                time.sleep(1)
                 form_choice_2.click()
 
-                time.sleep(1)
+                time.sleep(3)
                 driver.execute_script(
                     "arguments[0].scrollIntoView();", submit_button)
-                time.sleep(1)
+                time.sleep(3)
                 submit_button.click()
-                time.sleep(1)
+                time.sleep(5)
 
                 return_value = WebDriverWait(driver, 5).until(
                     EC.presence_of_element_located((By.ID, "search")))
 
-                print(f"Success! {return_value is not None}")
+                print(f"Success! Post created! {return_value is not None}")
 
-            except:
+            except Exception as e:
                 return_value = None
-                print("something went wrong (post form)")
+                print("something went wrong (post form)", e)
 
             self.assertTrue(return_value is not None)
         auto.close_browser()
@@ -263,8 +265,8 @@ class ProfileFormTestCase(unittest.TestCase):
                     (By.CSS_SELECTOR, "#user-name > a"))
             )
             user_name.click()
-        except:
-            print('something went wrong (user_name)')
+        except Exception as e:
+            print('something went wrong (user_name)', e)
         else:
             time.sleep(5)
             before = WebDriverWait(driver, 5).until(
@@ -278,8 +280,8 @@ class ProfileFormTestCase(unittest.TestCase):
                         (By.CLASS_NAME, "bx-pencil"))
                 )
                 edit.click()
-            except:
-                print('something went wrong (edit)')
+            except Exception as e:
+                print('something went wrong (edit)', e)
             else:
                 time.sleep(3)
                 city = WebDriverWait(driver, 8).until(
@@ -304,7 +306,7 @@ class ProfileFormTestCase(unittest.TestCase):
                         (By.CSS_SELECTOR, "#profile > div > div > div.col-xl-8.col-lg-7 > p"))
                 )
 
-                print(f"Success!")
+                print("Success! Profile updated!")
 
             self.assertNotEqual(before, return_value)
         auto.close_browser()
@@ -312,22 +314,15 @@ class ProfileFormTestCase(unittest.TestCase):
 
 class ContactFprmTestCase(unittest.TestCase):
     def test_contact(self):
-        # contact form
-        service = ChromeService('./chromedriver')
-        service.start()
-
-        driver = webdriver.Remote(service.service_url)
-        driver.get("https://helpukr.herokuapp.com/")
-        if "Help U" not in driver.title:
-            raise Exception("Unable to load the page!")
-
+        auto = SignIn()
+        driver = auto.driver
         try:
             form = WebDriverWait(driver, 10).until(
                 EC.presence_of_element_located((By.CLASS_NAME, "contact-form"))
             )
             driver.execute_script("arguments[0].scrollIntoView();", form)
-        except:
-            print('something went wrong')
+        except Exception as e:
+            print('something went wrong', e)
         else:
             form_name = WebDriverWait(driver, 10).until(
                 EC.presence_of_element_located((By.ID, "name"))
@@ -376,19 +371,13 @@ class ContactFprmTestCase(unittest.TestCase):
         self.assertEqual(return_value.text,
                          "Your message has been sent. Thank you!")
 
-        driver.quit()
-        service.stop()
+        auto.close_browser()
 
 
 class SignUpTestCase(unittest.TestCase):
     def test_signup(self):
-        service = ChromeService('./chromedriver')
-        service.start()
-
-        driver = webdriver.Remote(service.service_url)
-        driver.get("https://helpukr.herokuapp.com/")
-        if "Help U" not in driver.title:
-            raise Exception("Unable to load the page!")
+        auto = SignIn()
+        driver = auto.driver
         try:
             try:
                 menu = WebDriverWait(driver, 5).until(
@@ -396,15 +385,15 @@ class SignUpTestCase(unittest.TestCase):
                         (By.CSS_SELECTOR, "#navbar > i"))
                 )
                 menu.click()
-            except:
+            except Exception:
                 pass
             register = WebDriverWait(driver, 5).until(
                 EC.element_to_be_clickable(
                     (By.CSS_SELECTOR, "#navbar > ul > li:nth-child(5) > a"))
             )
             register.click()
-        except:
-            print('something went wrong (register)')
+        except Exception as e:
+            print('something went wrong (register)', e)
         else:
             form_email = WebDriverWait(driver, 5).until(
                 EC.presence_of_element_located((By.ID, "id_email"))
@@ -454,11 +443,10 @@ class SignUpTestCase(unittest.TestCase):
             return_value = WebDriverWait(driver, 5).until(
                 EC.presence_of_element_located((By.CSS_SELECTOR, ".login-block > div.row > div > h1")))
             if return_value.text == "Verify Your E-mail Address":
-                print(f"Success!")
+                print("Success! Signed up!")
 
             self.assertEqual(return_value.text, "Verify Your E-mail Address")
-        driver.quit()
-        service.stop()
+        auto.close_browser()
 
 
 if __name__ == '__main__':
