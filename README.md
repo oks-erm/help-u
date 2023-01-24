@@ -378,6 +378,7 @@ The development of the website has followed an Agile methodology, using GitHub's
 - could have
 
 ![](readme/assets/issues1.png)
+
 ![](readme/assets/issues2.png)
 
 The development followed an AGILE approach, which allowed for the delivery of a functional and feature-rich site. The project was constrained by time limitations, which resulted in some initially listed features not being implemented. However, AGILE methodology is increadibly helpful in situations like this, as it allows for the prioritization and tracking of user stories. Completed user stories are in the "Done" section and the ones that were not prioritised for the first iteration are currently in the "To Do" section to be covered in the next iteration. 
@@ -849,7 +850,8 @@ Unfortunately it is not possible to run Selenium tests from Gitpod environment, 
 
 - **Run locally**
 
-Download folder [to_run_locally](selenium_tests/to_run_locally/) and follow insructions from [local_tests](selenium_tests/to_run_locally/local_tests.py) to run tests locally. Code for these tests in different from BrowserStack version, because running remotely imposes a lot of constraints, because of them the code for BrowserStack tests is not very pretty.
+Download folder [to_run_locally](selenium_tests/to_run_locally/) and follow insructions from [local_tests](selenium_tests/to_run_locally/local_tests.py) to run tests locally. Code for these tests in different from BrowserStack version, because running remotely imposes a lot of constraints, because of them the code for BrowserStack tests is not very pretty. 
+••The `sleep` is quite long in the tests, because I have a terrible Internet connection.
 
 - **Run on BrowserStack**
 
@@ -863,17 +865,111 @@ Even though, the code is "not so pretty", we can run tests in three different br
 
 All pages were run through HTML Validator. No errors were detected.
 
+**Home Page**
+
+![](readme/assets/code_validation/html_index.png)
+
+**Posts Page**
+
+![](readme/assets/code_validation/html_posts.png)
+
+••Trailing slashes come from cloudinary template tag.
+
+**Post Update Page**
+
+![](readme/assets/code_validation/html_updatepost.png)
+
+••It is toplevel, works fine with screen readers.
+
+**New Post Page**
+
+![](readme/assets/code_validation/html_newpost.png)
+
+••It is toplevel, works fine with screen readers.
+
+**Post Detail Page**
+
+![](readme/assets/code_validation/html_fullpost.png)
+
+**Messenger**
+
+![](readme/assets/code_validation/html_messenger.png)
+
+**Profile Page**
+
+![](readme/assets/code_validation/html_profile.png)
+
+**Profile Edit**
+
+![](readme/assets/code_validation/html_profile_edit.png)
+
+••It is toplevel, works fine with screen readers.
+
 2. **[W3 Jigsaw](https://jigsaw.w3.org/css-validator/) - CSS Validation**
 
 CSS Stylesheet was run through CSS Validator. No errors were detected.
+
+![](readme/assets/code_validation/valid_css.png)
 
 3. **[CI Python Linter](https://pep8ci.herokuapp.com) - Python Validation**
 
 All Python files were run through CI Python Linter. No errors were detected.
 
+**HELP_U APP**
+
+![](readme/assets/code_validation/pylint_help_asgi.png)
+
+![](readme/assets/code_validation/pylint_help_routing.png)
+
+![](readme/assets/code_validation/pylint_help_settings.png)
+
+![](readme/assets/code_validation/pylint_help_urls.png)
+
+**MAIN APP**
+
+![](readme/assets/code_validation/pylint_main_admin.png)
+
+![](readme/assets/code_validation/pylint_main_forms.png)
+
+![](readme/assets/code_validation/pylint_main_managers.png)
+
+![](readme/assets/code_validation/pylint_main_models.png)
+
+![](readme/assets/code_validation/pylint_main_serialisers.png)
+
+![](readme/assets/code_validation/pylint_main_urls.png)
+
+![](readme/assets/code_validation/pylint_main_views.png)
+
+**MESSENGER APP**
+
+![](readme/assets/code_validation/pylint_mes_api_paginators.png)
+
+![](readme/assets/code_validation/pylint_mes_api_serialisers.png)
+
+![](readme/assets/code_validation/pylint_mes_api_views.png)
+
+![](readme/assets/code_validation/pylint_mes_admin.png)
+
+![](readme/assets/code_validation/pylint_mes_consumers.png)
+
+![](readme/assets/code_validation/pylint_mes_models.png)
+
+![](readme/assets/code_validation/pylint_mes_views.png)
+
+**USERS APP**
+
+![](readme/assets/code_validation/pylint_users_forms.png)
+
+![](readme/assets/code_validation/pylint_users_views.png)
+
 4. **[JS Hint](https://jshint.com/) - JS Validation**
 
 All JS files were run through JS Hint. No errors were detected.
+
+![](readme/assets/code_validation/valid_jshint.png)
+
+••Complains about ES6 syntax.
 
 4. **[VSCode TSlint](https://jshint.com/) - TypeScript Validation**
 
@@ -1078,6 +1174,6 @@ Another option is to create a local clone of the repository:
 9. Press `Enter` and the local clone will be created.
 
 # Credentials
-
+Comming soon
 
 [Back to the Top](#help-u-website-milestone-project-4)
