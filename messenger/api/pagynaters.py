@@ -1,3 +1,6 @@
+"""
+Paginators of messenger api.
+"""
 from rest_framework.pagination import PageNumberPagination
 
 

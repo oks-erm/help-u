@@ -1,3 +1,6 @@
+"""
+Serialisers for messenger api.
+"""
 from rest_framework import serializers
 from messenger.models import Message, Conversation
 from main.serialisers import CustomUserSerializer

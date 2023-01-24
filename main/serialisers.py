@@ -13,7 +13,7 @@ class CustomUserSerializer(serializers.ModelSerializer):
 
     class Meta:
         """
-        Specifies the model and the fields to be included 
+        Specifies the model and the fields to be included
         in the serialized output.
         """
         model = CustomUser
