@@ -440,6 +440,8 @@ Another advantage of a hybrid architecture is the ability to send data to the fr
 
 In terms of performance, by using React for the front-end of a web application, in this case just a part - a real-time Messenger, we can take advantage of its performance benefits and provide a smooth and responsive experience for the user. Additionally, React is a highly modular library, and by building a single page app, you can easily scale the different parts of the application independently as needed. This can make it easier to add new features or make changes to the application without affecting other parts of the codebase. It also allows for easier debugging and testing.
 
+Furthermore, React allows for easier debugging and testing, which can simplify the development process and make the application more maintainable.
+
 As well as the mentioned above, that I prioritised in my project, React for the front-end of can significantly improve the user experience. 
  Here a scheme of the structure:
 
@@ -455,11 +457,17 @@ ___
 
 Authentication is particularly important for Help U, as the subject is quite sensitive and people are vulnerable asking for help, so it should be confidential within the community and available only for authenticated users. Thus all the website, besides the home page is avalable only for authenticated users. 
 
+In a Django project, there are several ways to handle authentication and authorization. One of the most popular libraries [django-allauth](https://django-allauth.readthedocs.io/en/latest/), which provides a flexible solution for handling user authentication and registration. It supports both traditional username and password authentication as well as social authentication through providers like Google, Facebook, and Twitter. It uses session-based authentication and stores user authentication information in the user's session, instead of Django's built-in token-based authentication. When a user logs in, the library creates a new session for the user and stores the user's identifying information (such as the user's ID or username) in the session. The library then sends a session ID to the client, as a session cookie, which the client stores in the browser. With each subsequent request, the client sends the session ID back to the server in the Cookie header of the HTTP request. django-allauth then uses the session ID to look up the associated session and authenticate the user.
+
+One of the key features of [django-allauth](https://django-allauth.readthedocs.io/en/latest/) is its support for OAuth. OAuth is an open standard for authorization that allows users to share their private resources stored on one site with another site, without having to share their credentials. OAuth allows users to grant a third-party application access to their resources without having to reveal their password. This is useful for scenarios where users want to give access to their resources to a third-party application without having to provide their credentials.
+
+One of the main reasons I chose to use [django-allauth](https://django-allauth.readthedocs.io/en/latest/) is because of its flexibility and support for various authentication methods. Another reason is because of its scalability. The library is built on top of the Django framework and it is actively maintained and is widely used in production, which means that it is likely to be compatible with the latest Django versions and have a solid user base.
+
 ### User Authentication ([uac 7](#uac7))
 
 ![](readme/assets/mockup-signin.png)
 
-In this project, authentication is implemented using Django AllAuth. The project uses a custom user model with email as a user id, which means that users to register and log in to the website need to use their email address instead of a traditional username.
+The project uses a custom user model with email as a user id, instead of using Django's built-in User model, which means that users to register and log in to the website need to use their email address instead of a traditional username, it also uses a custom sign up form. Users are logged in automatically after they verify their email address. However, users will not be logged in automatically after resetting their password. The ACCOUNT_SESSION_REMEMBER is set to True which means that the session will be remembered even if the user closes the browser. The email confirmation link will be signed using HMAC (Hash-based message authentication code) for security. The account login attempts are limited to 10 which means that the account will be locked for 50 minutes after 10 failed login attempts. 
 
 ### User Registration ([uac 5](#uac5))
 
@@ -469,11 +477,13 @@ Even though the website's registration process includes an email as the primary 
 The registration process requires users to enter their password twice to ensure that they have typed it correctly. This is an important security measure, as it helps to prevent users from accidentally entering the wrong password.
 
 ### Social Auth ([uac 6](#uac6))
-AllAuth allows users to quickly and easily register and log in to the website using their existing social media accounts. In this case Google and Facebook were chosen as the most of the most popular social media platforms in the world, with billions of active users and robust security protocols. This eliminates the need for users to create a new account or remember a separate username and password for the website, which can help to increase user engagement and retention. By offering social authentication options, we can increase the number of users who register for an account on the website. 
 
-Social authentication providers, such as Google and Facebook, have their own security protocols in place to ensure that user's personal information is secure. By using social authentication, we can rely on these established security protocols and increase the security of the website.
+AllAuth allows users to quickly and easily register and log in to the website using their existing social media accounts. When a user clicks on the "Sign in with Facebook" or "Sign in with Google" button, [django-allauth](https://django-allauth.readthedocs.io/en/latest/) redirects the user to the social media website where they will be prompted to grant permission to your application. Once the user grants permission, the social media website will redirect the user back to the website with an access token. [django-allauth](https://django-allauth.readthedocs.io/en/latest/) then uses the access token to retrieve the user's information from the social media website and create or update the user's account in the Django project.
+
+In this case Google and Facebook were chosen as the most of the most popular social media platforms in the world, with billions of active users and robust security protocols. This eliminates the need for users to create a new account or remember a separate username and password for the website, which can help to increase user engagement and retention. By offering social authentication options, we can increase the number of users who register for an account on the website. 
 
 ### Reset password ([uac 30](#uac30))
+
 The website also provides the password reset feature, which is an important security feature that allows users to reset their password if they have forgotten it or if their account has been compromised. AllAuth sends out an email notification to the user with a link to reset their password, which ensures that only the user can reset the password of their account. The password reset feature provides a better user experience by allowing users to regain access to their account quickly and easily, which helps to increase user engagement and retention.
 
 ## Django Messages ([uac 31](#uac31))
@@ -489,8 +499,7 @@ Responsiveness was achieved by utilizing Bootstrap in combination with JavaScrip
 
 ## Accessibility
 
-The website is designed and developed with accessibility in mind: it provides alternative text for images, using semantic HTML elements, aria-labels and providing adequate color contrast.
-Keyboard navigation is possible. It's also works with screen readers, however, there's room for improvement in this aspect, to ensure that it is fully accessible to users with disabilities.
+The website is designed and developed with accessibility in mind: it provides alternative text for images, using semantic HTML elements, aria-labels and providing adequate color contrast. Keyboard navigation is possible. It's also works with screen readers, however, there's room for improvement in this aspect, to ensure that it is fully accessible to users with disabilities.
 
 ## User Profile ([uac 14](#uac14))
 
@@ -656,15 +665,27 @@ The messenger feature on the website is designed to allow users to communicate w
 
 ### Websocket (Django Channels) 
 
-Django Channels is the package that was used to add websocket support to the Django project. Django Channels provides the necessary tools to set up a robust and efficient websocket connection in the project, and enables real-time functionality throughout the website by allowing for real-time notifications and communication. It extends the functionality of Django by allowing the handling of multiple protocols, such as the HTTP protocol which is used by default, and the websocket protocol which enables real-time functionality.
+[Django Channels](https://channels.readthedocs.io/en/stable/) is the package that was used to add websocket support to the Django project. Django Channels provides the necessary tools to set up a robust and efficient websocket connection in the project, and enables real-time functionality throughout the website by allowing for real-time notifications and communication. It extends the functionality of Django by allowing the handling of multiple protocols, such as the HTTP protocol which is used by default, and the websocket protocol which enables real-time functionality.
 
 To set up websockets in the project, Django Channels uses an asgi application, which is responsible for handling the HTTP protocol, and a URL router that handles the websocket protocol. The router is responsible for directing the websocket connection to the appropriate view, where the communication between the client and the server takes place. 
 
-Since we need to support both traditional HTTP requests and WebSockets in the same server all the website is served by Daphne. Daphne is a web server for Django that handles both HTTP and WebSockets, it is built on top of the asgi (Asynchronous Server Gateway Interface) protocol. Daphne is useful in situations when we need to support both traditional HTTP requests and WebSockets in the same server, which is exactly the case. 
+**Daphne**
 
-It might not be a good idea to handle HTTP with Daphne because Daphne is not optimized for handling large numbers of traditional HTTP requests, it is better suited for WebSockets and real-time connections. It may not perform as well as other web servers such as Gunicorn or uWSGI when handling large numbers of traditional HTTP requests. Daphne is primarily designed as a simple HTTP and WebSocket protocol server, and while it may work well for small projects, which I believe the current project is, it may not have all the features and performance optimizations needed for a high-traffic production application. So when the project goes big I plan to use a reverse proxy like Nginx or Apache to handle the HTTP protocol in production environments, and use Daphne or other ASGI servers to handle WebSockets.
+When building a Django project that uses WebSockets, it is common to use either [Daphne](https://github.com/django/daphne) or [Uvicorn](https://www.uvicorn.org/) as the server. Daphne is a high-performance ASGI server that is specifically designed for use with Django Channels and is able to handle both HTTP and WebSocket connections, and it also supports HTTP/2.
 
-In this project, Redis is utilised as the channel layer for Django Channels to facilitate real-time communication. This allows to store information about groups of users connected to a websocket and enables efficient communication across different instances of the application.
+Uvicorn, on the other hand, is a high-performance ASGI server that is built on top of the asyncio library and it is not specifically designed for use with Django Channels. Uvicorn supports both HTTP and WebSocket connections. Both Daphne and Uvicorn are high-performance servers that are well-suited for use with Django and WebSockets. The main difference between them is that Daphne is specifically designed for use with Django Channels, while Uvicorn is a more general-purpose ASGI server.
+
+In terms of choosing one over the other, Daphne might be the better choice when using Django Channels to take advantage of its built-in support for WebSockets and other asynchronous protocols. Uvicorn, on the other hand, might be a better as a more general-purpose ASGI server. Following this notion, Daphne was chosen for this project. 
+
+Utilizing Daphne for HTTP request handling may not be optimal, as Daphne is not optimized for handling large numbers of traditional HTTP requests, it is better suited for WebSockets and real-time connections. It may not perform as well as other web servers such as Gunicorn or uWSGI when handling large numbers of traditional HTTP requests. Daphne is primarily designed as a simple HTTP and WebSocket protocol server, and while it may be efficient for small scale projects, which I believe the current project is, it may not have all the features and performance optimizations needed for a high-traffic production  environments. Therefore, when the project scales, utilizing a reverse proxy such as Nginx or Apache to handle the HTTP protocol in production environments, with Daphne or other ASGI servers handling WebSockets, would be a more suitable approach.
+
+**Redis**
+
+Redis is an in-memory data store that can be used with Django Channels to provide a backend for managing WebSockets and other asynchronous protocols. Django Channels uses a concept called "channels" to handle WebSockets and other asynchronous protocols. Each channel is a unique identifier that represents a connection between a client and a server. When a client connects to the server, a channel is created and the client is subscribed to that channel. When the server receives a message from the client, it is broadcasted to all the clients subscribed to that channel. Redis is used as a backend for Django Channels to manage these channels. It stores the list of channels and the clients subscribed to them. When a client connects to the server, a new channel is created and the client's connection information is stored in Redis. When the server receives a message from the client, it uses Redis to look up the list of clients subscribed to that channel and broadcast the message to them. By using Redis as a backend, Django Channels can handle a large number of concurrent connections and handle messages in real-time.
+
+In this project, Redis is utilised as the channel layer for Django Channels to facilitate real-time communication. This allows to store information about groups of users connected to a websocket and enables efficient communication across different instances of the application. 
+
+Additionally, Redis can be used as a caching system, and store session data, which can help to improve the performance of the application.
 
 ### Conversations List 
 
@@ -692,7 +713,9 @@ The Django REST framework is used to handle the creation and retrieval of data f
 
 ## Stunnel ([uac 21](#uac21))
 
-Stunnel is a software package that is used to add SSL/TLS encryption to network connections. When Daphne is running asynchronously inside of stunnel, it is essentially wrapping the Daphne process in an SSL/TLS layer, providing an additional layer of security for the data being transmitted over the network. This is useful for protecting sensitive information such as login credentials or other user data that is being transmitted between the client and the server. 
+STunnel is a software that provides a secure layer between two network protocols. It can be used to encrypt traffic between a client and a server, or to secure connections between servers. Stunnel works by creating a secure "tunnel" between the client and the server. The client connects to stunnel and sends its data to be encrypted. Stunnel then encrypts the data and forwards it to the server. The server receives the encrypted data, decrypts it, and processes it as if it were received directly from the client. The response from the server is then encrypted by stunnel and sent back to the client.
+
+In the project STunnel is used to add SSL/TLS encryption to network connections. When Daphne is running asynchronously inside of stunnel, it is essentially wrapping the Daphne process in an SSL/TLS layer, providing an additional layer of security for the data being transmitted over the network. This is useful for protecting sensitive information such as login credentials or other user data that is being transmitted between the client and the server. 
 
 ## Admin ([uac 25](#uac25))
 
@@ -1050,7 +1073,7 @@ ___
 ## Programs, frameworks, libraries
 - [Django](https://www.djangoproject.com/) for backend and frontend functionality.
 - [React](https://reactjs.org/) for Messenger app.
-- [AllAuth](https://django-allauth.readthedocs.io/en/latest/) for authentication, registration and account management.
+- [Django AllAuth](https://django-allauth.readthedocs.io/en/latest/) for authentication, registration and account management.
 - [Django Channels](https://channels.readthedocs.io/en/stable/) for websockets and ASGI.
 - [Django Rest Framework](https://www.django-rest-framework.org/) for building API.
 - [Redis](https://redis.io/) back-end for handling WebSockets, to facilitate. Django Channels channel layers.
@@ -1142,12 +1165,12 @@ ___
 ____
  
 4. Add Django secret key to config vars `SECRET_KEY` and `DISABLE_COLLECT_STATIC` = 1
-
-5. Navigate to the `Deploy` tab and select GitHub as a deployment method.
-6. Find a repository to connect to and choose the branch to deploy.
-7. Enable automatic deployment, cross your fingers and deploy the branch. 
-8. Wait for the app to build, click on the `View`.
-9. Go back to config vars and remove `DISABLE_COLLECT_STATIC` = 1
+5. Set the buildbacks to [redis](https://buildpack-registry.s3.amazonaws.com/buildpacks/heroku/redis.tgz) and `python/heroku` in that order.
+6. Navigate to the `Deploy` tab and select GitHub as a deployment method.
+7. Find a repository to connect to and choose the branch to deploy.
+8. Enable automatic deployment, cross your fingers and deploy the branch. 
+9. Wait for the app to build, click on the `View`.
+10. Go back to config vars and remove `DISABLE_COLLECT_STATIC` = 1
 
 ### Fork GitHub Repo
 
