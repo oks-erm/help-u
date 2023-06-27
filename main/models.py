@@ -47,7 +47,7 @@ class UserProfile(models.Model):
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
     userpic = CloudinaryField(
         'image',
-        default='c_scale,w_233/v1674079970/static/assets/img/placeholder.png')
+        default='c_scale,w_233/static/assets/img/placeholder.png')
     languages = models.CharField(max_length=200)
     bio = models.TextField(default='', blank=True)
     country = CountryField()
